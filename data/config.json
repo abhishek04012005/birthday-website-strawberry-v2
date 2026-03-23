@@ -1,0 +1,279 @@
+{
+  "child": {
+    "name": "Emma",
+    "fullName": "Emma Rose",
+    "age": 5,
+    "birthDate": "2020-04-12",
+    "zodiac": "♈ Aries",
+    "emoji": "🍓",
+    "color": {
+      "primary": "#e8243c",
+      "dark": "#8c001a",
+      "crimson": "#c0003a",
+      "light": "#ffd6e0"
+    }
+  },
+  "party": {
+    "title": "Happy Birthday, Little Emma!",
+    "date": "2025-04-12",
+    "time": "3:00 PM - 6:00 PM",
+    "venue": "Strawberry Garden Hall",
+    "address": "42 Blossom Lane, Central Park, New York, NY 10024",
+    "mapUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.8885!2d-73.9712!3d40.7831!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2589a018531e3%3A0xb9df1f7387a94119!2sCentral%20Park!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus",
+    "dressCode": "Wear your pinkest outfit! Strawberry theme encouraged",
+    "activities": [
+      "Face painting 🎨",
+      "Strawberry cake cutting 🍰",
+      "Dance floor 💃",
+      "Goodie bags 🎁",
+      "Surprise games 🎉"
+    ]
+  },
+  "hero": {
+    "subtitle": "Join us for the most magical strawberry-filled celebration ever! 🎉",
+    "cta1": "🎟 RSVP Now",
+    "cta2": "🎉 Celebrate!",
+    "photoUrl": "https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=600&q=85&fit=crop&crop=faces,top",
+    "photoAlt": "Birthday child"
+  },
+  "personalityTags": [
+    { "text": "🍓 Strawberry Addict", "emoji": "🍓" },
+    { "text": "🌿 Nature Explorer", "emoji": "🌿" },
+    { "text": "☀️ Morning Person", "emoji": "☀️" },
+    { "text": "🎨 Tiny Artist", "emoji": "🎨" },
+    { "text": "🐾 Animal Whisperer", "emoji": "🐾" },
+    { "text": "💃 Dance Queen", "emoji": "💃" },
+    { "text": "🍪 Cookie Monster", "emoji": "🍪" },
+    { "text": "🌟 Future Superstar", "emoji": "🌟" }
+  ],
+  "facts": [
+    {
+      "id": "chocolates",
+      "icon": "🍫",
+      "label": "Lifetime Chocolates Eaten",
+      "number": "1247",
+      "unit": "pcs",
+      "description": "And she remembers the exact wrapper of every single one 😄",
+      "barWidth": 88,
+      "colorClass": "fc-red"
+    },
+    {
+      "id": "strawberries",
+      "icon": "🍓",
+      "label": "Strawberries Devoured",
+      "number": "2863",
+      "unit": "berries",
+      "description": "Her spirit animal is literally a strawberry 🍓",
+      "barWidth": 96,
+      "colorClass": "fc-green"
+    },
+    {
+      "id": "giggles",
+      "icon": "😂",
+      "label": "Average Giggles Per Day",
+      "number": "147",
+      "unit": "giggles",
+      "description": "Scientists are still trying to record them all 🔬",
+      "barWidth": 100,
+      "colorClass": "fc-yellow"
+    },
+    {
+      "id": "stories",
+      "icon": "📚",
+      "label": "Bedtime Stories Requested",
+      "number": "532",
+      "unit": "stories",
+      "description": "\"One more story!\" — Emma, every single night 🌙",
+      "barWidth": 72,
+      "colorClass": "fc-purple"
+    },
+    {
+      "id": "danceParties",
+      "icon": "💃",
+      "label": "Living Room Dance Parties",
+      "number": "318",
+      "unit": "parties",
+      "description": "Zero invitations needed, maximum chaos guaranteed 🎵",
+      "barWidth": 60,
+      "colorClass": "fc-teal"
+    },
+    {
+      "id": "stuffedAnimals",
+      "icon": "🧸",
+      "label": "Stuffed Animal Friends",
+      "number": "43",
+      "unit": "besties",
+      "description": "All named, all loved, all attending tonight's party 🫶",
+      "barWidth": 55,
+      "colorClass": "fc-coral"
+    }
+  ],
+  "treats": [
+    {
+      "emoji": "🎂",
+      "name": "Strawberry Dream Cake",
+      "description": "Three-tiered masterpiece with fresh strawberry cream, edible flowers & Emma's name in gold letters!",
+      "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=85&fit=crop",
+      "tag": "⭐ Star of the Show"
+    },
+    {
+      "emoji": "🍓",
+      "name": "Strawberry Shortcake Bites",
+      "description": "Mini cloud-soft shortcakes piled high with fresh berries, whipped cream & a drizzle of strawberry glaze!",
+      "image": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&q=85&fit=crop",
+      "tag": "🍓 Emma's Fave"
+    },
+    {
+      "emoji": "🍡",
+      "name": "Chocolate-Dipped Berries",
+      "description": "Plump fresh strawberries hand-dipped in rich Belgian chocolate with sprinkles & edible gold dust!",
+      "image": "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=85&fit=crop",
+      "tag": "🌿 Fresh & Healthy"
+    },
+    {
+      "emoji": "🍦",
+      "name": "Strawberry Soft Serve Station",
+      "description": "DIY ice cream bar with pink strawberry soft serve, sprinkles, candy floss & all the toppings imaginable!",
+      "image": "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=600&q=85&fit=crop",
+      "tag": "🎈 Party Special"
+    },
+    {
+      "emoji": "🧁",
+      "name": "Mini Strawberry Cupcakes",
+      "description": "Bite-sized vanilla cupcakes topped with swirls of strawberry buttercream & a fresh berry crown!",
+      "image": "https://images.unsplash.com/photo-1603532648955-039310d9ed75?w=600&q=85&fit=crop",
+      "tag": "🧁 Fan Favourite"
+    },
+    {
+      "emoji": "🍹",
+      "name": "Sparkling Strawberry Lemonade",
+      "description": "Emma's signature drink — freshly squeezed lemonade with strawberry purée, mint & edible glitter bubbles!",
+      "image": "https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?w=600&q=85&fit=crop",
+      "tag": "🥤 Signature Drink"
+    }
+  ],
+  "timeline": [
+    {
+      "time": "3:00 PM",
+      "emoji": "🍓",
+      "title": "🎉 Doors Open & Welcome!",
+      "description": "Guests arrive to a strawberry-scented wonderland! Welcome drinks, photo booth & meet-and-greet with our birthday princess."
+    },
+    {
+      "time": "3:30 PM",
+      "emoji": "🎨",
+      "title": "🎨 Face Painting & Crafts",
+      "description": "Our talented artists will transform little ones into strawberries, butterflies & magical creatures. Craft tables open!"
+    },
+    {
+      "time": "4:00 PM",
+      "emoji": "🎪",
+      "title": "🎪 Games & Activities",
+      "description": "Musical chairs, strawberry toss, treasure hunt & the giant bouncy castle! Prizes for every little champion 🏆"
+    },
+    {
+      "time": "4:45 PM",
+      "emoji": "🎂",
+      "title": "🎂 Cake & Singing!",
+      "description": "The grand cake ceremony! Emma makes her 5 birthday wishes, we sing together & dive into the most delicious strawberry cake."
+    },
+    {
+      "time": "5:15 PM",
+      "emoji": "💃",
+      "title": "💃 Dance Party & Treats",
+      "description": "DJ drops the beat, dessert table opens & Emma leads the dance floor! Goodie bags handed out to every guest 🎁"
+    },
+    {
+      "time": "6:00 PM",
+      "emoji": "🌟",
+      "title": "🌟 Farewell & Hugs!",
+      "description": "The sweetest goodbye — family photos, last hugs & goodie bags for everyone. Thank you for making Emma's day magical!"
+    }
+  ],
+  "activities": [
+    {
+      "emoji": "🎨",
+      "name": "Face Painting Studio",
+      "time": "3:30 – 4:00 PM",
+      "duration": "30 min session",
+      "ageGroup": "All ages welcome",
+      "description": "Professional artists turn little faces into strawberries, unicorns, butterflies & superheroes! Each design takes 5–10 minutes of pure magic."
+    },
+    {
+      "emoji": "🎪",
+      "name": "Giant Bouncy Castle",
+      "time": "3:30 – 5:00 PM",
+      "duration": "Open all afternoon",
+      "ageGroup": "Ages 2–10",
+      "description": "A massive strawberry-themed inflatable castle with slides, ball pit & obstacle course! Socks required, smiles guaranteed 😄"
+    },
+    {
+      "emoji": "📸",
+      "name": "Strawberry Photo Booth",
+      "time": "All Day",
+      "duration": "Available all event",
+      "ageGroup": "Free prints!",
+      "description": "Strike a pose with giant strawberry hats, berry baskets & \"I'm 5!\" signs! Instant prints for every family to take home as keepsakes."
+    },
+    {
+      "emoji": "🏆",
+      "name": "Games & Prize Corner",
+      "time": "4:00 – 4:30 PM",
+      "duration": "30 min",
+      "ageGroup": "Prizes for everyone!",
+      "description": "Musical chairs, strawberry toss, pass-the-parcel & a mystery treasure hunt around the garden! Every child wins a prize 🎁"
+    }
+  ],
+  "playlist": [
+    { "track": 1, "name": "Strawberry Fields Forever", "artist": "The Sweethearts · Birthday Edition", "duration": "3:28" },
+    { "track": 2, "name": "Happy Birthday to You!", "artist": "The Birthday Choir · Classic Mix", "duration": "2:14" },
+    { "track": 3, "name": "Dance Like a Strawberry", "artist": "DJ Berry Bounce · Party Remix", "duration": "3:45" },
+    { "track": 4, "name": "Rainbow Sunshine Day", "artist": "The Sparkle Squad · Kids Vol. 5", "duration": "3:12" },
+    { "track": 5, "name": "Balloons & Birthday Dreams", "artist": "Poppy Pops · Celebration Hits", "duration": "3:56" },
+    { "track": 6, "name": "Ice Cream Parade", "artist": "Sweet Tooth Orchestra · Summer", "duration": "2:58" },
+    { "track": 7, "name": "Princess Garden Waltz", "artist": "Fairy Dust Ensemble · Magical", "duration": "4:02" },
+    { "track": 8, "name": "Best Day Ever (Emma's Song)", "artist": "The Birthday Band · Dedication", "duration": "4:18" }
+  ],
+  "rsvp": {
+    "invitedCount": 28,
+    "comingCount": 14,
+    "features": [
+      { "icon": "🎂", "text": "Strawberry birthday cake for everyone" },
+      { "icon": "🎁", "text": "Special goodie bags for every guest" },
+      { "icon": "🎪", "text": "Games, face painting & fun activities" },
+      { "icon": "📸", "text": "Photo booth with strawberry props!" }
+    ]
+  },
+  "gallery": [
+    {
+      "url": "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700&q=85&fit=crop",
+      "alt": "Birthday celebration",
+      "badge": "🎂 Celebration!",
+      "text": "🎂 Birthday Magic!"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=85&fit=crop",
+      "alt": "Fresh strawberries",
+      "badge": "🍓 Berries!",
+      "text": "🍓 So Sweet!"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&q=85&fit=crop",
+      "alt": "Birthday cake",
+      "badge": "🎂 Cake!",
+      "text": "🎂 Yummy Cake!"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=500&q=85&fit=crop",
+      "alt": "Party balloons",
+      "badge": "🎈 Balloons!",
+      "text": "🎈 Party Time!"
+    },
+    {
+      "url": "https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=85&fit=crop",
+      "alt": "Strawberry dessert",
+      "badge": "🍓 Dessert!",
+      "text": "🍓 Strawberry Love!"
+    }
+  ]
+}

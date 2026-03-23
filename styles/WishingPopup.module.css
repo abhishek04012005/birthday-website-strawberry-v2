@@ -1,0 +1,380 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.popup {
+  background: var(--cream);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(232, 36, 60, 0.3);
+  animation: popupSlideIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 3px solid var(--pink);
+  position: relative;
+}
+
+@keyframes popupSlideIn {
+  from {
+    transform: scale(0.85) translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.closeBtn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: var(--pink);
+  border: none;
+  color: white;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.closeBtn:hover {
+  background: var(--red);
+  transform: rotate(90deg);
+}
+
+.content {
+  padding-top: 20px;
+}
+
+.title {
+  font-family: 'Fredoka One', cursive;
+  font-size: 28px;
+  color: var(--red);
+  text-align: center;
+  margin-bottom: 25px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.input,
+.textarea {
+  border: 2px solid var(--pink);
+  border-radius: 12px;
+  padding: 12px 16px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  background: white;
+  color: var(--dark-red);
+}
+
+.input:focus,
+.textarea:focus {
+  outline: none;
+  border-color: var(--red);
+  box-shadow: 0 0 15px rgba(232, 36, 60, 0.2);
+  transform: translateY(-2px);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--pink);
+}
+
+.textarea {
+  resize: vertical;
+  min-height: 100px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, var(--red) 0%, var(--pink) 100%);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Nunito', sans-serif;
+}
+
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(232, 36, 60, 0.3);
+}
+
+.submitBtn:active:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.submitBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.successMessage {
+  background: var(--light-pink);
+  color: var(--red);
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+  animation: slideDown 0.4s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wishesContainer {
+  border-top: 3px dashed var(--pink);
+  padding-top: 20px;
+}
+
+.wishesTitle {
+  font-family: 'Dancing Script', cursive;
+  font-size: 20px;
+  color: var(--red);
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.loadingText {
+  text-align: center;
+  color: var(--pink);
+  font-style: italic;
+  padding: 20px;
+}
+
+.emptyText {
+  text-align: center;
+  color: var(--pink);
+  padding: 20px;
+  font-size: 15px;
+}
+
+.wishesList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.wishesList::-webkit-scrollbar {
+  width: 6px;
+}
+
+.wishesList::-webkit-scrollbar-track {
+  background: var(--light-pink);
+  border-radius: 10px;
+}
+
+.wishesList::-webkit-scrollbar-thumb {
+  background: var(--pink);
+  border-radius: 10px;
+}
+
+.wishItem {
+  background: white;
+  border: 2px solid var(--light-pink);
+  border-radius: 12px;
+  padding: 12px 14px;
+  animation: slideIn 0.4s ease;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.wishItem:hover {
+  border-color: var(--pink);
+  box-shadow: 0 4px 12px rgba(232, 36, 60, 0.15);
+}
+
+.wishHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.guestName {
+  font-weight: 700;
+  color: var(--red);
+  font-size: 14px;
+}
+
+.wishDate {
+  font-size: 12px;
+  color: var(--pink);
+  font-style: italic;
+}
+
+.wishText {
+  color: var(--dark-red);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+  .popup {
+    padding: 20px;
+    max-width: 100%;
+    width: 95%;
+    max-height: 90vh;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .wishesTitle {
+    font-size: 18px;
+  }
+
+  .wishesList {
+    max-height: 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .popup {
+    width: 90%;
+    max-width: 500px;
+    padding: 24px;
+  }
+  
+  .form {
+    gap: 12px;
+  }
+  
+  .input,
+  .textarea {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .overlay {
+    padding: 10px;
+  }
+  
+  .popup {
+    width: 95%;
+    max-width: 100%;
+    padding: 18px;
+    max-height: 95vh;
+  }
+  
+  .closeBtn {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+  }
+  
+  .title {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .form {
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .input,
+  .textarea {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+  
+  .textarea {
+    min-height: 80px;
+  }
+  
+  .submitBtn {
+    padding: 12px 16px;
+    font-size: 14px;
+  }
+  
+  .wishesTitle {
+    font-size: 16px;
+  }
+  
+  .wishesList {
+    max-height: 200px;
+    gap: 8px;
+  }
+  
+  .wishItem {
+    padding: 10px 12px;
+  }
+  
+  .guestName {
+    font-size: 13px;
+  }
+  
+  .wishText {
+    font-size: 13px;
+  }
+}

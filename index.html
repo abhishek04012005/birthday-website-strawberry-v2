@@ -1,0 +1,2372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🍓 Emma's Strawberry Birthday Party!</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;900&family=Dancing+Script:wght@700&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+/* ======= ROOT ======= */
+:root{
+  --red:#e8243c; --dark-red:#8c001a; --crimson:#c0003a;
+  --pink:#ff6b8a; --rose:#ff94aa; --light-pink:#ffd6e0;
+  --blush:#fff0f4; --cream:#fffaf5; --ivory:#fff8f2;
+  --green:#2ecc71; --dark-green:#1a8a48;
+  --yellow:#ffe566; --amber:#f5a623;
+  --purple:#c77dff; --teal:#00b4d8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--cream); overflow-x:hidden;
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30'%3E%3Ctext y='24' font-size='24'%3E🍓%3C/text%3E%3C/svg%3E") 15 15,auto;
+}
+
+/* ======= CANVAS / RAIN ======= */
+#confettiCanvas{position:fixed;inset:0;pointer-events:none;z-index:9999;}
+.rain-layer{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden;}
+.drop{position:absolute;top:-70px;animation:rain linear infinite;opacity:0.45;}
+@keyframes rain{
+  0%{transform:translateY(-70px) rotate(0deg);opacity:0;}
+  8%{opacity:0.45;} 92%{opacity:0.45;}
+  100%{transform:translateY(110vh) rotate(400deg);opacity:0;}
+}
+
+/* ======= NAV ======= */
+nav{
+  position:fixed;top:0;left:0;width:100%;z-index:5000;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;height:66px;
+  background:rgba(255,255,255,0.94);
+  backdrop-filter:blur(18px) saturate(180%);
+  border-bottom:2.5px solid var(--light-pink);
+  box-shadow:0 4px 28px rgba(232,36,60,0.09);
+  transition:background 0.3s;
+}
+.nav-logo{
+  font-family:'Pacifico',cursive;color:var(--red);font-size:1.45rem;
+  display:flex;align-items:center;gap:10px;
+}
+.nav-logo-icon{animation:logoBounce 2s ease-in-out infinite;display:inline-block;font-size:1.6rem;}
+@keyframes logoBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.nav-links{display:flex;gap:6px;align-items:center;}
+.nav-links a{
+  text-decoration:none;color:var(--dark-red);font-weight:800;
+  font-size:0.84rem;letter-spacing:0.06em;padding:8px 14px;
+  border-radius:50px;transition:all 0.25s;
+}
+.nav-links a:hover{background:var(--light-pink);color:var(--dark-red);}
+.nav-rsvp-btn{
+  background:var(--red)!important;color:#fff!important;
+  box-shadow:0 3px 12px rgba(232,36,60,0.3);
+}
+.nav-rsvp-btn:hover{background:var(--dark-red)!important;transform:translateY(-2px);}
+
+/* ======= HERO ======= */
+.hero{
+  min-height:100vh;position:relative;
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;padding-top:66px;
+}
+.hero-bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 50%,#ffd6e080 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 20%,#ffe56650 0%,transparent 45%),
+             radial-gradient(ellipse at 60% 85%,#ffd6e070 0%,transparent 50%),
+             linear-gradient(160deg,#fff8f2 0%,#fff0f4 50%,#fff5e8 100%);
+  animation:heroGrad 10s ease infinite;
+}
+@keyframes heroGrad{
+  0%,100%{filter:hue-rotate(0deg);}
+  50%{filter:hue-rotate(8deg);}
+}
+.hero-bg::after{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(232,36,60,0.07) 2px,transparent 2px);
+  background-size:44px 44px;
+}
+/* Blobs */
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;}
+.b1{width:500px;height:500px;background:#ffb3c8;top:-140px;left:-140px;opacity:0.35;animation:bb 8s ease-in-out infinite;}
+.b2{width:380px;height:380px;background:#ffe566;bottom:-80px;right:-80px;opacity:0.28;animation:bb 9s ease-in-out infinite reverse;}
+.b3{width:300px;height:300px;background:#a8edea;top:40%;left:50%;opacity:0.18;animation:bb 11s ease-in-out infinite 2s;}
+@keyframes bb{0%,100%{transform:scale(1) translate(0,0);}50%{transform:scale(1.12) translate(22px,-18px);}}
+
+/* Big deco strawberry SVG bg */
+.hero-deco-sb{
+  position:absolute;right:-60px;bottom:-40px;
+  font-size:22rem;opacity:0.045;
+  animation:decoSpin 20s linear infinite;
+  pointer-events:none;user-select:none;
+}
+@keyframes decoSpin{0%{transform:rotate(0);}100%{transform:rotate(360deg);}}
+
+.hero-inner{
+  position:relative;z-index:10;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:72px;align-items:center;
+  max-width:1160px;width:100%;padding:48px 48px;
+}
+
+/* LEFT */
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:linear-gradient(135deg,var(--red),var(--crimson));
+  color:#fff;font-size:0.75rem;font-weight:900;letter-spacing:0.18em;
+  padding:8px 22px;border-radius:50px;margin-bottom:24px;
+  animation:popIn 0.6s 0.1s both;
+  box-shadow:0 6px 20px rgba(232,36,60,0.4);
+  text-transform:uppercase;
+}
+.hero-title{
+  font-family:'Pacifico',cursive;
+  font-size:clamp(2.2rem,4.5vw,3.8rem);
+  color:var(--dark-red);line-height:1.08;
+  text-shadow:4px 4px 0 rgba(255,150,170,0.5);
+  animation:popIn 0.7s 0.3s both;margin-bottom:6px;
+}
+.hero-name{
+  font-family:'Dancing Script',cursive;
+  font-size:clamp(3.2rem,7vw,6rem);
+  background:linear-gradient(135deg,var(--red),#ff6b8a,var(--amber));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  line-height:1;animation:popIn 0.7s 0.5s both;margin-bottom:22px;
+}
+.hero-age-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  background:var(--yellow);color:var(--dark-red);
+  font-family:'Fredoka One',cursive;font-size:1.1rem;
+  padding:6px 18px;border-radius:50px;margin-bottom:18px;
+  animation:popIn 0.7s 0.55s both;
+  border:2.5px solid var(--amber);
+  box-shadow:0 4px 14px rgba(245,166,35,0.3);
+}
+.hero-sub{
+  font-size:1.08rem;color:#7a3040;font-weight:600;
+  animation:popIn 0.7s 0.7s both;margin-bottom:34px;line-height:1.75;
+}
+.hero-btns{display:flex;gap:16px;flex-wrap:wrap;animation:popIn 0.7s 0.9s both;}
+.btn-red{
+  background:linear-gradient(135deg,var(--red),var(--crimson));
+  color:#fff;border:none;border-radius:50px;
+  padding:16px 36px;font-family:'Fredoka One',cursive;font-size:1.05rem;
+  cursor:pointer;box-shadow:0 6px 0 var(--dark-red),0 12px 28px rgba(232,36,60,0.32);
+  transition:transform 0.15s,box-shadow 0.15s;text-decoration:none;display:inline-block;
+  letter-spacing:0.04em;
+}
+.btn-red:hover{transform:translateY(-5px);box-shadow:0 11px 0 var(--dark-red),0 20px 36px rgba(232,36,60,0.38);}
+.btn-red:active{transform:translateY(2px);box-shadow:0 2px 0 var(--dark-red);}
+.btn-ghost{
+  background:rgba(255,255,255,0.8);color:var(--red);
+  border:2.5px solid var(--red);border-radius:50px;
+  padding:15px 34px;font-family:'Fredoka One',cursive;font-size:1.05rem;
+  cursor:pointer;transition:all 0.22s;text-decoration:none;display:inline-block;
+  backdrop-filter:blur(4px);
+}
+.btn-ghost:hover{background:var(--light-pink);transform:translateY(-3px);}
+
+@keyframes popIn{0%{transform:scale(0.65) translateY(22px);opacity:0;}100%{transform:scale(1) translateY(0);opacity:1;}}
+
+/* RIGHT */
+.hero-right{display:flex;flex-direction:column;align-items:center;gap:26px;animation:popIn 0.8s 0.25s both;}
+
+.photo-wrapper{position:relative;animation:floatAnim 4.5s ease-in-out infinite;}
+@keyframes floatAnim{0%,100%{transform:translateY(0) rotate(-1.5deg);}50%{transform:translateY(-20px) rotate(1.5deg);}}
+
+/* Rotating ring */
+.photo-ring{
+  position:absolute;inset:-18px;
+  border-radius:50%;
+  border:4px dashed rgba(232,36,60,0.3);
+  animation:ringRotate 10s linear infinite;
+}
+@keyframes ringRotate{0%{transform:rotate(0);}100%{transform:rotate(360deg);}}
+
+.photo-frame{
+  width:310px;height:370px;
+  border-radius:48% 52% 52% 48% / 44% 44% 56% 56%;
+  overflow:hidden;
+  border:8px solid #fff;
+  box-shadow:
+    0 0 0 4px var(--light-pink),
+    0 0 0 8px rgba(232,36,60,0.12),
+    0 28px 80px rgba(232,36,60,0.3);
+  position:relative;
+}
+.photo-frame img{width:100%;height:100%;object-fit:cover;object-position:center top;transition:transform 0.6s;}
+.photo-frame:hover img{transform:scale(1.08);}
+
+.sticker{position:absolute;filter:drop-shadow(3px 3px 6px rgba(0,0,0,0.18));animation:sWiggle 2.5s ease-in-out infinite;}
+.s1{font-size:2.6rem;top:-26px;right:-18px;animation-delay:0s;}
+.s2{font-size:2.2rem;bottom:-20px;left:-26px;animation-delay:0.7s;}
+.s3{font-size:2rem;top:45%;right:-34px;animation-delay:1.3s;}
+.s4{font-size:1.8rem;top:10px;left:-20px;animation-delay:0.4s;}
+.s5{font-size:1.6rem;bottom:30px;right:-28px;animation-delay:1.8s;}
+@keyframes sWiggle{0%,100%{transform:rotate(-12deg) scale(1);}50%{transform:rotate(12deg) scale(1.2);}}
+
+/* COUNTDOWN */
+.countdown-card{
+  background:linear-gradient(135deg,#e8243c 0%,#8c001a 100%);
+  border-radius:28px;padding:24px 30px;width:100%;max-width:380px;
+  box-shadow:0 8px 0 #5c0010,0 20px 50px rgba(232,36,60,0.38);
+  position:relative;overflow:hidden;
+}
+.countdown-card::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='2' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
+}
+.cd-title{font-family:'Fredoka One',cursive;color:#fff;font-size:1rem;
+  text-align:center;margin-bottom:18px;position:relative;letter-spacing:0.06em;
+  text-shadow:0 2px 8px rgba(0,0,0,0.2);}
+.cd-row{display:flex;gap:10px;justify-content:center;position:relative;}
+.cd-box{
+  background:rgba(255,255,255,0.15);
+  border:2px solid rgba(255,255,255,0.3);
+  border-radius:18px;padding:12px 6px;min-width:72px;text-align:center;
+  backdrop-filter:blur(6px);transition:background 0.3s;
+}
+.cd-box:hover{background:rgba(255,255,255,0.25);}
+.cd-num{
+  font-family:'Pacifico',cursive;font-size:2.2rem;color:#fff;
+  display:block;line-height:1;text-shadow:0 3px 12px rgba(0,0,0,0.25);
+}
+.cd-label{font-size:0.6rem;font-weight:900;color:rgba(255,255,255,0.7);
+  letter-spacing:0.15em;text-transform:uppercase;margin-top:5px;display:block;}
+.cd-colon{font-family:'Pacifico',cursive;color:#fff;font-size:2rem;
+  align-self:center;opacity:0.7;animation:colonBlink 1s step-end infinite;}
+@keyframes colonBlink{0%,100%{opacity:0.7;}50%{opacity:0.15;}}
+
+/* ======= WAVE ======= */
+.wave{line-height:0;position:relative;z-index:5;}
+.wave svg{display:block;width:100%;}
+
+/* ======= GENERIC SECTION ======= */
+.section{position:relative;z-index:5;padding:90px 52px;}
+.sec-head{text-align:center;margin-bottom:62px;}
+.sec-pill{
+  display:inline-block;font-size:0.72rem;font-weight:900;
+  letter-spacing:0.16em;text-transform:uppercase;padding:7px 22px;
+  border-radius:50px;margin-bottom:14px;
+}
+.pill-pink{background:var(--light-pink);color:var(--dark-red);}
+.pill-white{background:rgba(255,255,255,0.2);color:#fff;}
+.sec-title{
+  font-family:'Pacifico',cursive;font-size:clamp(1.9rem,4vw,3.2rem);
+  color:var(--dark-red);text-shadow:3px 3px 0 rgba(255,130,160,0.3);margin-bottom:14px;
+}
+.sec-title-white{color:#fff!important;text-shadow:3px 3px 0 rgba(0,0,0,0.15)!important;}
+.sec-sub{font-size:1rem;color:#8a4050;max-width:580px;margin:0 auto;line-height:1.75;}
+.sec-sub-white{color:rgba(255,255,255,0.82)!important;}
+
+/* ======= GALLERY ======= */
+.gallery-bg{background:linear-gradient(160deg,#fff0f4 0%,#fffaf5 100%);}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  grid-template-rows:270px 270px;
+  gap:18px;max-width:1100px;margin:0 auto;
+}
+.gal-item{
+  border-radius:24px;overflow:hidden;position:relative;cursor:pointer;
+  box-shadow:0 8px 36px rgba(0,0,0,0.1);
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.4s;
+}
+.gal-item:hover{transform:scale(1.05) rotate(-1deg);box-shadow:0 24px 60px rgba(232,36,60,0.28);z-index:10;}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.55s;display:block;}
+.gal-item:hover img{transform:scale(1.12);}
+.gal-item:nth-child(1){grid-row:span 2;}
+.gal-badge{
+  position:absolute;top:14px;left:14px;
+  background:var(--red);color:#fff;font-family:'Fredoka One',cursive;
+  font-size:0.78rem;padding:5px 14px;border-radius:50px;
+  box-shadow:0 4px 12px rgba(0,0,0,0.2);letter-spacing:0.06em;
+}
+.gal-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(140,0,26,0.75) 0%,transparent 55%);
+  opacity:0;transition:opacity 0.32s;
+  display:flex;align-items:flex-end;padding:20px;
+}
+.gal-item:hover .gal-overlay{opacity:1;}
+.gal-text{font-family:'Pacifico',cursive;color:#fff;font-size:1rem;text-shadow:1px 1px 0 rgba(0,0,0,0.3);}
+
+/* Gallery footer strip */
+.gal-strip{
+  display:flex;gap:14px;justify-content:center;flex-wrap:wrap;
+  max-width:1100px;margin:20px auto 0;
+}
+.gal-mini{
+  width:90px;height:90px;border-radius:16px;overflow:hidden;cursor:pointer;
+  border:3px solid #fff;
+  box-shadow:0 4px 16px rgba(0,0,0,0.1);
+  transition:transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+}
+.gal-mini:hover{transform:scale(1.18) rotate(2deg);}
+.gal-mini img{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* ======= DETAILS + MAP ======= */
+.details-bg{background:var(--cream);}
+.details-layout{
+  display:grid;grid-template-columns:1fr 1.2fr;
+  gap:48px;align-items:start;max-width:1120px;margin:0 auto;
+}
+.detail-cards{display:flex;flex-direction:column;gap:22px;}
+.dcard{
+  background:#fff;border-radius:26px;padding:30px 28px;
+  border:2.5px solid var(--light-pink);
+  box-shadow:0 6px 0 var(--light-pink),0 16px 44px rgba(0,0,0,0.06);
+  display:flex;align-items:flex-start;gap:22px;
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.35s;
+  position:relative;overflow:hidden;
+}
+.dcard::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,var(--blush) 0%,transparent 60%);
+  opacity:0;transition:opacity 0.3s;
+}
+.dcard:hover{transform:translateX(10px);box-shadow:0 6px 0 var(--light-pink),0 22px 55px rgba(232,36,60,0.12);}
+.dcard:hover::before{opacity:1;}
+.dcard-icon{
+  width:62px;height:62px;border-radius:18px;
+  background:linear-gradient(135deg,var(--red),var(--crimson));
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.8rem;flex-shrink:0;
+  box-shadow:0 6px 18px rgba(232,36,60,0.3);
+  animation:dIconBob 2.2s ease-in-out infinite;
+}
+.dcard:nth-child(2) .dcard-icon{background:linear-gradient(135deg,#3da84c,#1e6b2e);box-shadow:0 6px 18px rgba(61,168,76,0.3);}
+.dcard:nth-child(3) .dcard-icon{background:linear-gradient(135deg,#f5a623,#d4880c);box-shadow:0 6px 18px rgba(245,166,35,0.3);}
+.dcard:nth-child(4) .dcard-icon{background:linear-gradient(135deg,#c77dff,#9b42e8);box-shadow:0 6px 18px rgba(199,125,255,0.3);}
+@keyframes dIconBob{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.dcard:nth-child(2) .dcard-icon{animation-delay:0.3s;}
+.dcard:nth-child(3) .dcard-icon{animation-delay:0.6s;}
+.dcard:nth-child(4) .dcard-icon{animation-delay:0.9s;}
+.dcard-body{position:relative;z-index:1;}
+.dcard-body h3{font-family:'Fredoka One',cursive;color:var(--dark-red);font-size:1.15rem;margin-bottom:6px;letter-spacing:0.03em;}
+.dcard-body p{color:#7a5060;font-size:0.88rem;line-height:1.65;}
+.dcard-body strong{color:var(--dark-red);}
+
+/* MAP */
+.map-block{display:flex;flex-direction:column;gap:0;}
+.map-label{
+  background:linear-gradient(135deg,var(--red),var(--crimson));
+  color:#fff;font-family:'Fredoka One',cursive;font-size:1.05rem;
+  padding:16px 24px;border-radius:24px 24px 0 0;
+  display:flex;align-items:center;gap:10px;letter-spacing:0.04em;
+  box-shadow:0 -2px 0 rgba(0,0,0,0.05) inset;
+}
+.map-label-icon{font-size:1.5rem;animation:dIconBob 2s ease-in-out infinite;}
+.map-frame-wrapper{
+  position:relative;border-radius:0 0 24px 24px;overflow:hidden;
+  box-shadow:0 14px 50px rgba(0,0,0,0.14),0 0 0 3px var(--light-pink);
+}
+.map-frame-wrapper::after{
+  content:'🍓';
+  position:absolute;top:14px;right:14px;
+  font-size:2rem;pointer-events:none;
+  filter:drop-shadow(2px 2px 4px rgba(0,0,0,0.2));
+  animation:dIconBob 2.5s ease-in-out infinite;
+}
+.map-frame-wrapper iframe{
+  width:100%;height:380px;border:none;display:block;
+  filter:saturate(1.15) hue-rotate(0deg);
+}
+.map-footer{
+  background:#fff;border:2.5px solid var(--light-pink);
+  border-top:none;border-radius:0 0 24px 24px;
+  padding:16px 22px;display:flex;align-items:center;justify-content:space-between;
+  gap:14px;flex-wrap:wrap;
+  box-shadow:0 6px 0 var(--light-pink);
+  margin-top:-3px;
+}
+.map-addr{font-size:0.88rem;color:#7a5060;font-weight:700;}
+.map-addr strong{color:var(--dark-red);display:block;font-size:0.96rem;margin-bottom:2px;}
+.map-dir-btn{
+  background:linear-gradient(135deg,var(--green),var(--dark-green));
+  color:#fff;border:none;border-radius:50px;
+  padding:10px 22px;font-family:'Fredoka One',cursive;font-size:0.9rem;
+  cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:7px;
+  box-shadow:0 4px 14px rgba(46,204,113,0.35);
+  transition:transform 0.2s,box-shadow 0.2s;white-space:nowrap;
+}
+.map-dir-btn:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(46,204,113,0.4);}
+
+/* ======= ABOUT / FUN FACTS ======= */
+.about-bg{
+  background:linear-gradient(160deg,#fff8f2 0%,#fff0f4 50%,#fff5e8 100%);
+  position:relative;overflow:hidden;
+}
+.about-bg::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(232,36,60,0.06) 2px,transparent 2px);
+  background-size:38px 38px;pointer-events:none;
+}
+
+/* Big floating deco text behind section */
+.about-deco-word{
+  position:absolute;font-family:'Pacifico',cursive;
+  font-size:14rem;color:rgba(232,36,60,0.04);
+  white-space:nowrap;pointer-events:none;user-select:none;
+  top:50%;transform:translateY(-50%);right:-60px;
+  animation:decoWordFloat 8s ease-in-out infinite;
+}
+@keyframes decoWordFloat{0%,100%{transform:translateY(-50%) rotate(-3deg);}50%{transform:translateY(-55%) rotate(3deg);}}
+
+/* LAYOUT */
+.about-layout{
+  display:grid;grid-template-columns:340px 1fr;
+  gap:60px;align-items:start;
+  max-width:1120px;margin:0 auto;
+}
+
+/* LEFT — portrait + quote */
+.about-portrait-col{display:flex;flex-direction:column;align-items:center;gap:22px;}
+
+.portrait-frame{
+  position:relative;
+  animation:portraitFloat 5s ease-in-out infinite;
+}
+@keyframes portraitFloat{0%,100%{transform:translateY(0) rotate(2deg);}50%{transform:translateY(-14px) rotate(-2deg);}}
+
+.portrait-img{
+  width:280px;height:340px;
+  border-radius:42% 58% 55% 45% / 48% 48% 52% 52%;
+  object-fit:cover;object-position:center top;
+  display:block;
+  border:7px solid #fff;
+  box-shadow:0 0 0 5px var(--light-pink),0 0 0 10px rgba(232,36,60,0.08),0 26px 70px rgba(232,36,60,0.22);
+  transition:transform 0.5s;
+}
+.portrait-img:hover{transform:scale(1.04);}
+
+/* Sticker cluster around portrait */
+.ps{position:absolute;filter:drop-shadow(2px 3px 5px rgba(0,0,0,0.16));animation:sWiggle 2.5s ease-in-out infinite;}
+.ps1{font-size:2.4rem;top:-24px;right:-16px;animation-delay:0s;}
+.ps2{font-size:2rem;bottom:-18px;left:-22px;animation-delay:0.8s;}
+.ps3{font-size:1.8rem;top:42%;left:-30px;animation-delay:1.4s;}
+.ps4{font-size:1.6rem;bottom:30px;right:-26px;animation-delay:0.4s;}
+
+/* Polaroid-style name tag */
+.name-tag{
+  background:#fff;border-radius:16px;padding:18px 28px;
+  text-align:center;
+  border:2px solid var(--light-pink);
+  box-shadow:0 6px 0 var(--light-pink),0 14px 38px rgba(0,0,0,0.07);
+  width:100%;max-width:280px;
+  position:relative;overflow:hidden;
+}
+.name-tag::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:5px;
+  background:linear-gradient(90deg,var(--red),var(--pink),var(--yellow),var(--green),var(--red));
+  background-size:200% 100%;animation:rainbowSlide 3s linear infinite;
+}
+@keyframes rainbowSlide{0%{background-position:0% 0;}100%{background-position:200% 0;}}
+.name-tag-emoji{font-size:2.4rem;display:block;margin-bottom:6px;}
+.name-tag-name{font-family:'Pacifico',cursive;color:var(--dark-red);font-size:1.3rem;display:block;margin-bottom:4px;}
+.name-tag-sub{font-size:0.82rem;color:#9a6070;font-weight:700;letter-spacing:0.06em;}
+
+/* RIGHT — fun facts grid */
+.facts-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.fact-card{
+  background:#fff;
+  border-radius:24px;
+  padding:26px 24px;
+  border:2.5px solid var(--light-pink);
+  box-shadow:0 5px 0 var(--light-pink),0 12px 36px rgba(0,0,0,0.06);
+  position:relative;overflow:hidden;
+  transition:transform 0.38s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.38s;
+  cursor:default;
+}
+.fact-card:hover{
+  transform:translateY(-8px) rotate(-1deg) scale(1.02);
+  box-shadow:0 14px 0 var(--light-pink),0 24px 50px rgba(232,36,60,0.14);
+}
+/* Coloured top accent bar */
+.fact-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:0;
+}
+.fc-red::before{background:linear-gradient(90deg,var(--red),var(--pink));}
+.fc-green::before{background:linear-gradient(90deg,var(--green),#a8edbc);}
+.fc-yellow::before{background:linear-gradient(90deg,var(--yellow),var(--amber));}
+.fc-purple::before{background:linear-gradient(90deg,#c77dff,#a855f7);}
+.fc-teal::before{background:linear-gradient(90deg,#00b4d8,#48cae4);}
+.fc-coral::before{background:linear-gradient(90deg,#ff6b6b,#ffa07a);}
+
+/* Icon bubble */
+.fact-icon-bubble{
+  width:56px;height:56px;border-radius:16px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.9rem;margin-bottom:14px;
+  animation:iconBobFact 2.4s ease-in-out infinite;
+}
+.fc-red    .fact-icon-bubble{background:#fff0f4;}
+.fc-green  .fact-icon-bubble{background:#eafff0;}
+.fc-yellow .fact-icon-bubble{background:#fffce8;}
+.fc-purple .fact-icon-bubble{background:#f5f0ff;}
+.fc-teal   .fact-icon-bubble{background:#e8faff;}
+.fc-coral  .fact-icon-bubble{background:#fff4f0;}
+@keyframes iconBobFact{0%,100%{transform:translateY(0);}50%{transform:translateY(-7px);}}
+.fact-card:nth-child(2) .fact-icon-bubble{animation-delay:0.3s;}
+.fact-card:nth-child(3) .fact-icon-bubble{animation-delay:0.6s;}
+.fact-card:nth-child(4) .fact-icon-bubble{animation-delay:0.9s;}
+.fact-card:nth-child(5) .fact-icon-bubble{animation-delay:1.2s;}
+.fact-card:nth-child(6) .fact-icon-bubble{animation-delay:1.5s;}
+
+.fact-label{
+  font-size:0.72rem;font-weight:900;letter-spacing:0.14em;
+  text-transform:uppercase;margin-bottom:6px;display:block;
+}
+.fc-red    .fact-label{color:var(--red);}
+.fc-green  .fact-label{color:var(--dark-green);}
+.fc-yellow .fact-label{color:#b07800;}
+.fc-purple .fact-label{color:#7c3aed;}
+.fc-teal   .fact-label{color:#0077a8;}
+.fc-coral  .fact-label{color:#c0392b;}
+
+/* Animated counter number */
+.fact-number{
+  font-family:'Pacifico',cursive;
+  font-size:2.6rem;line-height:1;
+  margin-bottom:6px;display:block;
+}
+.fc-red    .fact-number{color:var(--dark-red);}
+.fc-green  .fact-number{color:var(--dark-green);}
+.fc-yellow .fact-number{color:#8a5c00;}
+.fc-purple .fact-number{color:#5b21b6;}
+.fc-teal   .fact-number{color:#005f85;}
+.fc-coral  .fact-number{color:#9a1f1f;}
+
+.fact-unit{font-family:'Fredoka One',cursive;font-size:1rem;opacity:0.65;margin-left:4px;}
+.fact-desc{font-size:0.86rem;color:#7a5060;font-weight:600;line-height:1.5;}
+
+/* Progress bar inside card */
+.fact-bar-wrap{margin-top:12px;height:8px;background:var(--light-pink);border-radius:50px;overflow:hidden;}
+.fact-bar{height:100%;border-radius:50px;width:0;transition:width 1.4s cubic-bezier(0.34,1.56,0.64,1);}
+.fc-red    .fact-bar{background:linear-gradient(90deg,var(--red),var(--pink));}
+.fc-green  .fact-bar{background:linear-gradient(90deg,var(--green),#a8edbc);}
+.fc-yellow .fact-bar{background:linear-gradient(90deg,var(--yellow),var(--amber));}
+.fc-purple .fact-bar{background:linear-gradient(90deg,#c77dff,#a855f7);}
+.fc-teal   .fact-bar{background:linear-gradient(90deg,#00b4d8,#48cae4);}
+.fc-coral  .fact-bar{background:linear-gradient(90deg,#ff6b6b,#ffa07a);}
+
+/* PERSONALITY TAGS */
+.personality-row{
+  grid-column:span 2;
+  background:#fff;border-radius:24px;padding:26px 24px;
+  border:2.5px solid var(--light-pink);
+  box-shadow:0 5px 0 var(--light-pink),0 12px 36px rgba(0,0,0,0.06);
+  transition:transform 0.38s cubic-bezier(0.34,1.56,0.64,1);
+}
+.personality-row:hover{transform:translateY(-6px);}
+.personality-row::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;border-radius:0;
+  background:linear-gradient(90deg,var(--red),var(--pink),var(--yellow),var(--green),#c77dff);}
+.personality-title{font-family:'Fredoka One',cursive;color:var(--dark-red);font-size:1rem;
+  margin-bottom:14px;letter-spacing:0.04em;}
+.tags-row{display:flex;gap:10px;flex-wrap:wrap;}
+.ptag{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:9px 18px;border-radius:50px;
+  font-family:'Fredoka One',cursive;font-size:0.88rem;
+  animation:tagPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1);cursor:default;
+}
+.ptag:hover{transform:scale(1.12) rotate(-2deg);}
+.pt1{background:#fff0f4;color:var(--dark-red);border:2px solid var(--light-pink);animation-delay:0.1s;}
+.pt2{background:#eafff0;color:var(--dark-green);border:2px solid #b6f5c8;animation-delay:0.18s;}
+.pt3{background:#fff8e8;color:#7a4f00;border:2px solid #ffe0a0;animation-delay:0.26s;}
+.pt4{background:#f5f0ff;color:#5b21b6;border:2px solid #e0d4ff;animation-delay:0.34s;}
+.pt5{background:#e8faff;color:#005f85;border:2px solid #b0e8f8;animation-delay:0.42s;}
+.pt6{background:#fff0f4;color:var(--dark-red);border:2px solid var(--light-pink);animation-delay:0.5s;}
+.pt7{background:#fff4e8;color:#8a3a00;border:2px solid #ffd4a0;animation-delay:0.58s;}
+.pt8{background:#f8f0ff;color:#6d28d9;border:2px solid #e4d4ff;animation-delay:0.66s;}
+@keyframes tagPop{0%{transform:scale(0.5);opacity:0;}100%{transform:scale(1);opacity:1;}}
+
+/* ======= RSVP ======= */
+.rsvp-bg{
+  background:linear-gradient(150deg,#e8243c 0%,#8c001a 60%,#5c000f 100%);
+  position:relative;overflow:hidden;
+}
+.rsvp-bg::before{
+  content:'';position:absolute;inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='80' height='80' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='40' cy='40' r='2.5' fill='rgba(255,255,255,0.055)'/%3E%3C/svg%3E");
+}
+.rsvp-floaters{position:absolute;inset:0;pointer-events:none;overflow:hidden;}
+.rf{position:absolute;opacity:0.06;font-size:6rem;animation:rfloat 7s ease-in-out infinite;}
+.rf:nth-child(1){top:5%;left:2%;font-size:8rem;animation-delay:0s;}
+.rf:nth-child(2){top:55%;left:8%;font-size:5rem;animation-delay:2s;}
+.rf:nth-child(3){top:10%;right:5%;font-size:9rem;animation-delay:1s;}
+.rf:nth-child(4){bottom:8%;right:3%;font-size:6rem;animation-delay:3s;}
+.rf:nth-child(5){top:35%;left:50%;font-size:4rem;animation-delay:1.5s;}
+@keyframes rfloat{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-28px) rotate(14deg);}}
+
+.rsvp-inner{
+  position:relative;z-index:5;display:grid;
+  grid-template-columns:1fr 1fr;gap:68px;
+  align-items:center;max-width:1060px;margin:0 auto;
+}
+
+/* RSVP Left */
+.rsvp-stat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:34px;}
+.r-stat{
+  text-align:center;background:rgba(255,255,255,0.1);
+  border:1.5px solid rgba(255,255,255,0.2);border-radius:18px;
+  padding:18px 12px;transition:background 0.25s;
+}
+.r-stat:hover{background:rgba(255,255,255,0.18);}
+.r-stat-num{font-family:'Pacifico',cursive;font-size:2.2rem;color:#fff;display:block;margin-bottom:4px;}
+.r-stat-label{font-size:0.68rem;font-weight:900;color:rgba(255,255,255,0.65);letter-spacing:0.12em;text-transform:uppercase;}
+.rsvp-features{display:flex;flex-direction:column;gap:12px;}
+.rsvp-feat{display:flex;align-items:center;gap:12px;color:rgba(255,255,255,0.85);font-size:0.92rem;font-weight:600;}
+.rsvp-feat-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.15);
+  display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+
+/* RSVP Form */
+.rsvp-card{
+  background:#fff;border-radius:32px;padding:42px 38px;
+  box-shadow:0 28px 80px rgba(0,0,0,0.25);animation:popIn 0.7s 0.3s both;
+}
+.rsvp-card-title{
+  font-family:'Pacifico',cursive;color:var(--dark-red);
+  font-size:1.55rem;margin-bottom:26px;text-align:center;
+}
+.attend-opts{display:flex;gap:12px;margin-bottom:24px;}
+.attend-opt{
+  flex:1;text-align:center;border:2.5px solid var(--light-pink);
+  border-radius:18px;padding:16px 10px;cursor:pointer;
+  transition:all 0.28s cubic-bezier(0.34,1.56,0.64,1);
+  font-weight:800;color:#bbb;font-size:0.86rem;
+}
+.attend-opt span{display:block;font-size:2.2rem;margin-bottom:6px;}
+.attend-opt:hover{border-color:var(--rose);color:var(--dark-red);transform:translateY(-3px);}
+.attend-opt.active{
+  border-color:var(--red);background:var(--blush);
+  color:var(--dark-red);transform:translateY(-4px);
+  box-shadow:0 8px 22px rgba(232,36,60,0.18);
+}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.fgroup{margin-bottom:18px;}
+.fgroup label{display:block;font-weight:800;font-size:0.8rem;
+  color:var(--dark-red);margin-bottom:7px;letter-spacing:0.06em;}
+.fgroup input,.fgroup select,.fgroup textarea{
+  width:100%;border:2.5px solid var(--light-pink);border-radius:14px;
+  padding:13px 16px;font-family:'Nunito',sans-serif;font-size:0.92rem;
+  color:#444;outline:none;transition:all 0.22s;background:#fff;
+}
+.fgroup input:focus,.fgroup select:focus,.fgroup textarea:focus{
+  border-color:var(--red);box-shadow:0 0 0 5px rgba(232,36,60,0.1);
+  transform:translateY(-2px);
+}
+.fgroup textarea{resize:vertical;min-height:80px;}
+.rsvp-submit{
+  width:100%;background:linear-gradient(135deg,var(--red),var(--crimson));
+  color:#fff;border:none;border-radius:50px;padding:18px;
+  font-family:'Fredoka One',cursive;font-size:1.12rem;cursor:pointer;
+  box-shadow:0 5px 0 var(--dark-red),0 14px 36px rgba(232,36,60,0.38);
+  transition:transform 0.15s,box-shadow 0.15s;letter-spacing:0.06em;
+}
+.rsvp-submit:hover{transform:translateY(-5px);box-shadow:0 10px 0 var(--dark-red),0 22px 44px rgba(232,36,60,0.44);}
+.rsvp-submit:active{transform:translateY(2px);box-shadow:0 2px 0 var(--dark-red);}
+.rsvp-ok{display:none;text-align:center;padding:40px 20px;animation:popIn 0.6s both;}
+.rsvp-ok .ok-emoji{font-size:5.5rem;display:block;margin-bottom:20px;}
+.rsvp-ok h3{font-family:'Pacifico',cursive;color:var(--dark-red);font-size:1.8rem;margin-bottom:10px;}
+.rsvp-ok p{color:#888;font-size:0.94rem;line-height:1.65;}
+
+/* ======= WISH ======= */
+.wish-section{
+  background:linear-gradient(135deg,var(--yellow),#ffd24d);
+  padding:80px 40px;text-align:center;position:relative;overflow:hidden;
+}
+.wish-section::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(232,36,60,0.07) 2px,transparent 2px);
+  background-size:32px 32px;
+}
+.wish-deco{position:absolute;opacity:0.08;font-size:12rem;pointer-events:none;user-select:none;}
+.wish-deco-l{left:-40px;top:50%;transform:translateY(-50%);}
+.wish-deco-r{right:-40px;top:50%;transform:translateY(-50%);}
+.wish-main{
+  font-family:'Pacifico',cursive;font-size:clamp(2rem,5.5vw,4.5rem);
+  color:var(--dark-red);text-shadow:4px 4px 0 rgba(232,36,60,0.16);
+  position:relative;animation:pulseBig 2.5s ease-in-out infinite;
+}
+@keyframes pulseBig{0%,100%{transform:scale(1);}50%{transform:scale(1.04);}}
+.wish-sub{font-size:1.15rem;color:#7a2030;font-weight:700;margin-top:18px;position:relative;line-height:1.6;}
+.wish-btn{
+  margin-top:32px;display:inline-block;
+  background:var(--red);color:#fff;
+  font-family:'Fredoka One',cursive;font-size:1.05rem;
+  padding:14px 36px;border-radius:50px;text-decoration:none;
+  box-shadow:0 5px 0 var(--dark-red),0 10px 28px rgba(232,36,60,0.3);
+  transition:transform 0.2s,box-shadow 0.2s;position:relative;cursor:pointer;border:none;
+}
+.wish-btn:hover{transform:translateY(-5px);box-shadow:0 10px 0 var(--dark-red),0 18px 36px rgba(232,36,60,0.38);}
+
+/* ======= FOOTER ======= */
+footer{
+  background:var(--dark-red);
+  padding:40px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:20px;
+}
+.foot-left{color:rgba(255,255,255,0.65);font-size:0.88rem;font-weight:700;}
+.foot-left strong{color:#fff;}
+.foot-emoji{font-size:2rem;display:flex;gap:10px;}
+.foot-emoji span{animation:dIconBob 2s ease-in-out infinite;}
+.foot-emoji span:nth-child(2){animation-delay:0.4s;}
+.foot-emoji span:nth-child(3){animation-delay:0.8s;}
+
+/* ======= HEARTS ======= */
+.hearts-corner{position:fixed;bottom:26px;right:26px;z-index:100;pointer-events:none;}
+.hf{position:absolute;animation:hRise 3.4s ease-out infinite;opacity:0;font-size:1.7rem;}
+.hf:nth-child(1){left:0;animation-delay:0s;}
+.hf:nth-child(2){left:26px;animation-delay:1.1s;}
+.hf:nth-child(3){left:52px;animation-delay:2.2s;}
+@keyframes hRise{0%{transform:translateY(0);opacity:0;}14%{opacity:1;}100%{transform:translateY(-150px);opacity:0;}}
+
+/* ======= LIGHTBOX ======= */
+.lightbox{position:fixed;inset:0;z-index:9990;background:rgba(0,0,0,0.93);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.32s;}
+.lightbox.open{opacity:1;pointer-events:all;}
+.lb-img-wrap{position:relative;}
+.lightbox img{max-width:88vw;max-height:82vh;border-radius:20px;
+  box-shadow:0 0 100px rgba(232,36,60,0.4);
+  transform:scale(0.88);transition:transform 0.32s;}
+.lightbox.open img{transform:scale(1);}
+.lb-close{position:absolute;top:20px;right:24px;color:#fff;font-size:2.8rem;cursor:pointer;
+  line-height:1;z-index:10;transition:transform 0.2s;}
+.lb-close:hover{transform:rotate(90deg) scale(1.2);}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);
+  background:rgba(255,255,255,0.15);color:#fff;border:none;
+  border-radius:50%;width:50px;height:50px;font-size:1.5rem;cursor:pointer;
+  backdrop-filter:blur(6px);transition:background 0.2s;display:flex;align-items:center;justify-content:center;}
+.lb-nav:hover{background:rgba(255,255,255,0.3);}
+.lb-prev{left:-70px;} .lb-next{right:-70px;}
+
+/* ======= RESPONSIVE ======= */
+@media(max-width:960px){
+  .hero-inner{grid-template-columns:1fr;text-align:center;gap:36px;padding:36px 24px;}
+  .hero-btns{justify-content:center;}
+  .about-layout{grid-template-columns:1fr;}
+  .about-portrait-col{flex-direction:row;flex-wrap:wrap;justify-content:center;}
+  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;}
+  .gal-item:nth-child(1){grid-row:span 1;}
+  .details-layout{grid-template-columns:1fr;}
+  .rsvp-inner{grid-template-columns:1fr;}
+  nav{padding:0 22px;}
+  .section{padding:68px 24px;}
+  .lb-nav{display:none;}
+}
+@media(max-width:600px){
+  .gallery-grid{grid-template-columns:1fr;}
+  .frow{grid-template-columns:1fr;}
+  .rsvp-stat-grid{grid-template-columns:1fr 1fr;}
+  .nav-links a:not(.nav-rsvp-btn){display:none;}
+  footer{flex-direction:column;text-align:center;}
+  .map-footer{flex-direction:column;text-align:center;}
+  .facts-grid{grid-template-columns:1fr;}
+  .personality-row{grid-column:span 1;}
+}
+</style>
+</head>
+<body>
+
+<!-- CONFETTI -->
+<canvas id="confettiCanvas"></canvas>
+
+<!-- HEARTS -->
+<div class="hearts-corner">
+  <div class="hf">🍓</div><div class="hf">❤️</div><div class="hf">💕</div>
+</div>
+
+<!-- RAIN -->
+<div class="rain-layer" id="rainLayer"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lb-close" onclick="lbClose()">✕</div>
+  <div class="lb-img-wrap">
+    <button class="lb-nav lb-prev" onclick="lbNav(-1)">‹</button>
+    <img id="lbImg" src="" alt="">
+    <button class="lb-nav lb-next" onclick="lbNav(1)">›</button>
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<nav>
+  <div class="nav-logo"><span class="nav-logo-icon">🍓</span> Emma's Party</div>
+  <div class="nav-links">
+    <a href="#hero">Home</a>
+    <a href="#about">About</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#schedule">Schedule</a>
+    <a href="#treats">Treats</a>
+    <a href="#details">Details</a>
+    <a href="#rsvp">RSVP</a>
+    <a href="#rsvp" class="nav-rsvp-btn">🎟 RSVP</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="hero-bg"></div>
+  <div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+  <div class="hero-deco-sb">🍓</div>
+
+  <div class="hero-inner">
+    <!-- LEFT -->
+    <div>
+      <div class="hero-eyebrow">🍓 You're Invited 🍓</div>
+      <h1 class="hero-title">Happy Birthday,</h1>
+      <div class="hero-name">Little Emma!</div>
+      <div class="hero-age-badge">🎂 Turning 5 Years Old! 🎂</div>
+      <p class="hero-sub">Join us for the most magical strawberry-filled celebration ever! 🎉<br>Cake, laughter, games & endless joy await you!</p>
+      <div class="hero-btns">
+        <a href="#rsvp" class="btn-red">🎟 RSVP Now</a>
+        <button class="btn-ghost" onclick="launchConfetti()">🎉 Celebrate!</button>
+      </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="hero-right">
+      <div class="photo-wrapper">
+        <div class="photo-ring"></div>
+        <div class="sticker s1">🍓</div>
+        <div class="sticker s2">🌸</div>
+        <div class="sticker s3">✨</div>
+        <div class="sticker s4">🎀</div>
+        <div class="sticker s5">🎈</div>
+        <div class="photo-frame">
+          <img
+            src="https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=600&q=85&fit=crop&crop=faces,top"
+            alt="Birthday child"
+            onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1533294455009-a77b7557d2d1?w=600&q=80&fit=crop'"
+          >
+        </div>
+      </div>
+
+      <!-- COUNTDOWN -->
+      <div class="countdown-card">
+        <div class="cd-title">🎂 Counting Down to the Big Day! 🎂</div>
+        <div class="cd-row">
+          <div class="cd-box"><span class="cd-num" id="cd-d">00</span><span class="cd-label">Days</span></div>
+          <div class="cd-colon">:</div>
+          <div class="cd-box"><span class="cd-num" id="cd-h">00</span><span class="cd-label">Hours</span></div>
+          <div class="cd-colon">:</div>
+          <div class="cd-box"><span class="cd-num" id="cd-m">00</span><span class="cd-label">Mins</span></div>
+          <div class="cd-colon">:</div>
+          <div class="cd-box"><span class="cd-num" id="cd-s">00</span><span class="cd-label">Secs</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,55 C280,5 560,80 840,50 C1120,20 1300,72 1440,55 L1440,80 L0,80 Z" fill="#fff0f4"/>
+</svg></div>
+
+<!-- ===== ABOUT EMMA ===== -->
+<section class="section about-bg" id="about">
+  <div class="about-deco-word">Emma</div>
+  <div class="sec-head">
+    <div class="sec-pill pill-pink">🍓 Meet the Birthday Girl</div>
+    <h2 class="sec-title">All About Little Emma!</h2>
+    <p class="sec-sub">Five years of pure magic, mischief & mountains of chocolate. Here are Emma's most important life stats 🎉</p>
+  </div>
+
+  <div class="about-layout">
+    <!-- LEFT: Portrait -->
+    <div class="about-portrait-col">
+      <div class="portrait-frame">
+        <div class="ps ps1">🍓</div>
+        <div class="ps ps2">🌸</div>
+        <div class="ps ps3">✨</div>
+        <div class="ps ps4">🎀</div>
+        <img
+          class="portrait-img"
+          src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=600&q=85&fit=crop&crop=faces,top"
+          alt="Emma"
+          onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=600&q=80&fit=crop&crop=faces,top'"
+        >
+      </div>
+
+      <div class="name-tag">
+        <span class="name-tag-emoji">👸</span>
+        <span class="name-tag-name">Emma Rose</span>
+        <span class="name-tag-sub">🎂 Born April 12, 2020 · Age 5 🎂</span>
+      </div>
+    </div>
+
+    <!-- RIGHT: Fun Facts Grid -->
+    <div class="facts-grid">
+
+      <!-- Chocolates eaten -->
+      <div class="fact-card fc-red">
+        <div class="fact-icon-bubble">🍫</div>
+        <span class="fact-label">Lifetime Chocolates Eaten</span>
+        <span class="fact-number"><span class="counter" data-target="1247">0</span><span class="fact-unit">pcs</span></span>
+        <p class="fact-desc">And she remembers the exact wrapper of every single one 😄</p>
+        <div class="fact-bar-wrap"><div class="fact-bar" data-width="88"></div></div>
+      </div>
+
+      <!-- Strawberries consumed -->
+      <div class="fact-card fc-green">
+        <div class="fact-icon-bubble">🍓</div>
+        <span class="fact-label">Strawberries Devoured</span>
+        <span class="fact-number"><span class="counter" data-target="2863">0</span><span class="fact-unit">berries</span></span>
+        <p class="fact-desc">Her spirit animal is literally a strawberry 🍓</p>
+        <div class="fact-bar-wrap"><div class="fact-bar" data-width="96"></div></div>
+      </div>
+
+      <!-- Giggles per day -->
+      <div class="fact-card fc-yellow">
+        <div class="fact-icon-bubble">😂</div>
+        <span class="fact-label">Average Giggles Per Day</span>
+        <span class="fact-number"><span class="counter" data-target="147">0</span><span class="fact-unit">giggles</span></span>
+        <p class="fact-desc">Scientists are still trying to record them all 🔬</p>
+        <div class="fact-bar-wrap"><div class="fact-bar" data-width="100"></div></div>
+      </div>
+
+      <!-- Bedtime stories requested -->
+      <div class="fact-card fc-purple">
+        <div class="fact-icon-bubble">📚</div>
+        <span class="fact-label">Bedtime Stories Requested</span>
+        <span class="fact-number"><span class="counter" data-target="532">0</span><span class="fact-unit">stories</span></span>
+        <p class="fact-desc">"One more story!" — Emma, every single night 🌙</p>
+        <div class="fact-bar-wrap"><div class="fact-bar" data-width="72"></div></div>
+      </div>
+
+      <!-- Dance parties -->
+      <div class="fact-card fc-teal">
+        <div class="fact-icon-bubble">💃</div>
+        <span class="fact-label">Living Room Dance Parties</span>
+        <span class="fact-number"><span class="counter" data-target="318">0</span><span class="fact-unit">parties</span></span>
+        <p class="fact-desc">Zero invitations needed, maximum chaos guaranteed 🎵</p>
+        <div class="fact-bar-wrap"><div class="fact-bar" data-width="60"></div></div>
+      </div>
+
+      <!-- Stuffed animals -->
+      <div class="fact-card fc-coral">
+        <div class="fact-icon-bubble">🧸</div>
+        <span class="fact-label">Stuffed Animal Friends</span>
+        <span class="fact-number"><span class="counter" data-target="43">0</span><span class="fact-unit">besties</span></span>
+        <p class="fact-desc">All named, all loved, all attending tonight's party 🫶</p>
+        <div class="fact-bar-wrap"><div class="fact-bar" data-width="55"></div></div>
+      </div>
+
+      <!-- Personality row spans full width -->
+      <div class="fact-card personality-row" style="position:relative;">
+        <div class="personality-title">✨ Emma's Personality in Tags</div>
+        <div class="tags-row">
+          <span class="ptag pt1">🍓 Strawberry Addict</span>
+          <span class="ptag pt2">🌿 Nature Explorer</span>
+          <span class="ptag pt3">☀️ Morning Person</span>
+          <span class="ptag pt4">🎨 Tiny Artist</span>
+          <span class="ptag pt5">🐾 Animal Whisperer</span>
+          <span class="ptag pt6">💃 Dance Queen</span>
+          <span class="ptag pt7">🍪 Cookie Monster</span>
+          <span class="ptag pt8">🌟 Future Superstar</span>
+        </div>
+      </div>
+
+    </div><!-- /facts-grid -->
+  </div><!-- /about-layout -->
+</section>
+
+<!-- WAVE after about -->
+<div class="wave" style="background:linear-gradient(160deg,#fff8f2 0%,#fff0f4 100%);">
+  <svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+    <path d="M0,40 C300,80 600,10 900,50 C1100,76 1300,20 1440,40 L1440,80 L0,80 Z" fill="#fff0f4"/>
+  </svg>
+</div>
+
+<!-- ===== GALLERY ===== -->
+<section class="section gallery-bg" id="gallery">
+  <div class="sec-head">
+    <div class="sec-pill pill-pink">📸 Sweet Memories</div>
+    <h2 class="sec-title">🍓 Photo Gallery 🍓</h2>
+    <p class="sec-sub">Click any photo to zoom in — sneak peeks of our sweetest moments!</p>
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid">
+    <div class="gal-item" onclick="lbOpen(0)">
+      <img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=700&q=85&fit=crop" alt="Birthday celebration" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=700&q=80'">
+      <div class="gal-badge">🎂 Celebration!</div>
+      <div class="gal-overlay"><span class="gal-text">🎂 Birthday Magic!</span></div>
+    </div>
+    <div class="gal-item" onclick="lbOpen(1)">
+      <img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=85&fit=crop" alt="Fresh strawberries" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1588165171080-c89acfa5ee83?w=500&q=80'">
+      <div class="gal-badge">🍓 Berries!</div>
+      <div class="gal-overlay"><span class="gal-text">🍓 So Sweet!</span></div>
+    </div>
+    <div class="gal-item" onclick="lbOpen(2)">
+      <img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=500&q=85&fit=crop" alt="Birthday cake" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=500&q=80'">
+      <div class="gal-badge">🎂 Cake!</div>
+      <div class="gal-overlay"><span class="gal-text">🎂 Yummy Cake!</span></div>
+    </div>
+    <div class="gal-item" onclick="lbOpen(3)">
+      <img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=500&q=85&fit=crop" alt="Party balloons" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1525278070609-779c7adb7b71?w=500&q=80'">
+      <div class="gal-badge">🎈 Balloons!</div>
+      <div class="gal-overlay"><span class="gal-text">🎈 Party Time!</span></div>
+    </div>
+    <div class="gal-item" onclick="lbOpen(4)">
+      <img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&q=85&fit=crop" alt="Strawberry dessert" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=500&q=80'">
+      <div class="gal-badge">🍓 Dessert!</div>
+      <div class="gal-overlay"><span class="gal-text">🍓 Strawberry Love!</span></div>
+    </div>
+  </div>
+
+  <!-- Mini strip -->
+  <div class="gal-strip">
+    <div class="gal-mini" onclick="lbOpen(0)"><img src="https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=120&q=80&fit=crop" alt=""></div>
+    <div class="gal-mini" onclick="lbOpen(1)"><img src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=120&q=80&fit=crop" alt=""></div>
+    <div class="gal-mini" onclick="lbOpen(2)"><img src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=120&q=80&fit=crop" alt=""></div>
+    <div class="gal-mini" onclick="lbOpen(3)"><img src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=120&q=80&fit=crop" alt=""></div>
+    <div class="gal-mini" onclick="lbOpen(4)"><img src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=120&q=80&fit=crop" alt=""></div>
+    <div class="gal-mini" onclick="lbOpen(0)"><img src="https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=120&q=80&fit=crop" alt=""></div>
+    <div class="gal-mini" onclick="lbOpen(1)"><img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=120&q=80&fit=crop" alt=""></div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave" style="background:#fff0f4;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,30 C360,80 720,0 1080,55 C1260,78 1380,16 1440,30 L1440,80 L0,80 Z" fill="#fffaf5"/>
+</svg></div>
+
+<!-- ===== DETAILS + MAP ===== -->
+<section class="section details-bg" id="details">
+  <div class="sec-head">
+    <div class="sec-pill pill-pink">🗓 Event Info</div>
+    <h2 class="sec-title">Party Details &amp; Venue</h2>
+    <p class="sec-sub">All the details you need to join the sweetest birthday bash in town!</p>
+  </div>
+
+  <div class="details-layout">
+    <!-- CARDS -->
+    <div class="detail-cards">
+      <div class="dcard">
+        <div class="dcard-icon">📅</div>
+        <div class="dcard-body">
+          <h3>Date &amp; Time</h3>
+          <p>Saturday, <strong>April 12, 2025</strong><br>3:00 PM – 6:00 PM<br>Don't be late — cake waits for no one! 🎂</p>
+        </div>
+      </div>
+      <div class="dcard">
+        <div class="dcard-icon">📍</div>
+        <div class="dcard-body">
+          <h3>Venue</h3>
+          <p><strong>Strawberry Garden Hall</strong><br>42 Blossom Lane, Central Park<br>New York, NY 10024 🌸</p>
+        </div>
+      </div>
+      <div class="dcard">
+        <div class="dcard-icon">🎁</div>
+        <div class="dcard-body">
+          <h3>Dress Code</h3>
+          <p>Wear your pinkest outfit! <strong>Strawberry theme</strong> encouraged 🍓<br>Red, pink &amp; white are perfect!</p>
+        </div>
+      </div>
+      <div class="dcard">
+        <div class="dcard-icon">🎪</div>
+        <div class="dcard-body">
+          <h3>Activities</h3>
+          <p>Face painting 🎨, strawberry cake cutting 🍰, dance floor 💃, goodie bags &amp; surprise games! 🎉</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MAP -->
+    <div class="map-block">
+      <div class="map-label">
+        <span class="map-label-icon">📍</span>
+        Find Us Here — Strawberry Garden Hall
+      </div>
+      <div class="map-frame-wrapper">
+        <!-- Google Maps embed for Central Park, New York (no API key needed) -->
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3021.8885!2d-73.9712!3d40.7831!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2589a018531e3%3A0xb9df1f7387a94119!2sCentral%20Park!5e0!3m2!1sen!2sus!4v1700000000000!5m2!1sen!2sus"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          title="Party Venue Location"
+        ></iframe>
+      </div>
+      <div class="map-footer">
+        <div class="map-addr">
+          <strong>📍 Strawberry Garden Hall</strong>
+          42 Blossom Lane, Central Park, New York, NY 10024
+        </div>
+        <a
+          href="https://www.google.com/maps/dir/?api=1&destination=Central+Park+New+York"
+          target="_blank" rel="noopener"
+          class="map-dir-btn"
+        >🗺 Get Directions</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave" style="background:#fffaf5;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,50 C360,8 720,75 1080,32 C1260,10 1380,65 1440,50 L1440,80 L0,80 Z" fill="#e8243c"/>
+</svg></div>
+
+<!-- ===== RSVP ===== -->
+<section class="section rsvp-bg" id="rsvp">
+  <div class="rsvp-floaters">
+    <div class="rf">🍓</div><div class="rf">🌸</div>
+    <div class="rf">🍓</div><div class="rf">🎀</div><div class="rf">✨</div>
+  </div>
+  <div class="rsvp-inner">
+    <!-- LEFT -->
+    <div>
+      <div class="sec-pill pill-white">🎟 Join the Fun</div>
+      <h2 class="sec-title sec-title-white" style="margin-bottom:14px;">RSVP &amp; Secure<br>Your Sweet Spot!</h2>
+      <p class="sec-sub sec-sub-white" style="margin:0 0 30px;text-align:left;">We're counting on your smiles! Let us know you're coming so we can save you the biggest slice of strawberry cake! 🎁🍓</p>
+
+      <div class="rsvp-stat-grid">
+        <div class="r-stat"><span class="r-stat-num">28</span><span class="r-stat-label">Invited</span></div>
+        <div class="r-stat"><span class="r-stat-num" id="rsvp-yes">14</span><span class="r-stat-label">Coming</span></div>
+        <div class="r-stat"><span class="r-stat-num">🍰</span><span class="r-stat-label">Cakes!</span></div>
+      </div>
+
+      <div class="rsvp-features">
+        <div class="rsvp-feat"><div class="rsvp-feat-icon">🎂</div>Strawberry birthday cake for everyone</div>
+        <div class="rsvp-feat"><div class="rsvp-feat-icon">🎁</div>Special goodie bags for every guest</div>
+        <div class="rsvp-feat"><div class="rsvp-feat-icon">🎪</div>Games, face painting &amp; fun activities</div>
+        <div class="rsvp-feat"><div class="rsvp-feat-icon">📸</div>Photo booth with strawberry props!</div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="rsvp-card">
+      <div id="formWrap">
+        <div class="rsvp-card-title">🍓 Will You Come? 🍓</div>
+
+        <div class="attend-opts">
+          <div class="attend-opt active" id="optY" onclick="chooseOpt('yes')">
+            <span>🎉</span>Yes, I'll be there!
+          </div>
+          <div class="attend-opt" id="optN" onclick="chooseOpt('no')">
+            <span>😢</span>Can't make it
+          </div>
+        </div>
+
+        <div class="frow">
+          <div class="fgroup"><label>Your Name *</label><input type="text" id="fname" placeholder="Jane Smith"></div>
+          <div class="fgroup"><label>WhatsApp / Phone</label><input type="tel" id="fphone" placeholder="+1 234 567 8900"></div>
+        </div>
+        <div class="frow">
+          <div class="fgroup"><label>Email Address</label><input type="email" id="femail" placeholder="jane@email.com"></div>
+          <div class="fgroup"><label>Number of Guests</label>
+            <select id="fguests">
+              <option>Just me 👤</option>
+              <option>2 people 👥</option>
+              <option>3 people 👨‍👩‍👦</option>
+              <option>4+ people 🎉</option>
+            </select>
+          </div>
+        </div>
+        <div class="fgroup"><label>Sweet Birthday Wish for Emma 🍓</label>
+          <textarea id="fmsg" placeholder="Share a sweet message for our birthday girl..."></textarea>
+        </div>
+        <button class="rsvp-submit" onclick="doRSVP()">🍓 Send My RSVP! 🎉</button>
+      </div>
+
+      <div class="rsvp-ok" id="rsvpOk">
+        <span class="ok-emoji">🍓🎉🎂</span>
+        <h3>Yay! You're Coming!</h3>
+        <p>We've saved your spot! Your slice of strawberry birthday cake &amp; goodie bag are ready.<br><br>See you on April 12! 💕🎈</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE into timeline -->
+<div class="wave" style="background:#8c001a;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,45 C320,80 640,5 960,50 C1140,76 1320,18 1440,45 L1440,80 L0,80 Z" fill="#1a0008"/>
+</svg></div>
+
+<!-- ===== TIMELINE ===== -->
+<section class="section timeline-bg" id="schedule">
+  <div class="tl-stars" id="tlStars"></div>
+  <div class="sec-head">
+    <div class="sec-pill pill-white" style="background:rgba(255,255,255,0.12);color:rgba(255,255,255,0.9);">✨ Party Schedule</div>
+    <h2 class="sec-title sec-title-white">The Big Day Timeline</h2>
+    <p class="sec-sub sec-sub-white">Every magical moment planned just for Emma's perfect day!</p>
+  </div>
+
+  <div class="timeline-inner">
+    <div class="tl-spine"></div>
+
+    <div class="tl-item">
+      <div class="tl-card">
+        <span class="tl-time">3:00 PM</span>
+        <div class="tl-title">🎉 Doors Open & Welcome!</div>
+        <p class="tl-desc">Guests arrive to a strawberry-scented wonderland! Welcome drinks, photo booth & meet-and-greet with our birthday princess.</p>
+      </div>
+      <div class="tl-dot">🍓</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot">🎨</div>
+      <div class="tl-card">
+        <span class="tl-time">3:30 PM</span>
+        <div class="tl-title">🎨 Face Painting & Crafts</div>
+        <p class="tl-desc">Our talented artists will transform little ones into strawberries, butterflies & magical creatures. Craft tables open!</p>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-card">
+        <span class="tl-time">4:00 PM</span>
+        <div class="tl-title">🎪 Games & Activities</div>
+        <p class="tl-desc">Musical chairs, strawberry toss, treasure hunt & the giant bouncy castle! Prizes for every little champion 🏆</p>
+      </div>
+      <div class="tl-dot">🎪</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot">🎂</div>
+      <div class="tl-card">
+        <span class="tl-time">4:45 PM</span>
+        <div class="tl-title">🎂 Cake & Singing!</div>
+        <p class="tl-desc">The grand cake ceremony! Emma makes her 5 birthday wishes, we sing together & dive into the most delicious strawberry cake.</p>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-card">
+        <span class="tl-time">5:15 PM</span>
+        <div class="tl-title">💃 Dance Party & Treats</div>
+        <p class="tl-desc">DJ drops the beat, dessert table opens & Emma leads the dance floor! Goodie bags handed out to every guest 🎁</p>
+      </div>
+      <div class="tl-dot">💃</div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-dot">🌟</div>
+      <div class="tl-card">
+        <span class="tl-time">6:00 PM</span>
+        <div class="tl-title">🌟 Farewell & Hugs!</div>
+        <p class="tl-desc">The sweetest goodbye — family photos, last hugs & goodie bags for everyone. Thank you for making Emma's day magical!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE out of timeline -->
+<div class="wave" style="background:#1a0008;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,30 C280,80 560,5 840,50 C1080,80 1260,18 1440,30 L1440,80 L0,80 Z" fill="#fffaf5"/>
+</svg></div>
+
+<!-- ===== TREATS MENU ===== -->
+<section class="section treats-bg" id="treats">
+  <div class="sec-head">
+    <div class="sec-pill pill-pink">🍰 Sweet Treats</div>
+    <h2 class="sec-title">Party Menu 🍓</h2>
+    <p class="sec-sub">A delicious spread of Emma's absolute favourite treats — because every birthday needs the sweetest food!</p>
+  </div>
+
+  <div class="treats-grid">
+    <div class="treat-card">
+      <div class="treat-img-wrap">
+        <img class="treat-img" src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=85&fit=crop" alt="Birthday cake" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1535141192574-5d4897c12636?w=600&q=80'">
+        <div class="treat-tag">⭐ Star of the Show</div>
+      </div>
+      <div class="treat-body">
+        <span class="treat-emoji">🎂</span>
+        <div class="treat-name">Strawberry Dream Cake</div>
+        <p class="treat-desc">Three-tiered masterpiece with fresh strawberry cream, edible flowers & Emma's name in gold letters!</p>
+        <div class="treat-rating"><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span></div>
+      </div>
+    </div>
+
+    <div class="treat-card">
+      <div class="treat-img-wrap">
+        <img class="treat-img" src="https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&q=85&fit=crop" alt="Strawberry treats" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=80'">
+        <div class="treat-tag">🍓 Emma's Fave</div>
+      </div>
+      <div class="treat-body">
+        <span class="treat-emoji">🍓</span>
+        <div class="treat-name">Strawberry Shortcake Bites</div>
+        <p class="treat-desc">Mini cloud-soft shortcakes piled high with fresh berries, whipped cream & a drizzle of strawberry glaze!</p>
+        <div class="treat-rating"><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span></div>
+      </div>
+    </div>
+
+    <div class="treat-card">
+      <div class="treat-img-wrap">
+        <img class="treat-img" src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=600&q=85&fit=crop" alt="Fresh strawberries" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1588165171080-c89acfa5ee83?w=600&q=80'">
+        <div class="treat-tag">🌿 Fresh & Healthy</div>
+      </div>
+      <div class="treat-body">
+        <span class="treat-emoji">🍡</span>
+        <div class="treat-name">Chocolate-Dipped Berries</div>
+        <p class="treat-desc">Plump fresh strawberries hand-dipped in rich Belgian chocolate with sprinkles & edible gold dust!</p>
+        <div class="treat-rating"><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span></div>
+      </div>
+    </div>
+
+    <div class="treat-card">
+      <div class="treat-img-wrap">
+        <img class="treat-img" src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=600&q=85&fit=crop" alt="Party treats" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=600&q=80'">
+        <div class="treat-tag">🎈 Party Special</div>
+      </div>
+      <div class="treat-body">
+        <span class="treat-emoji">🍦</span>
+        <div class="treat-name">Strawberry Soft Serve Station</div>
+        <p class="treat-desc">DIY ice cream bar with pink strawberry soft serve, sprinkles, candy floss & all the toppings imaginable!</p>
+        <div class="treat-rating"><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span></div>
+      </div>
+    </div>
+
+    <div class="treat-card">
+      <div class="treat-img-wrap">
+        <img class="treat-img" src="https://images.unsplash.com/photo-1603532648955-039310d9ed75?w=600&q=85&fit=crop" alt="Cupcakes" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1558636508-e0a4e6e91a39?w=600&q=80'">
+        <div class="treat-tag">🧁 Fan Favourite</div>
+      </div>
+      <div class="treat-body">
+        <span class="treat-emoji">🧁</span>
+        <div class="treat-name">Mini Strawberry Cupcakes</div>
+        <p class="treat-desc">Bite-sized vanilla cupcakes topped with swirls of strawberry buttercream & a fresh berry crown!</p>
+        <div class="treat-rating"><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span></div>
+      </div>
+    </div>
+
+    <div class="treat-card">
+      <div class="treat-img-wrap">
+        <img class="treat-img" src="https://images.unsplash.com/photo-1495147466023-ac5c588e2e94?w=600&q=85&fit=crop" alt="Pink lemonade" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1498019559366-a1cbd07b5160?w=600&q=80'">
+        <div class="treat-tag">🥤 Signature Drink</div>
+      </div>
+      <div class="treat-body">
+        <span class="treat-emoji">🍹</span>
+        <div class="treat-name">Sparkling Strawberry Lemonade</div>
+        <p class="treat-desc">Emma's signature drink — freshly squeezed lemonade with strawberry purée, mint & edible glitter bubbles!</p>
+        <div class="treat-rating"><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span><span>🍓</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave" style="background:#fffaf5;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,50 C260,10 520,78 780,42 C1040,8 1240,70 1440,50 L1440,80 L0,80 Z" fill="#1a8a48"/>
+</svg></div>
+
+<!-- ===== ACTIVITIES ===== -->
+<section class="section act-bg" id="activities">
+  <div class="act-floaters">
+    <div class="af">🎨</div><div class="af">🎪</div>
+    <div class="af">🎭</div><div class="af">🎡</div>
+  </div>
+  <div class="sec-head">
+    <div class="sec-pill pill-white" style="background:rgba(255,255,255,0.15);color:rgba(255,255,255,0.95);">🎪 Fun Activities</div>
+    <h2 class="sec-title sec-title-white">What's Happening!</h2>
+    <p class="sec-sub sec-sub-white">A jam-packed schedule of joy, laughter & unforgettable memories for every little guest!</p>
+  </div>
+
+  <div class="act-grid">
+    <div class="act-card">
+      <div class="act-icon-box">🎨</div>
+      <div class="act-body">
+        <span class="act-badge">3:30 – 4:00 PM</span>
+        <div class="act-name">Face Painting Studio</div>
+        <p class="act-desc">Professional artists turn little faces into strawberries, unicorns, butterflies & superheroes! Each design takes 5–10 minutes of pure magic.</p>
+        <div class="act-time">⏱ 30 min session · All ages welcome</div>
+      </div>
+    </div>
+
+    <div class="act-card">
+      <div class="act-icon-box">🎪</div>
+      <div class="act-body">
+        <span class="act-badge">3:30 – 5:00 PM</span>
+        <div class="act-name">Giant Bouncy Castle</div>
+        <p class="act-desc">A massive strawberry-themed inflatable castle with slides, ball pit & obstacle course! Socks required, smiles guaranteed 😄</p>
+        <div class="act-time">⏱ Open all afternoon · Ages 2–10</div>
+      </div>
+    </div>
+
+    <div class="act-card">
+      <div class="act-icon-box">📸</div>
+      <div class="act-body">
+        <span class="act-badge">All Day</span>
+        <div class="act-name">Strawberry Photo Booth</div>
+        <p class="act-desc">Strike a pose with giant strawberry hats, berry baskets & "I'm 5!" signs! Instant prints for every family to take home as keepsakes.</p>
+        <div class="act-time">⏱ Available all event · Free prints!</div>
+      </div>
+    </div>
+
+    <div class="act-card">
+      <div class="act-icon-box">🏆</div>
+      <div class="act-body">
+        <span class="act-badge">4:00 – 4:30 PM</span>
+        <div class="act-name">Games & Prize Corner</div>
+        <p class="act-desc">Musical chairs, strawberry toss, pass-the-parcel & a mystery treasure hunt around the garden! Every child wins a prize 🎁</p>
+        <div class="act-time">⏱ 30 min · Prizes for everyone!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave" style="background:#1a8a48;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,35 C360,80 720,5 1080,55 C1260,78 1380,22 1440,35 L1440,80 L0,80 Z" fill="#fff0f4"/>
+</svg></div>
+
+<!-- ===== PARTY PLAYLIST ===== -->
+<section class="section playlist-bg" id="playlist">
+  <div class="sec-head">
+    <div class="sec-pill pill-pink">🎵 Party Playlist</div>
+    <h2 class="sec-title">Emma's Birthday Jams 🍓</h2>
+    <p class="sec-sub">The official bop-list for the sweetest celebration! Get ready to dance, sing & shake those strawberries!</p>
+  </div>
+
+  <div class="playlist-inner">
+    <div class="playlist-card">
+      <div class="playlist-header">
+        <div class="playlist-vinyl">
+          <div></div>
+        </div>
+        <div class="playlist-info">
+          <div class="playlist-title-label">🍓 Emma's Sweet Party Mix</div>
+          <div class="playlist-sub-label">8 tracks · 28 mins · Curated with love 💕</div>
+        </div>
+      </div>
+
+      <div class="playlist-tracks" id="playlistTracks">
+        <div class="track playing" data-idx="0" onclick="playTrack(0)">
+          <div class="track-num"><span class="track-num-val">1</span><div class="track-bars"><div class="bar-anim" style="height:55%"></div><div class="bar-anim"></div><div class="bar-anim"></div><div class="bar-anim" style="height:70%"></div></div></div>
+          <div class="track-emoji">🍓</div>
+          <div class="track-info"><div class="track-name">Strawberry Fields Forever</div><div class="track-artist">The Sweethearts · Birthday Edition</div></div>
+          <div class="track-dur">3:28</div>
+        </div>
+        <div class="track" data-idx="1" onclick="playTrack(1)">
+          <div class="track-num"><span class="track-num-val">2</span><div class="track-bars"><div class="bar-anim" style="height:55%"></div><div class="bar-anim"></div><div class="bar-anim"></div><div class="bar-anim" style="height:70%"></div></div></div>
+          <div class="track-emoji">🎂</div>
+          <div class="track-info"><div class="track-name">Happy Birthday to You!</div><div class="track-artist">The Birthday Choir · Classic Mix</div></div>
+          <div class="track-dur">2:14</div>
+        </div>
+        <div class="track" data-idx="2" onclick="playTrack(2)">
+          <div class="track-num"><span class="track-num-val">3</span><div class="track-bars"><div class="bar-anim" style="height:55%"></div><div class="bar-anim"></div><div class="bar-anim"></div><div class="bar-anim" style="height:70%"></div></div></div>
+          <div class="track-emoji">💃</div>
+          <div class="track-info"><div class="track-name">Dance Like a Strawberry</div><div class="track-artist">DJ Berry Bounce · Party Remix</div></div>
+          <div class="track-dur">3:45</div>
+        </div>
+        <div class="track" data-idx="3" onclick="playTrack(3)">
+          <div class="track-num"><span class="track-num-val">4</span><div class="track-bars"><div class="bar-anim" style="height:55%"></div><div class="bar-anim"></div><div class="bar-anim"></div><div class="bar-anim" style="height:70%"></div></div></div>
+          <div class="track-emoji">🌈</div>
+          <div class="track-info"><div class="track-name">Rainbow Sunshine Day</div><div class="track-artist">The Sparkle Squad · Kids Vol. 5</div></div>
+          <div class="track-dur">3:12</div>
+        </div>
+        <div class="track" data-idx="4" onclick="playTrack(4)">
+          <div class="track-num"><span class="track-num-val">5</span><div class="track-bars"><div class="bar-anim" style="height:55%"></div><div class="bar-anim"></div><div class="bar-anim"></div><div class="bar-anim" style="height:70%"></div></div></div>
+          <div class="track-emoji">🎈</div>
+          <div class="track-info"><div class="track-name">Balloons & Birthday Dreams</div><div class="track-artist">Poppy Pops · Celebration Hits</div></div>
+          <div class="track-dur">3:56</div>
+        </div>
+        <div class="track" data-idx="5" onclick="playTrack(5)">
+          <div class="track-num"><span class="track-num-val">6</span><div class="track-bars"><div class="bar-anim" style="height:55%"></div><div class="bar-anim"></div><div class="bar-anim"></div><div class="bar-anim" style="height:70%"></div></div></div>
+          <div class="track-emoji">🍦</div>
+          <div class="track-info"><div class="track-name">Ice Cream Parade</div><div class="track-artist">Sweet Tooth Orchestra · Summer</div></div>
+          <div class="track-dur">2:58</div>
+        </div>
+        <div class="track" data-idx="6" onclick="playTrack(6)">
+          <div class="track-num"><span class="track-num-val">7</span><div class="track-bars"><div class="bar-anim" style="height:55%"></div><div class="bar-anim"></div><div class="bar-anim"></div><div class="bar-anim" style="height:70%"></div></div></div>
+          <div class="track-emoji">🌸</div>
+          <div class="track-info"><div class="track-name">Princess Garden Waltz</div><div class="track-artist">Fairy Dust Ensemble · Magical</div></div>
+          <div class="track-dur">4:02</div>
+        </div>
+        <div class="track" data-idx="7" onclick="playTrack(7)">
+          <div class="track-num"><span class="track-num-val">8</span><div class="track-bars"><div class="bar-anim" style="height:55%"></div><div class="bar-anim"></div><div class="bar-anim"></div><div class="bar-anim" style="height:70%"></div></div></div>
+          <div class="track-emoji">🎉</div>
+          <div class="track-info"><div class="track-name">Best Day Ever (Emma's Song)</div><div class="track-artist">The Birthday Band · Dedication</div></div>
+          <div class="track-dur">4:18</div>
+        </div>
+      </div>
+
+      <div class="playlist-controls">
+        <button class="ctrl-btn" onclick="playTrack((window._curTrack-1+8)%8)">⏮</button>
+        <button class="ctrl-btn" onclick="playTrack((window._curTrack-1+8)%8)">⏪</button>
+        <button class="ctrl-btn ctrl-play" id="playBtn" onclick="togglePlay()">▶</button>
+        <button class="ctrl-btn" onclick="playTrack((window._curTrack+1)%8)">⏩</button>
+        <button class="ctrl-btn" onclick="playTrack((window._curTrack+1)%8)">⏭</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAVE -->
+<div class="wave" style="background:#fff0f4;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,40 C240,80 480,10 720,50 C960,80 1200,15 1440,40 L1440,80 L0,80 Z" fill="#ffe566"/>
+</svg></div>
+
+<!-- ===== WISH ===== -->
+<div class="wish-section">
+  <div class="wish-deco wish-deco-l">🍓</div>
+  <div class="wish-deco wish-deco-r">🍓</div>
+  <p class="wish-main">🍓 Happy Birthday, Sweet Emma! 🍓</p>
+  <p class="wish-sub">May your day overflow with strawberry sweetness, magical moments &amp; all the love in the world! 💕</p>
+  <button class="wish-btn" onclick="launchConfetti()">🎉 Sprinkle the Confetti!</button>
+</div>
+
+<!-- WAVE -->
+<div class="wave" style="background:#ffe566;"><svg viewBox="0 0 1440 80" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+  <path d="M0,55 C280,5 560,80 840,45 C1120,15 1300,72 1440,55 L1440,80 L0,80 Z" fill="#8c001a"/>
+</svg></div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="foot-left">Made with love for <strong>Emma's 5th Birthday</strong> 🍓<br>April 12, 2025 · Strawberry Garden Hall, New York</div>
+  <div class="foot-emoji">
+    <span>🍓</span><span>❤️</span><span>🎂</span>
+  </div>
+</footer>
+
+<script>
+/* === RAIN === */
+const rainEl=document.getElementById('rainLayer');
+const rainEmojis=['🍓','🌸','✨','🎀','💕','🍓','🍓','🎈','🌺','🍓'];
+for(let i=0;i<24;i++){
+  const d=document.createElement('div');
+  d.className='drop';
+  d.textContent=rainEmojis[i%rainEmojis.length];
+  d.style.cssText=`left:${Math.random()*100}vw;font-size:${12+Math.random()*18}px;
+    animation-duration:${5+Math.random()*10}s;animation-delay:${Math.random()*10}s`;
+  rainEl.appendChild(d);
+}
+
+/* === COUNTDOWN === */
+const party=new Date('2025-04-12T15:00:00');
+function tick(){
+  const now=new Date(),diff=party-now;
+  if(diff<=0){['d','h','m','s'].forEach(k=>document.getElementById('cd-'+k).textContent='00');return;}
+  const D=Math.floor(diff/864e5),H=Math.floor(diff%864e5/36e5);
+  const M=Math.floor(diff%36e5/6e4),S=Math.floor(diff%6e4/1e3);
+  document.getElementById('cd-d').textContent=String(D).padStart(2,'0');
+  document.getElementById('cd-h').textContent=String(H).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(M).padStart(2,'0');
+  document.getElementById('cd-s').textContent=String(S).padStart(2,'0');
+}
+tick();setInterval(tick,1000);
+
+/* === RSVP === */
+let myChoice='yes';
+function chooseOpt(v){
+  myChoice=v;
+  document.getElementById('optY').classList.toggle('active',v==='yes');
+  document.getElementById('optN').classList.toggle('active',v==='no');
+}
+function doRSVP(){
+  const n=document.getElementById('fname').value.trim();
+  if(!n){alert('Please enter your name 🍓');return;}
+  document.getElementById('formWrap').style.display='none';
+  document.getElementById('rsvpOk').style.display='block';
+  if(myChoice==='yes'){
+    const el=document.getElementById('rsvp-yes');
+    el.textContent=parseInt(el.textContent)+1;
+  }
+  launchConfetti();
+}
+
+/* === CONFETTI === */
+const cv=document.getElementById('confettiCanvas');
+const cx=cv.getContext('2d');
+let cps=[],running=false;
+function resize(){cv.width=innerWidth;cv.height=innerHeight;}
+resize();window.addEventListener('resize',resize);
+const CC=['#e8243c','#ffb3c1','#ffe566','#3da84c','#fff','#ff6b8a','#8c001a','#c77dff','#00b4d8'];
+const CS=['circle','rect','tri'];
+function launchConfetti(){
+  for(let i=0;i<240;i++){
+    cps.push({x:Math.random()*cv.width,y:-22,r:5+Math.random()*10,
+      c:CC[Math.floor(Math.random()*CC.length)],s:CS[Math.floor(Math.random()*CS.length)],
+      vx:(Math.random()-0.5)*8,vy:2+Math.random()*6,
+      rot:Math.random()*360,rv:(Math.random()-0.5)*10,a:1});
+  }
+  if(!running){running=true;draw();}
+}
+function draw(){
+  cx.clearRect(0,0,cv.width,cv.height);
+  cps=cps.filter(p=>p.a>0.01);
+  for(const p of cps){
+    p.x+=p.vx;p.y+=p.vy;p.vy+=0.14;p.rot+=p.rv;
+    if(p.y>cv.height-50)p.a-=0.024;
+    cx.save();cx.globalAlpha=p.a;cx.translate(p.x,p.y);cx.rotate(p.rot*Math.PI/180);cx.fillStyle=p.c;
+    if(p.s==='circle'){cx.beginPath();cx.arc(0,0,p.r,0,Math.PI*2);cx.fill();}
+    else if(p.s==='rect'){cx.fillRect(-p.r,-p.r/2,p.r*2,p.r);}
+    else{cx.beginPath();cx.moveTo(0,-p.r);cx.lineTo(p.r,p.r);cx.lineTo(-p.r,p.r);cx.closePath();cx.fill();}
+    cx.restore();
+  }
+  if(cps.length>0)requestAnimationFrame(draw);
+  else{running=false;cx.clearRect(0,0,cv.width,cv.height);}
+}
+
+/* === LIGHTBOX === */
+const lbSrcs=[
+  'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=1200&q=90&fit=crop',
+  'https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=1200&q=90&fit=crop',
+  'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=1200&q=90&fit=crop',
+  'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?w=1200&q=90&fit=crop',
+  'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=1200&q=90&fit=crop',
+];
+let lbIdx=0;
+function lbOpen(i){
+  lbIdx=i;
+  document.getElementById('lbImg').src=lbSrcs[i];
+  document.getElementById('lightbox').classList.add('open');
+}
+function lbClose(){document.getElementById('lightbox').classList.remove('open');}
+function lbNav(dir){
+  lbIdx=(lbIdx+dir+lbSrcs.length)%lbSrcs.length;
+  document.getElementById('lbImg').src=lbSrcs[lbIdx];
+}
+document.getElementById('lightbox').addEventListener('click',function(e){if(e.target===this)lbClose();});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape')lbClose();
+  if(e.key==='ArrowRight')lbNav(1);
+  if(e.key==='ArrowLeft')lbNav(-1);
+});
+
+/* === ABOUT SECTION: Animated counters + bars === */
+function animateCounters(){
+  document.querySelectorAll('.counter').forEach(el=>{
+    const target=parseInt(el.dataset.target);
+    const dur=1800;const step=16;
+    const inc=target/(dur/step);
+    let cur=0;
+    const t=setInterval(()=>{
+      cur=Math.min(cur+inc,target);
+      el.textContent=Math.floor(cur).toLocaleString();
+      if(cur>=target)clearInterval(t);
+    },step);
+  });
+  document.querySelectorAll('.fact-bar').forEach(bar=>{
+    const w=bar.dataset.width;
+    setTimeout(()=>{bar.style.width=w+'%';},100);
+  });
+}
+/* Trigger when About section enters viewport */
+const aboutObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){animateCounters();aboutObs.disconnect();}});
+},{threshold:0.2});
+const aboutSec=document.getElementById('about');
+if(aboutSec)aboutObs.observe(aboutSec);
+
+/* === TIMELINE STARS === */
+(function(){
+  const stars=document.getElementById('tlStars');
+  if(!stars)return;
+  for(let i=0;i<60;i++){
+    const s=document.createElement('div');
+    s.className='tl-star';
+    const sz=1+Math.random()*2.5;
+    s.style.cssText=`width:${sz}px;height:${sz}px;
+      left:${Math.random()*100}%;top:${Math.random()*100}%;
+      animation-delay:${Math.random()*4}s;
+      animation-duration:${2+Math.random()*3}s;`;
+    stars.appendChild(s);
+  }
+})();
+
+/* === PLAYLIST === */
+window._curTrack=0;
+window._isPlaying=true;
+function playTrack(idx){
+  window._curTrack=idx;
+  document.querySelectorAll('.track').forEach((t,i)=>{
+    t.classList.toggle('playing',i===idx);
+  });
+  window._isPlaying=true;
+  document.getElementById('playBtn').textContent='⏸';
+}
+function togglePlay(){
+  window._isPlaying=!window._isPlaying;
+  document.getElementById('playBtn').textContent=window._isPlaying?'⏸':'▶';
+  document.querySelectorAll('.bar-anim').forEach(b=>{
+    b.style.animationPlayState=window._isPlaying?'running':'paused';
+  });
+}
+
+/* === AUTO LAUNCH === */
+setTimeout(launchConfetti,700);
+
+/* === BIRTHDAY WISH POPUP === */
+(function(){
+  function init(){
+    const popup=document.getElementById('wishPopup');
+    if(!popup) return;
+
+    /* Open popup on load after 1.8s */
+    setTimeout(()=>openWishPopup(),1800);
+
+    /* Close on backdrop click */
+    popup.addEventListener('click',function(e){
+      if(e.target===this) closeWishPopup();
+    });
+  }
+
+  function openWishPopup(){
+    const popup=document.getElementById('wishPopup');
+    if(!popup) return;
+    popup.classList.add('wp-open');
+    document.body.style.overflow='hidden';
+    spawnPopupConfetti();
+    startCandleAnim();
+  }
+  window.closeWishPopup=function(){
+    const popup=document.getElementById('wishPopup');
+    if(popup) popup.classList.remove('wp-open');
+    document.body.style.overflow='';
+  };
+  window.openWishPopup=openWishPopup;
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+
+  /* Popup confetti (inside popup canvas) */
+  function spawnPopupConfetti(){
+    const cv=document.getElementById('wpCanvas');
+    if(!cv)return;
+    const cx=cv.getContext('2d');
+    cv.width=cv.offsetWidth; cv.height=cv.offsetHeight;
+    const cols=['#e8243c','#ffb3c1','#ffe566','#3da84c','#fff','#ff6b8a','#c77dff'];
+    let pcs=[];
+    for(let i=0;i<120;i++) pcs.push({
+      x:Math.random()*cv.width, y:-16,
+      r:4+Math.random()*7,
+      c:cols[Math.floor(Math.random()*cols.length)],
+      vx:(Math.random()-0.5)*5, vy:1.5+Math.random()*4,
+      rot:Math.random()*360, rv:(Math.random()-0.5)*8, a:1
+    });
+    function draw(){
+      cx.clearRect(0,0,cv.width,cv.height);
+      pcs=pcs.filter(p=>p.a>0.01);
+      pcs.forEach(p=>{
+        p.x+=p.vx; p.y+=p.vy; p.vy+=0.1; p.rot+=p.rv;
+        if(p.y>cv.height-30) p.a-=0.03;
+        cx.save(); cx.globalAlpha=p.a; cx.translate(p.x,p.y); cx.rotate(p.rot*Math.PI/180);
+        cx.fillStyle=p.c; cx.beginPath(); cx.arc(0,0,p.r,0,Math.PI*2); cx.fill();
+        cx.restore();
+      });
+      if(pcs.length) requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
+  /* Candle flame flicker via JS */
+  function startCandleAnim(){
+    const flames=document.querySelectorAll('.wp-flame');
+    setInterval(()=>{
+      flames.forEach(f=>{
+        const s=0.85+Math.random()*0.3;
+        const r=(Math.random()-0.5)*12;
+        f.style.transform=`scaleX(${s}) scaleY(${1+(1-s)*0.5}) rotate(${r}deg)`;
+        f.style.opacity=0.85+Math.random()*0.15;
+      });
+    },80);
+  }
+
+  /* Send wish logic */
+  window.sendWish=function(){
+    const name=document.getElementById('wpName').value.trim();
+    const msg=document.getElementById('wpMsg').value.trim();
+    if(!name){ document.getElementById('wpName').focus(); return; }
+    /* Show thank-you state */
+    document.getElementById('wpFormState').style.display='none';
+    document.getElementById('wpThanks').style.display='flex';
+    spawnPopupConfetti();
+    launchConfetti();
+    /* Store wish in the wishes wall */
+    addWishToWall(name, msg||'Happy Birthday Emma! 🍓');
+  };
+
+  /* Wish wall (global array) */
+  window._wishes=[];
+  window.addWishToWall=function(name,msg){
+    window._wishes.push({name,msg});
+    document.getElementById('wishWallSection').style.display='block';
+    renderWishWall();
+  };
+
+  function renderWishWall(){
+    const wall=document.getElementById('wishWall');
+    if(!wall) return;
+    const colors=['#fff0f4','#eafff0','#fff8e8','#f5f0ff','#e8faff','#fff4e8'];
+    wall.innerHTML='';
+    window._wishes.slice(-6).forEach((w,i)=>{
+      const d=document.createElement('div');
+      d.className='ww-card';
+      d.style.background=colors[i%colors.length];
+      d.style.animationDelay=(i*0.08)+'s';
+      d.innerHTML=`<div class="ww-name">💌 ${w.name}</div><div class="ww-msg">${w.msg}</div>`;
+      wall.prepend(d);
+    });
+  }
+})();
+</script>
+
+<!-- ===== BIRTHDAY WISH POPUP ===== -->
+<style>
+/* ======= TIMELINE ======= */
+.timeline-bg{
+  background:linear-gradient(170deg,#1a0008 0%,#3d0015 40%,#1a0008 100%);
+  position:relative;overflow:hidden;
+}
+.timeline-bg::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,180,200,0.06) 1.5px,transparent 1.5px);
+  background-size:32px 32px;pointer-events:none;
+}
+.tl-stars{position:absolute;inset:0;pointer-events:none;}
+.tl-star{position:absolute;background:#fff;border-radius:50%;animation:twinkle 3s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:0.15;transform:scale(1);}50%{opacity:0.8;transform:scale(1.4);}}
+
+.timeline-inner{max-width:900px;margin:0 auto;position:relative;z-index:5;}
+
+/* vertical spine */
+.tl-spine{
+  position:absolute;left:50%;top:0;bottom:0;
+  width:3px;
+  background:linear-gradient(180deg,transparent,rgba(232,36,60,0.6) 10%,rgba(232,36,60,0.6) 90%,transparent);
+  transform:translateX(-50%);
+}
+
+.tl-item{
+  display:flex;align-items:center;gap:0;
+  margin-bottom:56px;position:relative;
+}
+.tl-item:nth-child(odd){flex-direction:row;}
+.tl-item:nth-child(even){flex-direction:row-reverse;}
+
+.tl-card{
+  width:calc(50% - 48px);
+  background:rgba(255,255,255,0.06);
+  border:1.5px solid rgba(255,180,200,0.2);
+  border-radius:24px;padding:28px 26px;
+  backdrop-filter:blur(8px);
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),border-color 0.3s,background 0.3s;
+  position:relative;overflow:hidden;
+}
+.tl-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--red),var(--pink));
+  border-radius:24px 24px 0 0;
+}
+.tl-card:hover{
+  transform:translateY(-8px) scale(1.03);
+  border-color:rgba(255,107,138,0.5);
+  background:rgba(255,255,255,0.1);
+}
+.tl-item:nth-child(odd) .tl-card{margin-right:auto;}
+.tl-item:nth-child(even) .tl-card{margin-left:auto;}
+
+/* connector dot */
+.tl-dot{
+  position:absolute;left:50%;transform:translateX(-50%);
+  width:52px;height:52px;border-radius:50%;z-index:2;
+  background:linear-gradient(135deg,var(--red),var(--crimson));
+  border:4px solid #1a0008;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.5rem;
+  box-shadow:0 0 0 3px rgba(232,36,60,0.3),0 0 20px rgba(232,36,60,0.4);
+  animation:dotPulse 2.5s ease-in-out infinite;
+  flex-shrink:0;
+}
+@keyframes dotPulse{0%,100%{box-shadow:0 0 0 3px rgba(232,36,60,0.3),0 0 20px rgba(232,36,60,0.4);}50%{box-shadow:0 0 0 8px rgba(232,36,60,0.15),0 0 35px rgba(232,36,60,0.6);}}
+.tl-item:nth-child(2) .tl-dot{animation-delay:0.5s;}
+.tl-item:nth-child(3) .tl-dot{animation-delay:1s;}
+.tl-item:nth-child(4) .tl-dot{animation-delay:1.5s;}
+.tl-item:nth-child(5) .tl-dot{animation-delay:2s;}
+
+.tl-time{
+  font-family:'Fredoka One',cursive;font-size:0.78rem;
+  color:rgba(255,107,138,0.85);letter-spacing:0.14em;
+  text-transform:uppercase;margin-bottom:8px;display:block;
+}
+.tl-title{
+  font-family:'Pacifico',cursive;color:#fff;
+  font-size:1.15rem;margin-bottom:8px;
+  text-shadow:0 2px 10px rgba(0,0,0,0.3);
+}
+.tl-desc{font-size:0.88rem;color:rgba(255,255,255,0.7);font-weight:600;line-height:1.6;}
+
+/* ======= TREATS MENU ======= */
+.treats-bg{background:linear-gradient(160deg,#fffaf5 0%,#fff0f8 100%);position:relative;overflow:hidden;}
+.treats-bg::after{
+  content:'🍓';position:absolute;font-size:20rem;
+  opacity:0.03;bottom:-40px;right:-60px;pointer-events:none;user-select:none;
+  animation:decoWordFloat 10s ease-in-out infinite;
+}
+
+.treats-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:22px;max-width:1100px;margin:0 auto;
+}
+.treat-card{
+  background:#fff;border-radius:28px;
+  border:2.5px solid var(--light-pink);
+  box-shadow:0 6px 0 var(--light-pink),0 14px 40px rgba(0,0,0,0.06);
+  overflow:hidden;
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),box-shadow 0.4s;
+  position:relative;
+}
+.treat-card:hover{
+  transform:translateY(-12px) rotate(-1deg);
+  box-shadow:0 18px 0 var(--light-pink),0 28px 55px rgba(232,36,60,0.15);
+}
+.treat-img{width:100%;height:200px;object-fit:cover;display:block;transition:transform 0.5s;}
+.treat-card:hover .treat-img{transform:scale(1.08);}
+.treat-img-wrap{overflow:hidden;position:relative;}
+.treat-tag{
+  position:absolute;top:14px;right:14px;
+  background:linear-gradient(135deg,var(--red),var(--crimson));
+  color:#fff;font-family:'Fredoka One',cursive;
+  font-size:0.78rem;padding:6px 16px;border-radius:50px;
+  letter-spacing:0.06em;
+  box-shadow:0 4px 12px rgba(232,36,60,0.4);
+}
+.treat-body{padding:22px 22px 26px;}
+.treat-emoji{font-size:2.2rem;display:block;margin-bottom:10px;}
+.treat-name{
+  font-family:'Pacifico',cursive;color:var(--dark-red);
+  font-size:1.15rem;margin-bottom:6px;
+}
+.treat-desc{font-size:0.86rem;color:#8a5060;font-weight:600;line-height:1.55;margin-bottom:14px;}
+.treat-rating{display:flex;gap:3px;margin-bottom:2px;}
+.treat-rating span{font-size:1rem;}
+
+/* ======= ACTIVITIES ======= */
+.act-bg{
+  background:linear-gradient(135deg,#3da84c 0%,#1a8a48 50%,#0d5c30 100%);
+  position:relative;overflow:hidden;
+}
+.act-bg::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.07) 2px,transparent 2px);
+  background-size:34px 34px;
+}
+.act-floaters{position:absolute;inset:0;pointer-events:none;}
+.af{position:absolute;opacity:0.08;font-size:5rem;animation:rfloat 7s ease-in-out infinite;}
+.af:nth-child(1){top:8%;left:3%;font-size:7rem;animation-delay:0s;}
+.af:nth-child(2){bottom:10%;left:8%;font-size:4rem;animation-delay:1.5s;}
+.af:nth-child(3){top:15%;right:4%;font-size:8rem;animation-delay:0.8s;}
+.af:nth-child(4){bottom:15%;right:6%;font-size:5rem;animation-delay:2.2s;}
+
+.act-grid{
+  display:grid;grid-template-columns:repeat(2,1fr);
+  gap:24px;max-width:980px;margin:0 auto;
+  position:relative;z-index:2;
+}
+.act-card{
+  background:rgba(255,255,255,0.1);
+  border:1.5px solid rgba(255,255,255,0.22);
+  border-radius:26px;padding:32px 28px;
+  backdrop-filter:blur(8px);
+  display:flex;gap:22px;align-items:flex-start;
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1),background 0.3s;
+  position:relative;overflow:hidden;
+}
+.act-card::before{
+  content:'';position:absolute;bottom:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,rgba(255,255,255,0.4),rgba(255,255,255,0.1));
+  border-radius:0 0 26px 26px;
+}
+.act-card:hover{
+  transform:translateY(-8px) scale(1.02);
+  background:rgba(255,255,255,0.18);
+}
+.act-icon-box{
+  width:64px;height:64px;border-radius:18px;
+  background:rgba(255,255,255,0.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2rem;flex-shrink:0;
+  box-shadow:0 4px 16px rgba(0,0,0,0.15);
+  animation:iconBob 2.4s ease-in-out infinite;
+}
+.act-card:nth-child(2) .act-icon-box{animation-delay:0.4s;}
+.act-card:nth-child(3) .act-icon-box{animation-delay:0.8s;}
+.act-card:nth-child(4) .act-icon-box{animation-delay:1.2s;}
+.act-body{}
+.act-badge{
+  display:inline-block;font-size:0.68rem;font-weight:900;
+  letter-spacing:0.14em;text-transform:uppercase;
+  background:rgba(255,255,255,0.2);color:rgba(255,255,255,0.9);
+  padding:4px 12px;border-radius:50px;margin-bottom:8px;
+}
+.act-name{
+  font-family:'Pacifico',cursive;color:#fff;
+  font-size:1.2rem;margin-bottom:8px;
+  text-shadow:0 2px 8px rgba(0,0,0,0.2);
+}
+.act-desc{font-size:0.88rem;color:rgba(255,255,255,0.8);font-weight:600;line-height:1.6;}
+.act-time{
+  margin-top:10px;font-size:0.8rem;color:rgba(255,255,255,0.6);
+  font-weight:700;letter-spacing:0.05em;
+}
+
+/* ======= PLAYLIST ======= */
+.playlist-bg{background:linear-gradient(160deg,#fff0f4 0%,#fff8f0 100%);position:relative;overflow:hidden;}
+.playlist-inner{max-width:860px;margin:0 auto;}
+.playlist-card{
+  background:#fff;border-radius:30px;
+  border:2.5px solid var(--light-pink);
+  box-shadow:0 8px 0 var(--light-pink),0 18px 50px rgba(0,0,0,0.08);
+  overflow:hidden;
+}
+.playlist-header{
+  background:linear-gradient(135deg,var(--red),var(--crimson));
+  padding:28px 32px;
+  display:flex;align-items:center;gap:22px;
+  position:relative;overflow:hidden;
+}
+.playlist-header::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(255,255,255,0.08) 1.5px,transparent 1.5px);
+  background-size:22px 22px;
+}
+.playlist-vinyl{
+  width:72px;height:72px;border-radius:50%;
+  background:conic-gradient(#1a0008 0%,#3d0015 25%,#1a0008 50%,#3d0015 75%,#1a0008 100%);
+  border:4px solid rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;position:relative;
+  animation:vinylSpin 4s linear infinite;
+}
+@keyframes vinylSpin{0%{transform:rotate(0);}100%{transform:rotate(360deg);}}
+.playlist-vinyl::after{
+  content:'';width:18px;height:18px;background:#fff;border-radius:50%;
+  position:absolute;
+}
+.playlist-info{position:relative;z-index:1;}
+.playlist-title-label{font-family:'Pacifico',cursive;color:#fff;font-size:1.5rem;text-shadow:2px 2px 0 rgba(0,0,0,0.15);}
+.playlist-sub-label{color:rgba(255,255,255,0.8);font-size:0.9rem;font-weight:700;margin-top:4px;}
+
+.playlist-tracks{padding:8px 0;}
+.track{
+  display:flex;align-items:center;gap:16px;
+  padding:16px 28px;border-bottom:1px solid rgba(232,36,60,0.06);
+  transition:background 0.22s;cursor:pointer;position:relative;
+}
+.track:last-child{border-bottom:none;}
+.track:hover{background:var(--blush);}
+.track.playing{background:var(--blush);}
+.track-num{
+  font-family:'Fredoka One',cursive;font-size:0.9rem;
+  color:#c0a0a8;min-width:24px;text-align:center;
+}
+.track.playing .track-num{color:var(--red);}
+.track-bars{
+  display:none;gap:2px;align-items:flex-end;min-width:24px;
+  height:20px;
+}
+.track.playing .track-bars{display:flex;}
+.track.playing .track-num-val{display:none;}
+.bar-anim{
+  width:4px;background:var(--red);border-radius:2px;
+  animation:barBounce 0.6s ease-in-out infinite alternate;
+}
+.bar-anim:nth-child(2){animation-delay:0.15s;height:60%;}
+.bar-anim:nth-child(3){animation-delay:0.3s;height:100%;}
+.bar-anim:nth-child(4){animation-delay:0.1s;height:40%;}
+@keyframes barBounce{0%{transform:scaleY(0.3);}100%{transform:scaleY(1);}}
+.track-emoji{font-size:1.5rem;flex-shrink:0;}
+.track-info{flex:1;}
+.track-name{font-family:'Fredoka One',cursive;color:var(--dark-red);font-size:1rem;margin-bottom:2px;}
+.track.playing .track-name{color:var(--red);}
+.track-artist{font-size:0.8rem;color:#9a7080;font-weight:700;}
+.track-dur{font-size:0.82rem;color:#9a7080;font-weight:700;margin-left:auto;}
+
+.playlist-controls{
+  padding:22px 28px;background:var(--blush);
+  display:flex;align-items:center;justify-content:center;gap:18px;
+  border-top:1.5px solid var(--light-pink);
+}
+.ctrl-btn{
+  background:transparent;border:2px solid var(--light-pink);
+  border-radius:50%;width:44px;height:44px;
+  font-size:1.1rem;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  color:var(--dark-red);transition:all 0.22s;
+}
+.ctrl-btn:hover{background:var(--light-pink);transform:scale(1.1);}
+.ctrl-play{
+  width:58px;height:58px;font-size:1.5rem;
+  background:linear-gradient(135deg,var(--red),var(--crimson));
+  color:#fff;border:none;
+  box-shadow:0 5px 0 var(--dark-red),0 10px 24px rgba(232,36,60,0.3);
+  transition:transform 0.15s,box-shadow 0.15s;
+}
+.ctrl-play:hover{transform:translateY(-3px);box-shadow:0 8px 0 var(--dark-red),0 16px 30px rgba(232,36,60,0.38);}
+.ctrl-play:active{transform:translateY(2px);box-shadow:0 2px 0 var(--dark-red);}
+
+/* POPUP OVERLAY */
+#wishPopup{
+  position:fixed;inset:0;z-index:19999;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(90,0,20,0.72);
+  backdrop-filter:blur(10px) saturate(140%);
+  opacity:0;pointer-events:none;
+  transition:opacity 0.45s cubic-bezier(0.4,0,0.2,1);
+  padding:20px;
+}
+#wishPopup.wp-open{opacity:1;pointer-events:all;}
+
+/* POPUP CARD */
+.wp-card{
+  background:#fff;
+  border-radius:36px;
+  width:100%;max-width:560px;
+  position:relative;overflow:hidden;
+  transform:scale(0.78) translateY(40px);
+  transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  box-shadow:0 32px 100px rgba(140,0,26,0.45), 0 0 0 3px rgba(255,180,200,0.5);
+}
+#wishPopup.wp-open .wp-card{transform:scale(1) translateY(0);}
+
+/* Rainbow top stripe */
+.wp-rainbow{
+  height:6px;
+  background:linear-gradient(90deg,#e8243c,#ff7096,#ffe566,#3da84c,#00b4d8,#c77dff,#e8243c);
+  background-size:300% 100%;
+  animation:wpRainbow 3s linear infinite;
+}
+@keyframes wpRainbow{0%{background-position:0% 0;}100%{background-position:300% 0;}}
+
+/* Confetti canvas inside card */
+#wpCanvas{
+  position:absolute;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;
+}
+
+/* CLOSE BTN */
+.wp-close{
+  position:absolute;top:14px;right:18px;z-index:10;
+  background:rgba(232,36,60,0.1);border:none;cursor:pointer;
+  color:var(--dark-red,#9e0020);font-size:1.3rem;
+  width:36px;height:36px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.2s,transform 0.2s;
+}
+.wp-close:hover{background:rgba(232,36,60,0.2);transform:rotate(90deg) scale(1.15);}
+
+/* BODY */
+.wp-body{
+  position:relative;z-index:2;
+  padding:36px 40px 40px;
+  text-align:center;
+}
+
+/* Animated cake SVG */
+.wp-cake-wrap{
+  display:flex;justify-content:center;margin-bottom:8px;
+  animation:wpCakeBounce 1.8s ease-in-out infinite;
+}
+@keyframes wpCakeBounce{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-10px) scale(1.06);}}
+
+/* Flames */
+.wp-flame{
+  transform-origin:50% 100%;
+  transition:transform 0.08s,opacity 0.08s;
+}
+
+/* Headings */
+.wp-eyebrow{
+  font-family:'Fredoka One',cursive;
+  font-size:0.8rem;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--red,#e8243c);margin-bottom:10px;
+  display:block;
+}
+.wp-headline{
+  font-family:'Pacifico',cursive;
+  font-size:clamp(1.8rem,5vw,2.8rem);
+  color:#8c001a;
+  text-shadow:3px 3px 0 rgba(255,130,160,0.4);
+  line-height:1.08;margin-bottom:6px;
+}
+.wp-sub{
+  font-size:0.96rem;color:#7a3040;font-weight:600;
+  line-height:1.6;margin-bottom:28px;
+  font-family:'Nunito',sans-serif;
+}
+
+/* FORM STATE */
+#wpFormState{}
+.wp-input-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.wp-input{
+  width:100%;border:2.5px solid #ffd6e0;border-radius:14px;
+  padding:13px 16px;font-family:'Nunito',sans-serif;font-size:0.92rem;
+  color:#444;outline:none;transition:border-color 0.2s,box-shadow 0.2s;
+  background:#fff;
+}
+.wp-input:focus{border-color:#e8243c;box-shadow:0 0 0 5px rgba(232,36,60,0.1);}
+.wp-textarea{
+  width:100%;border:2.5px solid #ffd6e0;border-radius:14px;
+  padding:13px 16px;font-family:'Nunito',sans-serif;font-size:0.92rem;
+  color:#444;outline:none;resize:none;height:90px;
+  transition:border-color 0.2s,box-shadow 0.2s;background:#fff;
+  margin-bottom:18px;
+}
+.wp-textarea:focus{border-color:#e8243c;box-shadow:0 0 0 5px rgba(232,36,60,0.1);}
+.wp-send-btn{
+  width:100%;
+  background:linear-gradient(135deg,#e8243c,#c0003a);
+  color:#fff;border:none;border-radius:50px;padding:17px;
+  font-family:'Pacifico',cursive;font-size:1.1rem;cursor:pointer;
+  box-shadow:0 5px 0 #8c001a,0 12px 30px rgba(232,36,60,0.38);
+  transition:transform 0.15s,box-shadow 0.15s;letter-spacing:0.04em;
+}
+.wp-send-btn:hover{transform:translateY(-4px);box-shadow:0 9px 0 #8c001a,0 18px 38px rgba(232,36,60,0.44);}
+.wp-send-btn:active{transform:translateY(2px);box-shadow:0 2px 0 #8c001a;}
+
+/* THANKS STATE */
+#wpThanks{
+  display:none;flex-direction:column;align-items:center;gap:12px;
+  animation:wpThanksIn 0.6s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+@keyframes wpThanksIn{0%{transform:scale(0.6);opacity:0;}100%{transform:scale(1);opacity:1;}}
+.wp-thanks-emoji{font-size:5rem;animation:wpCakeBounce 1.8s ease-in-out infinite;}
+.wp-thanks-title{font-family:'Pacifico',cursive;color:#8c001a;font-size:1.8rem;}
+.wp-thanks-sub{font-size:0.94rem;color:#7a4050;font-weight:600;font-family:'Nunito',sans-serif;}
+.wp-reopen-btn{
+  margin-top:8px;
+  background:transparent;color:#e8243c;
+  border:2.5px solid #e8243c;border-radius:50px;
+  padding:11px 30px;font-family:'Fredoka One',cursive;font-size:0.95rem;cursor:pointer;
+  transition:all 0.2s;
+}
+.wp-reopen-btn:hover{background:#fff0f4;}
+
+/* WISH WALL (below form, outside popup) */
+#wishWallSection{
+  position:relative;z-index:5;
+  background:linear-gradient(160deg,#fff5f8 0%,#fff0e8 100%);
+  padding:80px 52px;overflow:hidden;
+}
+#wishWallSection::before{
+  content:'';position:absolute;inset:0;
+  background-image:radial-gradient(circle,rgba(232,36,60,0.06) 2px,transparent 2px);
+  background-size:38px 38px;
+}
+#wishWall{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:18px;max-width:1100px;margin:0 auto;
+  position:relative;z-index:1;
+}
+.ww-card{
+  border-radius:22px;padding:24px 22px;
+  border:2.5px solid rgba(232,36,60,0.12);
+  box-shadow:0 5px 0 rgba(232,36,60,0.08),0 12px 32px rgba(0,0,0,0.06);
+  transition:transform 0.35s cubic-bezier(0.34,1.56,0.64,1);
+  animation:wwPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+}
+.ww-card:hover{transform:translateY(-8px) rotate(-1deg);}
+@keyframes wwPop{0%{transform:scale(0.7) translateY(20px);opacity:0;}100%{transform:scale(1) translateY(0);opacity:1;}}
+.ww-name{font-family:'Fredoka One',cursive;color:#8c001a;font-size:1rem;margin-bottom:8px;letter-spacing:0.03em;}
+.ww-msg{font-size:0.9rem;color:#7a4050;font-weight:600;line-height:1.55;font-family:'Nunito',sans-serif;}
+
+/* Floating trigger button (bottom left) */
+#wishTriggerBtn{
+  position:fixed;bottom:26px;left:26px;z-index:4000;
+  background:linear-gradient(135deg,#e8243c,#c0003a);
+  color:#fff;border:none;border-radius:50px;
+  padding:14px 24px;font-family:'Pacifico',cursive;font-size:0.95rem;
+  cursor:pointer;
+  box-shadow:0 5px 0 #8c001a,0 10px 28px rgba(232,36,60,0.38);
+  transition:transform 0.2s,box-shadow 0.2s;
+  display:flex;align-items:center;gap:9px;
+  animation:btnPulse 2.5s ease-in-out infinite;
+}
+#wishTriggerBtn:hover{transform:translateY(-4px);box-shadow:0 9px 0 #8c001a,0 18px 36px rgba(232,36,60,0.44);}
+@keyframes btnPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.05) translateY(-2px);}}
+</style>
+
+<!-- Floating wish trigger button -->
+<button id="wishTriggerBtn" onclick="openWishPopup()">
+  <span style="font-size:1.3rem">🍓</span> Send a Birthday Wish!
+</button>
+
+<!-- POPUP -->
+<div id="wishPopup">
+  <div class="wp-card">
+    <div class="wp-rainbow"></div>
+    <canvas id="wpCanvas"></canvas>
+    <button class="wp-close" onclick="closeWishPopup()">✕</button>
+
+    <div class="wp-body">
+      <!-- Animated cake -->
+      <div class="wp-cake-wrap">
+        <svg width="130" height="130" viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg">
+          <!-- Candles -->
+          <rect x="37" y="32" width="10" height="26" rx="5" fill="#ffe566"/>
+          <rect x="60" y="26" width="10" height="32" rx="5" fill="#ffb3c1"/>
+          <rect x="83" y="32" width="10" height="26" rx="5" fill="#3da84c"/>
+          <!-- Flames -->
+          <ellipse class="wp-flame" cx="42" cy="28" rx="5" ry="8" fill="#f5a623" opacity="0.9"/>
+          <ellipse class="wp-flame" cx="42" cy="30" rx="3" ry="5" fill="#ffe566" opacity="0.95"/>
+          <ellipse class="wp-flame" cx="65" cy="22" rx="5" ry="8" fill="#f5a623" opacity="0.9"/>
+          <ellipse class="wp-flame" cx="65" cy="24" rx="3" ry="5" fill="#ffe566" opacity="0.95"/>
+          <ellipse class="wp-flame" cx="88" cy="28" rx="5" ry="8" fill="#f5a623" opacity="0.9"/>
+          <ellipse class="wp-flame" cx="88" cy="30" rx="3" ry="5" fill="#ffe566" opacity="0.95"/>
+          <!-- Bottom tier -->
+          <rect x="14" y="82" width="102" height="38" rx="12" fill="#fff"/>
+          <rect x="14" y="82" width="102" height="14" rx="7" fill="#e8243c"/>
+          <text x="65" y="108" text-anchor="middle" font-size="18" font-family="sans-serif">🍓🍓🍓</text>
+          <!-- Middle tier -->
+          <rect x="28" y="56" width="74" height="30" rx="10" fill="#fff"/>
+          <rect x="28" y="56" width="74" height="12" rx="6" fill="#ffb3c1"/>
+          <text x="65" y="80" text-anchor="middle" font-size="13" font-family="sans-serif">🍓🍓</text>
+          <!-- Frosting drips -->
+          <path d="M18,82 Q24,94 30,82 Q36,94 42,82 Q48,94 54,82 Q60,94 66,82 Q72,94 78,82 Q84,94 90,82 Q96,94 102,82 Q108,94 114,82" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+
+      <span class="wp-eyebrow">🎉 It's a Special Day! 🎉</span>
+      <h2 class="wp-headline">Happy Birthday,<br>Little Emma! 🍓</h2>
+      <p class="wp-sub">Turning 5 is the sweetest milestone!<br>Leave a birthday wish for our little strawberry 💕</p>
+
+      <!-- FORM STATE -->
+      <div id="wpFormState">
+        <div class="wp-input-row">
+          <input class="wp-input" id="wpName" type="text" placeholder="Your name *" required>
+          <input class="wp-input" id="wpRelation" type="text" placeholder="e.g. Uncle Tom 👋">
+        </div>
+        <textarea class="wp-textarea" id="wpMsg" placeholder="Write a sweet birthday wish for Emma... 🍓✨"></textarea>
+        <button class="wp-send-btn" onclick="sendWish()">🍓 Send My Wish to Emma! 🎉</button>
+      </div>
+
+      <!-- THANKS STATE -->
+      <div id="wpThanks">
+        <span class="wp-thanks-emoji">🍓🎉</span>
+        <div class="wp-thanks-title">Wish Sent!</div>
+        <div class="wp-thanks-sub">Emma will treasure your sweet message forever! 💕<br>See you at the party on April 12!</div>
+        <button class="wp-reopen-btn" onclick="closeWishPopup()">🎀 Close & Celebrate!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WISH WALL SECTION (shows after submitting) -->
+<div id="wishWallSection" style="display:none;">
+  <div class="sec-head" style="position:relative;z-index:1;">
+    <div class="sec-pill pill-pink">💌 Birthday Messages</div>
+    <h2 class="sec-title">Wishes for Emma 🍓</h2>
+    <p class="sec-sub">Sweet messages from everyone who loves our birthday girl!</p>
+  </div>
+  <div id="wishWall"></div>
+</div>
+
+</body>
+</html>

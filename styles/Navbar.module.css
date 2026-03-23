@@ -1,0 +1,122 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 48px;
+  height: 66px;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(18px) saturate(180%);
+  border-bottom: 2.5px solid var(--light-pink);
+  box-shadow: 0 4px 28px rgba(232, 36, 60, 0.09);
+  transition: background 0.3s, padding 0.3s;
+  --light-pink: #ffd6e0;
+  --red: #e8243c;
+  --dark-red: #8c001a;
+}
+
+.logo {
+  font-family: 'Pacifico', cursive;
+  color: var(--red);
+  font-size: clamp(1rem, 2.5vw, 1.45rem);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 0;
+}
+
+.logoIcon {
+  animation: logoBounce 2s ease-in-out infinite;
+  display: inline-block;
+  font-size: 1.6rem;
+}
+
+@keyframes logoBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.navLinks {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.navLinks a {
+  text-decoration: none;
+  color: var(--dark-red);
+  font-weight: 800;
+  font-size: 0.84rem;
+  letter-spacing: 0.06em;
+  padding: 8px 14px;
+  border-radius: 50px;
+  transition: all 0.25s;
+}
+
+.navLinks a:hover {
+  background: var(--light-pink);
+  color: var(--dark-red);
+}
+
+.navRsvpBtn {
+  background: var(--red) !important;
+  color: #fff !important;
+  box-shadow: 0 3px 12px rgba(232, 36, 60, 0.3);
+}
+
+.navRsvpBtn:hover {
+  background: var(--dark-red) !important;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 960px) {
+  .navbar {
+    padding: 0 22px;
+  }
+  
+  .navLinks a:not(.navRsvpBtn) {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 0 16px;
+    height: 60px;
+  }
+  
+  .logo {
+    gap: 8px;
+  }
+  
+  .navLinks a {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0 12px;
+    height: 56px;
+  }
+  
+  .logo {
+    font-size: 1rem;
+    gap: 6px;
+  }
+  
+  .logoIcon {
+    font-size: 1.2rem;
+  }
+  
+  .navLinks a {
+    padding: 6px 10px;
+    font-size: 0.7rem;
+  }
+}
