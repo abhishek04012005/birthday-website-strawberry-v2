@@ -6,6 +6,7 @@ import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
 import { About } from '@/components/About';
 import { Gallery } from '@/components/Gallery';
+import { Parents } from '@/components/Parents';
 import { Details } from '@/components/Details';
 import { RSVP } from '@/components/RSVP';
 import { Treats } from '@/components/Treats';
@@ -83,6 +84,14 @@ export default function Home() {
 
       <Wave bgColor="#fff0f4" svgColor="#fffaf5" />
 
+      <Parents
+        title={config.parents.title}
+        subtitle={config.parents.subtitle}
+        list={config.parents.list}
+      />
+
+      <Wave bgColor="#fff0f4" svgColor="#fffaf5" />
+
       <Details
         venueName={config.party.venue}
         address={config.party.address}
@@ -114,41 +123,6 @@ export default function Home() {
         isOpen={wishingPopupOpen}
         onClose={() => setWishingPopupOpen(false)}
       />
-
-      {/* Floating Wishes Button */}
-      <button
-        onClick={() => setWishingPopupOpen(true)}
-        style={{
-          position: 'fixed',
-          bottom: '30px',
-          right: '30px',
-          background: 'linear-gradient(135deg, #e8243c 0%, #ff6b8a 100%)',
-          color: 'white',
-          border: 'none',
-          width: '60px',
-          height: '60px',
-          borderRadius: '50%',
-          fontSize: '28px',
-          cursor: 'pointer',
-          zIndex: 1500,
-          boxShadow: '0 6px 20px rgba(232, 36, 60, 0.4)',
-          transition: 'all 0.3s ease',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-        onMouseEnter={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.1)';
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 8px 30px rgba(232, 36, 60, 0.5)';
-        }}
-        onMouseLeave={(e) => {
-          (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)';
-          (e.currentTarget as HTMLButtonElement).style.boxShadow = '0 6px 20px rgba(232, 36, 60, 0.4)';
-        }}
-        title="Send a birthday wish!"
-      >
-        💌
-      </button>
     </main>
   );
 }

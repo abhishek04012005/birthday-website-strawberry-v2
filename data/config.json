@@ -275,5 +275,35 @@
       "badge": "🍓 Dessert!",
       "text": "🍓 Strawberry Love!"
     }
-  ]
+  ],
+  "parents": {
+    "title": "Meet the Parents! 👨‍👩‍👧",
+    "subtitle": "The amazing people behind the birthday girl",
+    "list": [
+      {
+        "name": "Sarah Rose",
+        "relationship": "Mom",
+        "emoji": "👩‍🦰",
+        "description": "Emma's loving mother, party planner extraordinaire & professional hugger 💕",
+        "hobbies": "Baking, gardening & photography",
+        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=85&fit=crop"
+      },
+      {
+        "name": "Michael Rose",
+        "relationship": "Dad",
+        "emoji": "👨",
+        "description": "Emma's proud papa, storyteller & master of silly jokes that make everyone laugh 😄",
+        "hobbies": "Building, sports & teaching Emma new skills",
+        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=85&fit=crop"
+      },
+      {
+        "name": "Lily Rose",
+        "relationship": "Older Sister",
+        "emoji": "👧",
+        "description": "Emma's big sis & best friend, fashion advisor & protector of all things cute 🌸",
+        "hobbies": "Art, music & looking after her little sister",
+        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=85&fit=crop"
+      }
+    ]
+  }
 }

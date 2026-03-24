@@ -1,0 +1,440 @@
+.wishesPageContainer {
+  min-height: 100vh;
+  padding-top: 100px;
+  position: relative;
+  overflow: hidden;
+}
+
+.wishesBg {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, #fff0f4 0%, #fffcfa 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wishesInner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  position: relative;
+  z-index: 10;
+}
+
+.wishesHeader {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.wishesTitle {
+  font-family: 'Fredoka One', cursive;
+  font-size: 3.2rem;
+  color: var(--red);
+  margin: 0 0 16px 0;
+  letter-spacing: 0.02em;
+  animation: slideDown 0.6s ease;
+}
+
+.formBlock {
+  margin-bottom: 40px;
+  background: white;
+  border: 2px solid var(--light-pink);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(232, 36, 60, 0.1);
+}
+
+.formBlock h2 {
+  margin: 0 0 14px;
+  font-size: 1.6rem;
+  color: var(--dark-red);
+}
+
+.wishForm {
+  display: grid;
+  gap: 14px;
+}
+
+.wishForm input,
+.wishForm textarea {
+  border: 2px solid var(--light-pink);
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 1rem;
+  color: #3b3b3b;
+}
+
+.wishForm button {
+  background: linear-gradient(135deg, var(--red) 0%, var(--crimson) 100%);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.wishForm button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(232, 36, 60, 0.2);
+}
+
+.formMessage {
+  margin-top: 10px;
+  color: var(--dark-red);
+  font-weight: 600;
+}
+
+.adminSection {
+  margin-top: 40px;
+  background: white;
+  border: 2px solid var(--light-pink);
+  border-radius: 20px;
+  padding: 24px;
+}
+
+.adminList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+}
+
+.adminItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px dashed #ffc1cd;
+  border-radius: 14px;
+  padding: 14px;
+  background: #fff7f9;
+}
+
+.adminItem p {
+  margin: 4px 0;
+}
+
+.showBtn,
+.hideBtn {
+  border: none;
+  border-radius: 10px;
+  color: white;
+  padding: 8px 12px;
+  font-weight: 600;
+}
+
+.showBtn {
+  background: #4f9f3b;
+}
+
+.hideBtn {
+  background: #d32f2f;
+}
+
+@media (max-width: 768px) {
+  .wishlistGrid {
+    grid-template-columns: 1fr;
+  }
+}
+.wishCount {
+  font-size: 1rem;
+  color: var(--red);
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wishesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 28px;
+  margin-bottom: 60px;
+}
+
+.wishCardContainer {
+  animation: fadeInUp 0.5s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.wishCard {
+  background: white;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(232, 36, 60, 0.12),
+              0 0 0 1px rgba(232, 36, 60, 0.08);
+  border: 2px solid var(--light-pink);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.wishCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--red) 0%, #ff6b8a 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.wishCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 16px 40px rgba(232, 36, 60, 0.18),
+              0 0 0 1px rgba(232, 36, 60, 0.12);
+}
+
+.wishCard:hover::before {
+  transform: scaleX(1);
+}
+
+.wishHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--light-pink);
+}
+
+.guestName {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.3rem;
+  color: var(--dark-red);
+  margin: 0;
+  flex: 1;
+}
+
+.wishDate {
+  font-size: 0.85rem;
+  color: #999;
+  white-space: nowrap;
+  background: var(--light-pink);
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.wishText {
+  font-size: 1rem;
+  color: #5a5a5a;
+  margin: 16px 0;
+  line-height: 1.8;
+  min-height: 60px;
+  font-style: italic;
+}
+
+.guestPhone {
+  font-size: 0.9rem;
+  color: var(--red);
+  margin: 0;
+  font-weight: 600;
+  padding-top: 12px;
+  border-top: 2px solid var(--light-pink);
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 80px 20px;
+  background: linear-gradient(135deg, rgba(255, 214, 224, 0.3) 0%, rgba(255, 229, 102, 0.2) 100%);
+  border-radius: 24px;
+  border: 2px dashed var(--light-pink);
+}
+
+.emptyIcon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.emptyText {
+  font-size: 1.4rem;
+  color: var(--dark-red);
+  margin: 0 0 8px 0;
+  font-weight: 700;
+}
+
+.emptySubtext {
+  font-size: 1rem;
+  color: #7a3040;
+  margin: 0;
+}
+
+/* Loading State */
+.loadingState {
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.loadingSpinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--light-pink);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loadingState p {
+  font-size: 1.1rem;
+  color: #7a3040;
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .wishesPageContainer {
+    padding-top: 80px;
+  }
+
+  .wishesInner {
+    padding: 40px 16px;
+  }
+
+  .wishesTitle {
+    font-size: 2.4rem;
+  }
+
+  .wishesSubtitle {
+    font-size: 1rem;
+  }
+
+  .wishesGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .wishCard {
+    padding: 24px;
+  }
+
+  .guestName {
+    font-size: 1.1rem;
+  }
+
+  .wishText {
+    font-size: 0.95rem;
+    min-height: 50px;
+  }
+
+  .guestPhone {
+    font-size: 0.85rem;
+  }
+
+  .emptyState {
+    padding: 60px 16px;
+  }
+
+  .emptyIcon {
+    font-size: 3rem;
+  }
+
+  .emptyText {
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wishesPageContainer {
+    padding-top: 70px;
+  }
+
+  .wishesInner {
+    padding: 30px 12px;
+  }
+
+  .wishesTitle {
+    font-size: 1.8rem;
+  }
+
+  .wishesSubtitle {
+    font-size: 0.95rem;
+  }
+
+  .wishCount {
+    font-size: 0.9rem;
+  }
+
+  .wishesGrid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .wishCard {
+    padding: 18px;
+  }
+
+  .wishHeader {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .guestName {
+    font-size: 1rem;
+  }
+
+  .wishDate {
+    width: 100%;
+    text-align: center;
+  }
+
+  .wishText {
+    font-size: 0.9rem;
+    margin: 14px 0;
+    min-height: 45px;
+  }
+
+  .guestPhone {
+    font-size: 0.8rem;
+  }
+
+  .emptyState {
+    padding: 50px 12px;
+  }
+
+  .emptyIcon {
+    font-size: 2.5rem;
+  }
+
+  .emptyText {
+    font-size: 1rem;
+  }
+
+  .emptySubtext {
+    font-size: 0.9rem;
+  }
+}

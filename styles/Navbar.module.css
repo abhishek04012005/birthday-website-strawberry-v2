@@ -74,12 +74,23 @@
   transform: translateY(-2px);
 }
 
+.navAdminBtn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+}
+
+.navAdminBtn:hover {
+  background: linear-gradient(135deg, #5568d3 0%, #663a90 100%) !important;
+  transform: translateY(-2px);
+}
+
 @media (max-width: 960px) {
   .navbar {
     padding: 0 22px;
   }
   
-  .navLinks a:not(.navRsvpBtn) {
+  .navLinks a:not(.navRsvpBtn):not(.navAdminBtn) {
     display: none;
   }
 }
@@ -113,6 +124,10 @@
   
   .logoIcon {
     font-size: 1.2rem;
+  }
+  
+  .navLinks {
+    gap: 4px;
   }
   
   .navLinks a {

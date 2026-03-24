@@ -1,0 +1,600 @@
+.dashboardContainer {
+  min-height: 100vh;
+  background: var(--cream);
+  position: relative;
+  overflow-x: hidden;
+}
+
+.dashboardBg {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse at 20% 30%, #ffd6e080 0%, transparent 50%),
+              radial-gradient(ellipse at 80% 70%, #ffe56650 0%, transparent 45%),
+              linear-gradient(180deg, #fff8f2 0%, #fff0f4 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Header */
+.dashboardHeader {
+  background: linear-gradient(135deg, var(--red) 0%, var(--crimson) 100%);
+  padding: 28px 20px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  box-shadow: 0 4px 20px rgba(232, 36, 60, 0.2);
+}
+
+.headerContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerTitle {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2rem;
+  color: white;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+.headerSubtitle {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 4px 0 0 0;
+}
+
+.logoutBtn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+}
+
+.logoutBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
+  transform: translateY(-2px);
+}
+
+/* Stats Section */
+.statsSection {
+  max-width: 1200px;
+  margin: 32px auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.statCard {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(232, 36, 60, 0.1),
+              0 0 0 1px rgba(232, 36, 60, 0.05);
+  border: 2px solid var(--light-pink);
+  transition: all 0.3s ease;
+}
+
+.statCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 32px rgba(232, 36, 60, 0.15),
+              0 0 0 1px rgba(232, 36, 60, 0.1);
+}
+
+.statNumber {
+  font-family: 'Fredoka One', cursive;
+  font-size: 2.4rem;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.statLabel {
+  font-size: 0.9rem;
+  color: #7a3040;
+  font-weight: 600;
+}
+
+/* Tabs */
+.tabContainer {
+  max-width: 1200px;
+  margin: 32px auto;
+  display: flex;
+  gap: 16px;
+  padding: 0 20px;
+  position: relative;
+  z-index: 5;
+}
+
+.tabBtn {
+  flex: 1;
+  padding: 14px 20px;
+  border: 2px solid var(--light-pink);
+  background: white;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: #7a3040;
+  font-family: 'Nunito', sans-serif;
+}
+
+.tabBtn:hover {
+  border-color: var(--red);
+  background: rgba(232, 36, 60, 0.05);
+}
+
+.tabBtn.active {
+  background: linear-gradient(135deg, var(--red) 0%, var(--crimson) 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(232, 36, 60, 0.2);
+}
+
+/* Content Area */
+.contentArea {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  position: relative;
+  z-index: 5;
+}
+
+/* RSVPs Section */
+.rsvpsSection {
+  width: 100%;
+}
+
+.rsvpsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 20px;
+}
+
+.rsvpCard {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  border: 2px solid var(--light-pink);
+  box-shadow: 0 4px 16px rgba(232, 36, 60, 0.1);
+  transition: all 0.3s ease;
+}
+
+.rsvpCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(232, 36, 60, 0.15);
+}
+
+.rsvpCard.rsvpAttending {
+  border-color: #81c784;
+  background: #f1f8f4;
+}
+
+.rsvpCard.rsvpNotAttending {
+  border-color: #ffb3c1;
+  background: #ffe8ed;
+}
+
+.rsvpHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 12px;
+}
+
+.rsvpHeader h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: var(--dark-red);
+}
+
+.rsvpStatus {
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+.rsvpAttending .rsvpStatus {
+  background: #81c784;
+  color: white;
+}
+
+.rsvpNotAttending .rsvpStatus {
+  background: #ef5350;
+  color: white;
+}
+
+.rsvpDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.rsvpDetails p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #5a5a5a;
+}
+
+.rsvpDetails a {
+  color: var(--red);
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.rsvpDetails a:hover {
+  color: var(--dark-red);
+  text-decoration: underline;
+}
+
+.date {
+  font-size: 0.85rem;
+  color: #999;
+  margin-top: 8px;
+  font-style: italic;
+}
+
+/* Wishes Section */
+.wishesSection {
+  width: 100%;
+}
+
+.wishesList {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.wishCard {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  border: 2px solid var(--light-pink);
+  box-shadow: 0 4px 16px rgba(232, 36, 60, 0.1);
+  transition: all 0.3s ease;
+}
+
+.wishCard:hover {
+  transform: translateX(8px);
+  box-shadow: 0 8px 24px rgba(232, 36, 60, 0.15);
+}
+
+.wishHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  gap: 16px;
+}
+
+.wishHeader h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--dark-red);
+}
+
+.wishDate {
+  font-size: 0.85rem;
+  color: #999;
+  white-space: nowrap;
+}
+
+.wishText {
+  margin: 0;
+  font-size: 1rem;
+  color: #5a5a5a;
+  line-height: 1.6;
+  font-style: italic;
+}
+
+/* Empty State */
+.emptyState {
+  text-align: center;
+  padding: 60px 20px;
+  background: linear-gradient(135deg, rgba(255, 214, 224, 0.3) 0%, rgba(255, 229, 102, 0.2) 100%);
+  border-radius: 24px;
+  border: 2px dashed var(--light-pink);
+}
+
+.emptyIcon {
+  font-size: 3rem;
+  margin: 0 0 16px 0;
+  display: block;
+}
+
+.emptyText {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #7a3040;
+  font-weight: 600;
+}
+
+/* Loading Spinner */
+.loadingSpinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 16px;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--light-pink);
+  border-top-color: var(--red);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .statsSection {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rsvpsList {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboardHeader {
+    padding: 20px;
+  }
+
+  .headerContent {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .headerTitle {
+    font-size: 1.6rem;
+  }
+
+  .logoutBtn {
+    width: 100%;
+  }
+
+  .statsSection {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 24px auto;
+  }
+
+  .statCard {
+    padding: 16px;
+  }
+
+  .statNumber {
+    font-size: 2rem;
+  }
+
+  .tabContainer {
+    gap: 12px;
+  }
+
+  .tabBtn {
+    padding: 12px 16px;
+    font-size: 0.9rem;
+  }
+
+  .contentArea {
+    padding: 0 20px 32px;
+  }
+
+  .rsvpCard {
+    padding: 16px;
+  }
+
+  .wishCard {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboardContainer {
+    padding-top: 0;
+  }
+
+  .dashboardHeader {
+    padding: 16px;
+  }
+
+  .headerContent {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .headerTitle {
+    font-size: 1.4rem;
+  }
+
+  .headerSubtitle {
+    font-size: 0.85rem;
+  }
+
+  .logoutBtn {
+    width: 100%;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+
+  .statsSection {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px auto;
+    padding: 0 16px;
+  }
+
+  .statCard {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .statNumber {
+    font-size: 1.6rem;
+  }
+
+  .statLabel {
+    font-size: 0.8rem;
+  }
+
+  .tabContainer {
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px auto;
+    padding: 0 16px;
+  }
+
+  .tabBtn {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.85rem;
+  }
+
+  .contentArea {
+    padding: 0 16px 24px;
+  }
+
+  .rsvpsSection,
+  .wishesSection {
+    width: 100%;
+  }
+
+  .rsvpsList {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .rsvpCard {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .rsvpHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rsvpHeader h3 {
+    font-size: 1rem;
+  }
+
+  .rsvpStatus {
+    width: 100%;
+    text-align: center;
+  }
+
+  .rsvpDetails {
+    gap: 10px;
+  }
+
+  .rsvpDetails p {
+    font-size: 0.9rem;
+  }
+
+  .wishesList {
+    gap: 16px;
+  }
+
+  .wishCard {
+    padding: 14px;
+    border-radius: 12px;
+  }
+
+  .wishHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .wishHeader h4 {
+    font-size: 1rem;
+  }
+
+  .wishText {
+    font-size: 0.95rem;
+  }
+
+  .emptyState {
+    padding: 40px 16px;
+    border-radius: 16px;
+  }
+
+  .emptyIcon {
+    font-size: 2.5rem;
+  }
+
+  .emptyText {
+    font-size: 1rem;
+  }
+}
+
+/* Bottom Action Bar */
+.bottomActionBar {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.actionBtn,
+.actionBtnSecondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #25d366, #128c7e);
+  color: white;
+  font-size: 1.3rem;
+  text-decoration: none;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+  border: 0;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  cursor: pointer;
+}
+
+.actionBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 24px rgba(0, 0, 0, 0.3);
+  filter: brightness(1.05);
+}
+
+.actionBtnSecondary {
+  background: linear-gradient(135deg, #e8243c, #ff6b8a);
+}
+
+.actionBtnSecondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 24px rgba(232, 36, 60, 0.3);
+  filter: brightness(1.05);
+}

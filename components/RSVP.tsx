@@ -15,6 +15,7 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
   const [choice, setChoice] = useState<'yes' | 'no'>('yes');
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -35,7 +36,7 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
 
     // Save to Supabase
     const rsvpData = {
-      name: formData.name,
+      guestName: formData.name,
       phone: formData.phone,
       email: formData.email,
       guestCount: parseInt(formData.guests.split(' ')[0]) || 1,
@@ -51,6 +52,8 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
     
     if (result.success) {
       setSubmitted(true);
+      setShowConfetti(true);
+      setTimeout(() => setShowConfetti(false), 5500);
       if (choice === 'yes') {
         localComingCount += 1;
       }
@@ -61,6 +64,32 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
 
   return (
     <section className={styles.rsvpBg} id="rsvp">
+      {showConfetti && (
+        <div className={styles.confettiOverlay}>
+          {Array.from({ length: 40 }).map((_, index) => {
+            const emojis = ['✨', '🎉', '🎊', '🍓', '🎈', '🧁'];
+            const emoji = emojis[index % emojis.length];
+            const left = Math.random() * 100;
+            const delay = Math.random() * 1.2;
+            const duration = 2.8 + Math.random() * 1.2;
+
+            return (
+              <span
+                key={index}
+                className={styles.confettiPiece}
+                style={{
+                  left: `${left}%`,
+                  animationDelay: `${delay}s`,
+                  animationDuration: `${duration}s`,
+                  fontSize: `${12 + Math.random() * 18}px`,
+                }}
+              >
+                {emoji}
+              </span>
+            );
+          })}
+        </div>
+      )}
       <div className={styles.rsvpFloaters}>
         <div className={styles.rf}>🍓</div>
         <div className={styles.rf}>🌸</div>
@@ -197,6 +226,18 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
             </div>
           )}
         </div>
+      </div>
+
+      <div className={styles.bottomActionBarRight}>
+        <a
+          href="https://wa.me/YOURNUMBER?text=Hi%20Emma%2C%20I%20just%20submitted%20an%20RSVP!"
+          target="_blank"
+          rel="noreferrer"
+          className={styles.floatingCircleBtn}
+          title="WhatsApp"
+        >
+          📱
+        </a>
       </div>
     </section>
   );

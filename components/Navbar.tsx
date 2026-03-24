@@ -16,10 +16,13 @@ export const Navbar: React.FC<NavbarProps> = ({ childName }) => {
         <a href="#hero">Home</a>
         <a href="#about">About</a>
         <a href="#gallery">Gallery</a>
+        <a href="#parents">Parents</a>
         <a href="#schedule">Schedule</a>
         <a href="#treats">Treats</a>
         <a href="#details">Details</a>
         <a href="#rsvp">RSVP</a>
+        <a href="/wishes">❤️ Wishes</a>
+        <a href="/auth" className={styles.navAdminBtn}>🔐 Admin Login</a>
         <a href="#rsvp" className={styles.navRsvpBtn}>🎟 RSVP</a>
       </div>
     </nav>

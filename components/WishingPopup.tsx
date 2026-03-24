@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { saveWish, getWishes, WishData } from '@/lib/supabase';
+import { saveWish, getVisibleWishes, WishData } from '@/lib/supabase';
 import styles from '@/styles/WishingPopup.module.css';
 
 interface WishingPopupProps {
@@ -12,6 +12,7 @@ interface WishingPopupProps {
 
 export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, isOpen }) => {
   const [guestName, setGuestName] = useState('');
+  const [guestPhone, setGuestPhone] = useState('');
   const [wish, setWish] = useState('');
   const [wishes, setWishes] = useState<WishData[]>([]);
   const [submitted, setSubmitted] = useState(false);
@@ -26,7 +27,7 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
 
   const fetchWishes = async () => {
     setFetchingWishes(true);
-    const result = await getWishes(childName);
+    const result = await getVisibleWishes(childName);
     if (result.success) {
       setWishes(result.data);
     }
@@ -36,15 +37,16 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!guestName.trim() || !wish.trim()) {
-      alert('Please fill in both name and wish!');
+    if (!guestName.trim() || !guestPhone.trim() || !wish.trim()) {
+      alert('Please fill in all fields (name, phone, and wish)!');
       return;
     }
 
     setLoading(true);
     const wishData: WishData = {
       guestName,
-      wish,
+      guestPhone,
+      wishText: wish,
       childName,
       createdAt: new Date().toISOString(),
     };
@@ -54,6 +56,7 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
     if (result.success) {
       setSubmitted(true);
       setGuestName('');
+      setGuestPhone('');
       setWish('');
       
       // Refresh wishes list
@@ -84,6 +87,14 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
               placeholder="Your name"
               value={guestName}
               onChange={(e) => setGuestName(e.target.value)}
+              className={styles.input}
+              disabled={loading}
+            />
+            <input
+              type="tel"
+              placeholder="Your phone number"
+              value={guestPhone}
+              onChange={(e) => setGuestPhone(e.target.value)}
               className={styles.input}
               disabled={loading}
             />
@@ -118,15 +129,15 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
               <p className={styles.emptyText}>Be the first to send a wish! 🍓</p>
             ) : (
               <div className={styles.wishesList}>
-                {wishes.map((w, idx) => (
+                {wishes.map((w: any, idx) => (
                   <div key={idx} className={styles.wishItem}>
                     <div className={styles.wishHeader}>
-                      <span className={styles.guestName}>{w.guestName}</span>
+                      <span className={styles.guestName}>{w.guest_name || w.guestName}</span>
                       <span className={styles.wishDate}>
-                        {new Date(w.createdAt).toLocaleDateString()}
+                        {new Date(w.created_at || w.createdAt).toLocaleDateString()}
                       </span>
                     </div>
-                    <p className={styles.wishText}>{w.wish}</p>
+                    <p className={styles.wishText}>{w.wish_text || w.wishText}</p>
                   </div>
                 ))}
               </div>

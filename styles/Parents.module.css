@@ -1,0 +1,307 @@
+.parentsSection {
+  padding: 80px 20px;
+  background: linear-gradient(180deg, #fff0f4 0%, #fffcfa 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.parentsContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.parentsHeader {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.parentsTitle {
+  font-family: 'Fredoka One', cursive;
+  font-size: 3rem;
+  color: var(--red);
+  margin: 0 0 16px 0;
+  letter-spacing: 0.02em;
+  animation: slideDown 0.6s ease;
+}
+
+.parentsSubtitle {
+  font-size: 1.2rem;
+  color: #7a3040;
+  margin: 0;
+  font-weight: 600;
+}
+
+.parentsList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+  margin-bottom: 48px;
+}
+
+.parentCard {
+  background: white;
+  border-radius: 24px;
+  padding: 40px 32px;
+  text-align: center;
+  box-shadow: 0 8px 32px rgba(232, 36, 60, 0.12),
+              0 0 0 1px rgba(232, 36, 60, 0.05);
+  border: 2px solid var(--light-pink);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.parentCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--red) 0%, #ff6b8a 100%);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.parentCard:hover::before {
+  transform: scaleX(1);
+}
+
+.parentCard:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 16px 48px rgba(232, 36, 60, 0.2),
+              0 0 0 1px rgba(232, 36, 60, 0.1);
+}
+
+.parentImageWrapper {
+  position: relative;
+  margin-bottom: 24px;
+  width: 100%;
+  height: 280px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: linear-gradient(135deg, var(--light-pink) 0%, #ffe5b0 100%);
+}
+
+.parentImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.parentCard:hover .parentImage {
+  transform: scale(1.1);
+}
+
+.parentEmoji {
+  position: absolute;
+  bottom: -8px;
+  right: -8px;
+  font-size: 3.5rem;
+  background: white;
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(232, 36, 60, 0.3);
+  border: 3px solid var(--light-pink);
+}
+
+.parentContent {
+  width: 100%;
+}
+
+.parentName {
+  font-family: 'Fredoka One', cursive;
+  font-size: 1.6rem;
+  color: var(--dark-red);
+  margin: 0 0 8px 0;
+}
+
+.parentRelationship {
+  font-size: 1.1rem;
+  color: var(--red);
+  margin: 0 0 16px 0;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+.parentDescription {
+  font-size: 1rem;
+  color: #5a5a5a;
+  margin: 16px 0;
+  line-height: 1.6;
+}
+
+.parentHobbies {
+  font-size: 0.95rem;
+  color: #7a3040;
+  margin: 16px 0 0 0;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.familyNote {
+  background: linear-gradient(135deg, rgba(232, 36, 60, 0.08) 0%, rgba(255, 107, 138, 0.08) 100%);
+  border: 2px solid var(--light-pink);
+  border-radius: 20px;
+  padding: 32px 24px;
+  text-align: center;
+  box-shadow: 0 4px 16px rgba(232, 36, 60, 0.1);
+}
+
+.familyNote p {
+  font-size: 1.1rem;
+  color: var(--dark-red);
+  margin: 0;
+  font-weight: 600;
+  line-height: 1.8;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .parentsSection {
+    padding: 60px 16px;
+  }
+
+  .parentsHeader {
+    margin-bottom: 40px;
+  }
+
+  .parentsTitle {
+    font-size: 2.2rem;
+  }
+
+  .parentsSubtitle {
+    font-size: 1rem;
+  }
+
+  .parentsList {
+    gap: 24px;
+  }
+
+  .parentCard {
+    padding: 32px 24px;
+    border-radius: 20px;
+  }
+
+  .parentImageWrapper {
+    height: 240px;
+    margin-bottom: 20px;
+  }
+
+  .parentEmoji {
+    width: 70px;
+    height: 70px;
+    font-size: 3rem;
+  }
+
+  .parentName {
+    font-size: 1.4rem;
+  }
+
+  .parentRelationship {
+    font-size: 1rem;
+    margin-bottom: 12px;
+  }
+
+  .parentDescription {
+    font-size: 0.95rem;
+    margin: 12px 0;
+  }
+
+  .familyNote {
+    padding: 24px 16px;
+  }
+
+  .familyNote p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .parentsSection {
+    padding: 40px 12px;
+  }
+
+  .parentsHeader {
+    margin-bottom: 32px;
+  }
+
+  .parentsTitle {
+    font-size: 1.8rem;
+    margin-bottom: 12px;
+  }
+
+  .parentsSubtitle {
+    font-size: 0.95rem;
+  }
+
+  .parentsList {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .parentCard {
+    padding: 24px 16px;
+    border-radius: 16px;
+  }
+
+  .parentCard:hover {
+    transform: translateY(-8px);
+  }
+
+  .parentImageWrapper {
+    height: 200px;
+    margin-bottom: 16px;
+    border-radius: 14px;
+  }
+
+  .parentEmoji {
+    width: 60px;
+    height: 60px;
+    font-size: 2.5rem;
+  }
+
+  .parentName {
+    font-size: 1.2rem;
+  }
+
+  .parentRelationship {
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+  }
+
+  .parentDescription {
+    font-size: 0.9rem;
+    margin: 10px 0;
+  }
+
+  .parentHobbies {
+    font-size: 0.85rem;
+  }
+
+  .familyNote {
+    padding: 20px 12px;
+    border-radius: 16px;
+  }
+
+  .familyNote p {
+    font-size: 0.95rem;
+  }
+}
