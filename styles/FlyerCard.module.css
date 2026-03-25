@@ -2,13 +2,12 @@
   display: flex;
   flex-direction: column;
   gap: 40px;
-  max-width: 1100px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .controls {
   text-align: center;
-  margin-bottom: 20px;
 }
 
 .controls h2 {
@@ -16,23 +15,56 @@
   color: #8c001a;
   margin: 0 0 12px;
   font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .description {
   font-size: 1rem;
   color: #666;
-  margin: 0 0 24px;
+  margin: 0 0 28px;
   line-height: 1.6;
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
 }
 
+.sizeSelector {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.sizeBtn {
+  padding: 10px 20px;
+  background: white;
+  color: #8c001a;
+  border: 2px solid #ffd6e0;
+  border-radius: 25px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.sizeBtn:hover {
+  border-color: #e8243c;
+  transform: translateY(-2px);
+}
+
+.sizeBtn.active {
+  background: linear-gradient(135deg, #e8243c 0%, #ff6b8a 100%);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 6px 20px rgba(232, 36, 60, 0.3);
+}
+
 .downloadBtn {
   background: linear-gradient(135deg, #e8243c 0%, #ff6b8a 100%);
   color: white;
   border: none;
-  padding: 14px 32px;
+  padding: 14px 40px;
   font-size: 1rem;
   font-weight: 600;
   border-radius: 50px;
@@ -56,27 +88,37 @@
   overflow-x: auto;
   overflow-y: visible;
   padding: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: #ffd6e0 transparent;
 }
 
-/* Main Flyer Card - 4:5 ratio (1080x1350) */
+/* A4 Flyer - 595x842px at 72 DPI */
 .flyer {
-  width: 450px;
-  height: 562.5px;
   background: white;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
-  border: 4px solid #ffd6e0;
+  border: 3px solid #ffd6e0;
+}
+
+.flyer.a4 {
+  width: 500px;
+  height: 707px;
+}
+
+.flyer.social {
+  width: 450px;
+  height: 562px;
 }
 
 .flyerBg {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, #fff0f4 0%, #fff8f2 50%, #fffaf5 100%);
+  background: linear-gradient(135deg, #fef5f7 0%, #fff0f4 50%, #fff8f2 100%);
   display: flex;
   flex-direction: column;
-  padding: 24px 20px;
+  padding: 0;
   box-sizing: border-box;
   position: relative;
   overflow: hidden;
@@ -87,166 +129,223 @@
   position: absolute;
   inset: 0;
   background: 
-    radial-gradient(circle at 10% 20%, rgba(232, 36, 60, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 90% 80%, rgba(255, 107, 138, 0.03) 0%, transparent 50%);
+    radial-gradient(circle at 10% 10%, rgba(232, 36, 60, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 90% 90%, rgba(255, 107, 138, 0.04) 0%, transparent 40%);
   pointer-events: none;
 }
 
-.flyerDecorTop,
-.flyerDecorBottom {
-  text-align: center;
-  font-size: 1.8rem;
-  letter-spacing: 0.5rem;
-  opacity: 0.5;
+/* Top Accent Bar */
+.accentBar {
+  height: 6px;
+  background: linear-gradient(90deg, #e8243c 0%, #ff6b8a 50%, #e8243c 100%);
 }
 
-.flyerDecorTop {
-  margin-bottom: 8px;
-}
-
-.flyerDecorBottom {
-  margin-top: auto;
-  padding-top: 8px;
-}
-
+/* Header */
 .flyerHeader {
+  padding: 28px 24px 20px;
   text-align: center;
-  margin-bottom: 16px;
+  position: relative;
+  z-index: 2;
 }
 
-.flyerEmoji {
-  font-size: 4rem;
-  display: block;
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
   margin-bottom: 8px;
-  animation: float 3s ease-in-out infinite;
 }
 
-@keyframes float {
+.decorEmoji {
+  font-size: 2rem;
+  opacity: 0.8;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.decorEmoji:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+@keyframes bounce {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-8px); }
 }
 
-.flyerTitle {
-  font-size: 1.8rem;
+.mainTitle {
+  font-size: 2.4rem;
   color: #8c001a;
-  margin: 0 0 4px;
-  font-weight: 700;
+  margin: 0;
+  font-weight: 800;
+  letter-spacing: 1px;
   font-family: 'Pacifico', cursive;
 }
 
-.flyerSubtitle {
-  font-size: 0.85rem;
+.partyName {
+  font-size: 0.9rem;
   color: #666;
+  margin: 8px 0 0;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+/* Content Area */
+.flyerContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 20px;
+  overflow: hidden;
+}
+
+/* Highlight Box - Date & Time */
+.highlightBox {
+  background: linear-gradient(135deg, rgba(232, 36, 60, 0.12) 0%, rgba(255, 107, 138, 0.08) 100%);
+  border: 2px solid #e8243c;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  position: relative;
+  z-index: 2;
+}
+
+.highlightIcon {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+
+.highlightContent {
+  flex: 1;
+}
+
+.highlightLabel {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: #8c001a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 4px;
+}
+
+.highlightValue {
+  font-size: 0.95rem;
+  color: #333;
+  margin: 0;
+  font-weight: 700;
+}
+
+/* Info Row */
+.infoRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.infoCard {
+  background: white;
+  border: 2px solid #ffd6e0;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.infoCardIcon {
+  font-size: 1.8rem;
+  margin-bottom: 6px;
+}
+
+.infoCardLabel {
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: #8c001a;
+  text-transform: uppercase;
+  margin: 0 0 4px;
+  letter-spacing: 0.3px;
+}
+
+.infoCardValue {
+  font-size: 0.8rem;
+  color: #333;
   margin: 0;
   line-height: 1.3;
   font-weight: 600;
 }
 
-.flyerContent {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  overflow: hidden;
-}
-
-.infoBox {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.infoItem {
-  display: flex;
-  gap: 8px;
-  padding: 8px;
-  background: white;
-  border-radius: 8px;
-  border: 1.5px solid #ffd6e0;
-}
-
-.infoIcon {
-  font-size: 1.3rem;
-  flex-shrink: 0;
-  line-height: 1;
-}
-
-.infoText {
-  flex: 1;
-  min-width: 0;
-}
-
-.infoLabel {
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: #8c001a;
-  margin: 0 0 2px;
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
-.infoValue {
-  font-size: 0.75rem;
-  color: #333;
-  margin: 0;
-  line-height: 1.2;
-  font-weight: 600;
-}
-
-.activitiesBox {
-  background: rgba(232, 36, 60, 0.08);
-  border: 1.5px solid #ffd6e0;
-  border-radius: 8px;
-  padding: 8px;
+/* Activities Section */
+.activitiesSection {
+  position: relative;
+  z-index: 2;
 }
 
 .activitiesTitle {
-  font-size: 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 800;
   color: #8c001a;
-  margin: 0 0 6px;
-  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.3px;
+  margin: 0 0 8px;
+  letter-spacing: 0.4px;
 }
 
-.activitiesList {
+.activitiesGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4px;
+  gap: 8px;
 }
 
-.activityItem {
-  font-size: 0.65rem;
-  color: #555;
-  line-height: 1.2;
-  padding: 4px;
-  background: white;
-  border-radius: 4px;
-  text-align: center;
-  border: 1px solid #ffe0eb;
-}
-
-.ctaBox {
-  background: linear-gradient(135deg, rgba(232, 36, 60, 0.1) 0%, rgba(255, 107, 138, 0.1) 100%);
-  border: 2px solid #e8243c;
+.activityBubble {
+  background: linear-gradient(135deg, #fff5f7 0%, #fff0f4 100%);
+  border: 1.5px solid #ffd6e0;
   border-radius: 8px;
-  padding: 8px;
+  padding: 10px;
+  font-size: 0.75rem;
+  color: #555;
   text-align: center;
-  margin-top: auto;
+  line-height: 1.3;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-.ctaText {
-  font-size: 0.8rem;
-  color: #8c001a;
+/* CTA Section */
+.ctaSection {
+  background: linear-gradient(135deg, #e8243c 0%, #ff6b8a 100%);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  position: relative;
+  z-index: 2;
+}
+
+.ctaMain {
+  font-size: 1rem;
+  color: white;
   margin: 0 0 4px;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.5px;
 }
 
-.rsvpText {
-  font-size: 0.65rem;
-  color: #666;
+.ctaSub {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.95);
   margin: 0;
-  font-style: italic;
+  font-weight: 600;
+}
+
+/* Bottom Decoration */
+.bottomDecor {
+  padding: 12px 0;
+  text-align: center;
+  font-size: 1.6rem;
+  letter-spacing: 0.3rem;
+  opacity: 0.6;
+  position: relative;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }
 
 .previewInfo {
@@ -254,14 +353,14 @@
   padding: 20px;
   background: rgba(232, 36, 60, 0.05);
   border-radius: 12px;
-  border: 1.5px dashed #ffd6e0;
+  border: 1.5px solid #ffd6e0;
   margin-top: 20px;
 }
 
 .previewInfo p {
   font-size: 0.9rem;
   color: #666;
-  margin: 6px 0;
+  margin: 8px 0;
   line-height: 1.5;
 }
 
@@ -279,15 +378,35 @@
     font-size: 0.95rem;
   }
 
-  .flyer {
+  .flyer.a4 {
+    width: 100%;
+    max-width: 420px;
+    height: auto;
+    aspect-ratio: 595 / 842;
+  }
+
+  .flyer.social {
     width: 100%;
     max-width: 380px;
     height: auto;
     aspect-ratio: 4 / 5;
   }
 
+  .mainTitle {
+    font-size: 2rem;
+  }
+
+  .sizeSelector {
+    gap: 10px;
+  }
+
+  .sizeBtn {
+    padding: 9px 16px;
+    font-size: 0.9rem;
+  }
+
   .downloadBtn {
-    padding: 12px 28px;
+    padding: 12px 32px;
     font-size: 0.95rem;
   }
 }
@@ -305,61 +424,108 @@
     font-size: 0.9rem;
   }
 
-  .flyer {
+  .flyerWrapper {
+    padding: 10px;
+  }
+
+  .flyer.a4,
+  .flyer.social {
     width: 100%;
-    max-width: 320px;
+    max-width: 100%;
     height: auto;
-    aspect-ratio: 4 / 5;
-    border-width: 3px;
   }
 
-  .flyerEmoji {
-    font-size: 3rem;
+  .flyerHeader {
+    padding: 20px 16px 16px;
   }
 
-  .flyerTitle {
-    font-size: 1.4rem;
+  .headerTop {
+    gap: 8px;
   }
 
-  .flyerSubtitle {
-    font-size: 0.8rem;
+  .decorEmoji {
+    font-size: 1.6rem;
   }
 
-  .infoItem {
-    gap: 6px;
-    padding: 6px;
+  .mainTitle {
+    font-size: 1.6rem;
   }
 
-  .infoIcon {
-    font-size: 1.1rem;
+  .partyName {
+    font-size: 0.85rem;
   }
 
-  .infoLabel {
+  .flyerContent {
+    gap: 12px;
+    padding: 0 16px;
+  }
+
+  .highlightBox {
+    padding: 12px;
+    gap: 10px;
+  }
+
+  .highlightIcon {
+    font-size: 1.8rem;
+  }
+
+  .highlightValue {
+    font-size: 0.85rem;
+  }
+
+  .infoRow {
+    gap: 10px;
+  }
+
+  .infoCard {
+    padding: 10px;
+  }
+
+  .infoCardIcon {
+    font-size: 1.5rem;
+  }
+
+  .infoCardLabel {
     font-size: 0.6rem;
   }
 
-  .infoValue {
-    font-size: 0.7rem;
-  }
-
-  .activitiesTitle {
-    font-size: 0.65rem;
-  }
-
-  .activityItem {
-    font-size: 0.6rem;
-    padding: 3px;
-  }
-
-  .ctaText {
+  .infoCardValue {
     font-size: 0.75rem;
   }
 
-  .rsvpText {
-    font-size: 0.6rem;
+  .activitiesGrid {
+    gap: 6px;
   }
 
-  .previewInfo p {
+  .activityBubble {
+    font-size: 0.7rem;
+    padding: 8px;
+  }
+
+  .ctaSection {
+    padding: 10px;
+  }
+
+  .ctaMain {
+    font-size: 0.9rem;
+  }
+
+  .ctaSub {
+    font-size: 0.7rem;
+  }
+
+  .bottomDecor {
+    font-size: 1.4rem;
+    gap: 6px;
+    padding: 10px 0;
+  }
+
+  .sizeSelector {
+    gap: 8px;
+  }
+
+  .sizeBtn {
+    padding: 8px 14px;
     font-size: 0.85rem;
   }
 
@@ -367,23 +533,36 @@
     padding: 10px 24px;
     font-size: 0.9rem;
   }
+
+  .previewInfo p {
+    font-size: 0.8rem;
+  }
 }
 
-/* Print styles for better output */
+/* Print Optimization */
 @media print {
   .controls,
-  .previewInfo {
+  .previewInfo,
+  .sizeSelector,
+  .downloadBtn {
     display: none;
   }
 
   .flyerWrapper {
     padding: 0;
+    background: none;
+    box-shadow: none;
   }
 
   .flyer {
     box-shadow: none;
-    width: 4in;
-    height: 5in;
+    border: none;
+    width: 8.27in;
+    height: 11.69in;
     margin: 0;
+  }
+
+  .flyerBg {
+    padding: 0;
   }
 }
