@@ -13,6 +13,7 @@ import { HomepageWishes } from '@/components/HomepageWishes';
 import { Treats } from '@/components/Treats';
 import { Footer } from '@/components/Footer';
 import { WishingPopup } from '@/components/WishingPopup';
+import { FloatingButtons } from '@/components/FloatingButtons';
 import { Wave, Confetti, HeartsAnimation, RainLayer } from '@/components/Utils';
 
 export default function Home() {
@@ -130,6 +131,8 @@ export default function Home() {
         isOpen={wishingPopupOpen}
         onClose={() => setWishingPopupOpen(false)}
       />
+
+      <FloatingButtons />
     </main>
   );
 }

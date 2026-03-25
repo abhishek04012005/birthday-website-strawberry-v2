@@ -9,12 +9,12 @@ import { Footer } from '@/components/Footer';
 import { Wave } from '@/components/Utils';
 
 interface Wish {
-  id: string | number;
+  id: number;
   guest_name: string;
   guest_phone: string;
   wish_text: string;
   child_name: string;
-  created_at: string;
+  submitted_at: string;
   is_visible?: boolean;
 }
 
@@ -127,7 +127,7 @@ export default function WishesPage() {
                   <div className={styles.wishCard}>
                     <div className={styles.wishHeader}>
                       <h3 className={styles.guestName}>{wish.guest_name}</h3>
-                      <span className={styles.wishDate}>{new Date(wish.created_at).toLocaleDateString()}</span>
+                      <span className={styles.wishDate}>{new Date(wish.submitted_at).toLocaleDateString()}</span>
                     </div>
                     <p className={styles.wishText}>{wish.wish_text}</p>
                     <p className={styles.guestPhone}>📞 {wish.guest_phone}</p>
@@ -149,7 +149,7 @@ export default function WishesPage() {
                       <div>
                         <strong>{wish.guest_name}</strong> ({wish.guest_phone})
                         <p>{wish.wish_text}</p>
-                        <small>{new Date(wish.created_at).toLocaleString()}</small>
+                        <small>{new Date(wish.submitted_at).toLocaleString()}</small>
                       </div>
                       <button
                         className={wish.is_visible ? styles.hideBtn : styles.showBtn}

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { saveWish, getVisibleWishes, WishData } from '@/lib/supabase';
+import { Confetti } from '@/components/Utils';
 import styles from '@/styles/WishingPopup.module.css';
 
 interface WishingPopupProps {
@@ -18,6 +19,7 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fetchingWishes, setFetchingWishes] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
@@ -55,6 +57,7 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
     
     if (result.success) {
       setSubmitted(true);
+      setShowConfetti(true);
       setGuestName('');
       setGuestPhone('');
       setWish('');
@@ -64,6 +67,9 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
       
       // Reset submitted message after 2 seconds
       setTimeout(() => setSubmitted(false), 2000);
+      
+      // Stop confetti after 3 seconds
+      setTimeout(() => setShowConfetti(false), 3000);
     } else {
       alert(`Error: ${result.error}`);
     }
@@ -75,6 +81,8 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
 
   return (
     <div className={styles.overlay} onClick={onClose}>
+      {showConfetti && <Confetti />}
+      
       <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
         <button className={styles.closeBtn} onClick={onClose}>✕</button>
         
@@ -133,9 +141,6 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
                   <div key={idx} className={styles.wishItem}>
                     <div className={styles.wishHeader}>
                       <span className={styles.guestName}>{w.guest_name || w.guestName}</span>
-                      <span className={styles.wishDate}>
-                        {new Date(w.created_at || w.createdAt).toLocaleDateString()}
-                      </span>
                     </div>
                     <p className={styles.wishText}>{w.wish_text || w.wishText}</p>
                   </div>

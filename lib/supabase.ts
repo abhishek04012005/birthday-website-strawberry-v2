@@ -155,7 +155,7 @@ export interface WishData {
   guestPhone: string;
   wishText: string;
   childName: string;
-  createdAt: string;
+  createdAt?: string;
 }
 
 // Save RSVP data
@@ -199,7 +199,8 @@ export const saveWish = async (data: WishData) => {
       guest_phone: data.guestPhone,
       wish_text: data.wishText,
       child_name: data.childName,
-      created_at: data.createdAt,
+      submitted_at: data.createdAt || new Date().toISOString(),
+      is_visible: false,
     };
 
     const { data: result, error } = await supabase
