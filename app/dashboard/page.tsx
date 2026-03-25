@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getRSVPs, getWishes, updateWishVisibility } from '@/lib/supabase';
 import styles from '@/styles/Dashboard.module.css';
+import { FlyerCard } from '@/components/FlyerCard';
 
 interface RSVP {
   id: string;
@@ -32,7 +33,7 @@ export default function DashboardPage() {
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [selectedWishes, setSelectedWishes] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'rsvps' | 'wishes'>('rsvps');
+  const [activeTab, setActiveTab] = useState<'rsvps' | 'wishes' | 'flyer'>('rsvps');
   const [modalMessage, setModalMessage] = useState<{text: string, type: 'success' | 'error'} | null>(null);
 
   useEffect(() => {
@@ -178,6 +179,12 @@ export default function DashboardPage() {
         >
           🎈 Wishes ({wishes.length})
         </button>
+        <button
+          className={`${styles.tabBtn} ${activeTab === 'flyer' ? styles.active : ''}`}
+          onClick={() => setActiveTab('flyer')}
+        >
+          🎟 Flyer
+        </button>
       </div>
 
       {/* Content */}
@@ -223,6 +230,24 @@ export default function DashboardPage() {
                           minute: '2-digit',
                         })}
                       </p>
+                    </div>
+                    <div className={styles.actionButtons}>
+                      <a
+                        href={`https://wa.me/${rsvp.phone.replace(/\D/g, '')}?text=Hi%20${rsvp.guest_name.replace(/\s/g, '%20')}%2C%20thanks%20for%20RSVPing%20for%20Emma's%20birthday!`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className={styles.actionBtn}
+                        title="WhatsApp Message"
+                      >
+                        💬 WhatsApp
+                      </a>
+                      <a
+                        href={`tel:${rsvp.phone}`}
+                        className={styles.actionBtn}
+                        title="Call"
+                      >
+                        📞 Call
+                      </a>
                     </div>
                   </div>
                 ))}
@@ -284,6 +309,12 @@ export default function DashboardPage() {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {activeTab === 'flyer' && (
+          <div className={styles.flyerSection}>
+            <FlyerCard />
           </div>
         )}
       </main>

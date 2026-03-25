@@ -1,0 +1,389 @@
+.flyerContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.controls {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.controls h2 {
+  font-size: 2.2rem;
+  color: #8c001a;
+  margin: 0 0 12px;
+  font-weight: 700;
+}
+
+.description {
+  font-size: 1rem;
+  color: #666;
+  margin: 0 0 24px;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.downloadBtn {
+  background: linear-gradient(135deg, #e8243c 0%, #ff6b8a 100%);
+  color: white;
+  border: none;
+  padding: 14px 32px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 24px rgba(232, 36, 60, 0.3);
+}
+
+.downloadBtn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 32px rgba(232, 36, 60, 0.4);
+}
+
+.downloadBtn:active {
+  transform: translateY(-1px);
+}
+
+.flyerWrapper {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+  overflow-y: visible;
+  padding: 20px;
+}
+
+/* Main Flyer Card - 4:5 ratio (1080x1350) */
+.flyer {
+  width: 450px;
+  height: 562.5px;
+  background: white;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+  border: 4px solid #ffd6e0;
+}
+
+.flyerBg {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #fff0f4 0%, #fff8f2 50%, #fffaf5 100%);
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  box-sizing: border-box;
+  position: relative;
+  overflow: hidden;
+}
+
+.flyerBg::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(circle at 10% 20%, rgba(232, 36, 60, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 90% 80%, rgba(255, 107, 138, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.flyerDecorTop,
+.flyerDecorBottom {
+  text-align: center;
+  font-size: 1.8rem;
+  letter-spacing: 0.5rem;
+  opacity: 0.5;
+}
+
+.flyerDecorTop {
+  margin-bottom: 8px;
+}
+
+.flyerDecorBottom {
+  margin-top: auto;
+  padding-top: 8px;
+}
+
+.flyerHeader {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.flyerEmoji {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 8px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.flyerTitle {
+  font-size: 1.8rem;
+  color: #8c001a;
+  margin: 0 0 4px;
+  font-weight: 700;
+  font-family: 'Pacifico', cursive;
+}
+
+.flyerSubtitle {
+  font-size: 0.85rem;
+  color: #666;
+  margin: 0;
+  line-height: 1.3;
+  font-weight: 600;
+}
+
+.flyerContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  overflow: hidden;
+}
+
+.infoBox {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.infoItem {
+  display: flex;
+  gap: 8px;
+  padding: 8px;
+  background: white;
+  border-radius: 8px;
+  border: 1.5px solid #ffd6e0;
+}
+
+.infoIcon {
+  font-size: 1.3rem;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.infoText {
+  flex: 1;
+  min-width: 0;
+}
+
+.infoLabel {
+  font-size: 0.65rem;
+  font-weight: 700;
+  color: #8c001a;
+  margin: 0 0 2px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.infoValue {
+  font-size: 0.75rem;
+  color: #333;
+  margin: 0;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+.activitiesBox {
+  background: rgba(232, 36, 60, 0.08);
+  border: 1.5px solid #ffd6e0;
+  border-radius: 8px;
+  padding: 8px;
+}
+
+.activitiesTitle {
+  font-size: 0.7rem;
+  color: #8c001a;
+  margin: 0 0 6px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.activitiesList {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.activityItem {
+  font-size: 0.65rem;
+  color: #555;
+  line-height: 1.2;
+  padding: 4px;
+  background: white;
+  border-radius: 4px;
+  text-align: center;
+  border: 1px solid #ffe0eb;
+}
+
+.ctaBox {
+  background: linear-gradient(135deg, rgba(232, 36, 60, 0.1) 0%, rgba(255, 107, 138, 0.1) 100%);
+  border: 2px solid #e8243c;
+  border-radius: 8px;
+  padding: 8px;
+  text-align: center;
+  margin-top: auto;
+}
+
+.ctaText {
+  font-size: 0.8rem;
+  color: #8c001a;
+  margin: 0 0 4px;
+  font-weight: 700;
+}
+
+.rsvpText {
+  font-size: 0.65rem;
+  color: #666;
+  margin: 0;
+  font-style: italic;
+}
+
+.previewInfo {
+  text-align: center;
+  padding: 20px;
+  background: rgba(232, 36, 60, 0.05);
+  border-radius: 12px;
+  border: 1.5px dashed #ffd6e0;
+  margin-top: 20px;
+}
+
+.previewInfo p {
+  font-size: 0.9rem;
+  color: #666;
+  margin: 6px 0;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .flyerContainer {
+    gap: 30px;
+  }
+
+  .controls h2 {
+    font-size: 1.8rem;
+  }
+
+  .description {
+    font-size: 0.95rem;
+  }
+
+  .flyer {
+    width: 100%;
+    max-width: 380px;
+    height: auto;
+    aspect-ratio: 4 / 5;
+  }
+
+  .downloadBtn {
+    padding: 12px 28px;
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .flyerContainer {
+    gap: 20px;
+  }
+
+  .controls h2 {
+    font-size: 1.5rem;
+  }
+
+  .description {
+    font-size: 0.9rem;
+  }
+
+  .flyer {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    aspect-ratio: 4 / 5;
+    border-width: 3px;
+  }
+
+  .flyerEmoji {
+    font-size: 3rem;
+  }
+
+  .flyerTitle {
+    font-size: 1.4rem;
+  }
+
+  .flyerSubtitle {
+    font-size: 0.8rem;
+  }
+
+  .infoItem {
+    gap: 6px;
+    padding: 6px;
+  }
+
+  .infoIcon {
+    font-size: 1.1rem;
+  }
+
+  .infoLabel {
+    font-size: 0.6rem;
+  }
+
+  .infoValue {
+    font-size: 0.7rem;
+  }
+
+  .activitiesTitle {
+    font-size: 0.65rem;
+  }
+
+  .activityItem {
+    font-size: 0.6rem;
+    padding: 3px;
+  }
+
+  .ctaText {
+    font-size: 0.75rem;
+  }
+
+  .rsvpText {
+    font-size: 0.6rem;
+  }
+
+  .previewInfo p {
+    font-size: 0.85rem;
+  }
+
+  .downloadBtn {
+    padding: 10px 24px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Print styles for better output */
+@media print {
+  .controls,
+  .previewInfo {
+    display: none;
+  }
+
+  .flyerWrapper {
+    padding: 0;
+  }
+
+  .flyer {
+    box-shadow: none;
+    width: 4in;
+    height: 5in;
+    margin: 0;
+  }
+}

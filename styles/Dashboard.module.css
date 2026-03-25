@@ -876,3 +876,71 @@
     transform: scale(1) rotate(0deg);
   }
 }
+
+/* Action Buttons */
+.actionButtons {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.actionBtn {
+  flex: 1;
+  padding: 10px 14px;
+  background: linear-gradient(135deg, #e8243c 0%, #ff6b8a 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: inline-block;
+  min-width: 100px;
+}
+
+.actionBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(232, 36, 60, 0.3);
+}
+
+.actionBtn:active {
+  transform: translateY(0);
+}
+
+/* Flyer Section */
+.flyerSection {
+  animation: fadeInUp 0.6s ease;
+  padding: 40px 20px;
+}
+
+@media (max-width: 768px) {
+  .rsvpCard {
+    flex-direction: column;
+  }
+
+  .actionButtons {
+    gap: 10px;
+  }
+
+  .actionBtn {
+    min-width: 80px;
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .actionButtons {
+    gap: 8px;
+  }
+
+  .actionBtn {
+    padding: 8px 10px;
+    font-size: 0.8rem;
+    min-width: 70px;
+  }
+}
