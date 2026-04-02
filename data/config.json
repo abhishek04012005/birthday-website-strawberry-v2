@@ -152,6 +152,38 @@
       "tag": "🥤 Signature Drink"
     }
   ],
+  "quiz": [
+    {
+      "id": 1,
+      "question": "What is the birthday girl's favorite treat?",
+      "options": ["Chocolate cake", "Strawberry shortcake", "Ice cream", "Donut"],
+      "correctIndex": 1
+    },
+    {
+      "id": 2,
+      "question": "How old is Emma turning?",
+      "options": ["4", "5", "6", "7"],
+      "correctIndex": 1
+    },
+    {
+      "id": 3,
+      "question": "Which color is the party theme?",
+      "options": ["Blue", "Green", "Pink", "Yellow"],
+      "correctIndex": 2
+    },
+    {
+      "id": 4,
+      "question": "What activity includes music and dancing?",
+      "options": ["Face painting", "Bouncy castle", "Dance party", "Treasure hunt"],
+      "correctIndex": 2
+    },
+    {
+      "id": 5,
+      "question": "Which of these is NOT in the treats section?",
+      "options": ["Strawberry lemonade", "Mini cupcakes", "Pizza", "Chocolate-dipped berries"],
+      "correctIndex": 2
+    }
+  ],
   "timeline": [
     {
       "time": "3:00 PM",

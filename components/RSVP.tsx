@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { saveRSVP } from '@/lib/supabase';
 import styles from '@/styles/RSVP.module.css';
 
@@ -23,6 +24,24 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
     guests: 'Just me 👤',
     message: '',
   });
+
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    if (!searchParams) return;
+
+    const name = searchParams.get('name') || '';
+    const phone = searchParams.get('phone') || '';
+
+    if (!name && !phone) return;
+
+    setFormData((prev) => ({
+      ...prev,
+      name: decodeURIComponent(name),
+      phone: decodeURIComponent(phone),
+    }));
+  }, [searchParams]);
+
   let localComingCount = comingCount;
 
   const handleSubmit = async (e: React.FormEvent) => {

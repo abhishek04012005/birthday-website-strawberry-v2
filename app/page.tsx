@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import config from '@/data/config.json';
 import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
+import { Quiz, QuizQuestion } from '@/components/Quiz';
 import { About } from '@/components/About';
 import { Gallery } from '@/components/Gallery';
 import { Parents } from '@/components/Parents';
@@ -18,8 +19,26 @@ import { Wave, Confetti, HeartsAnimation, RainLayer } from '@/components/Utils';
 
 export default function Home() {
   const [wishingPopupOpen, setWishingPopupOpen] = useState(true);
+  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
 
   useEffect(() => {
+    // Setup quiz data from admin saved values / default config
+    const savedQuiz = localStorage.getItem('birthdayQuizQuestions');
+    if (savedQuiz) {
+      try {
+        const parsed = JSON.parse(savedQuiz) as QuizQuestion[];
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          setQuizQuestions(parsed);
+        } else {
+          setQuizQuestions(config.quiz as QuizQuestion[]);
+        }
+      } catch {
+        setQuizQuestions(config.quiz as QuizQuestion[]);
+      }
+    } else {
+      setQuizQuestions(config.quiz as QuizQuestion[]);
+    }
+
     // Launch confetti on load
     const canvas = document.getElementById('confettiCanvas') as HTMLCanvasElement;
     if (canvas) {
@@ -109,6 +128,10 @@ export default function Home() {
         features={config.rsvp.features}
         childName={config.child.name}
       />
+
+      <Wave bgColor="#8c001a" svgColor="#1a0008" />
+
+      <Quiz questions={quizQuestions} />
 
       <Wave bgColor="#8c001a" svgColor="#1a0008" />
 

@@ -1,8 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { getGuests, saveGuest, updateGuest, deleteGuest, bulkSaveGuests, GuestData } from '@/lib/supabase';
+import config from '@/data/config.json';
 import * as XLSX from 'xlsx';
 import styles from '@/styles/GuestManagement.module.css';
 
@@ -16,13 +17,24 @@ interface Guest {
   updated_at: string;
 }
 
+interface QuizQuestion {
+  id: number;
+  question: string;
+  options: string[];
+  correctIndex: number;
+}
+
 export default function GuestManagementPage() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [guests, setGuests] = useState<Guest[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'list' | 'add' | 'upload'>('list');
+  const [activeTab, setActiveTab] = useState<'list' | 'add' | 'upload' | 'quiz'>('list');
   const [modalMessage, setModalMessage] = useState<{text: string, type: 'success' | 'error'} | null>(null);
+
+  const searchParams = useSearchParams();
+  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
+  const defaultQuiz = config.quiz as QuizQuestion[] || [];
 
   // Form states
   const [formData, setFormData] = useState({
@@ -65,8 +77,30 @@ export default function GuestManagementPage() {
       }
     };
 
+    const loadQuiz = () => {
+      try {
+        const stored = localStorage.getItem('birthdayQuizQuestions');
+        if (stored) {
+          const parsed = JSON.parse(stored) as QuizQuestion[];
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            setQuizQuestions(parsed);
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn('Failed to parse quiz from localStorage', e);
+      }
+      setQuizQuestions(defaultQuiz);
+    };
+
     checkAuth();
-  }, [router]);
+    loadQuiz();
+
+    const tab = searchParams?.get('tab');
+    if (tab === 'quiz') {
+      setActiveTab('quiz');
+    }
+  }, [router, defaultQuiz, searchParams]);
 
   const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -209,12 +243,29 @@ export default function GuestManagementPage() {
     setTimeout(() => setModalMessage(null), 3000);
   };
 
-  const generateWhatsAppMessage = (guest: Guest) => {
-    return customMessage
+  const generateWhatsAppMessage = (guest: Guest, includeRsvp = true) => {
+    const message = customMessage
       .replaceAll('{title}', guest.title || '')
       .replaceAll('{name}', guest.name || '')
       .replace(/\s+/g, ' ')
       .trim();
+
+    if (!includeRsvp || !guest.name) {
+      return message;
+    }
+
+    const rsvpName = `${guest.title ? guest.title + ' ' : ''}${guest.name}`.trim();
+    const rsvpUrl = new URL(`${window.location.origin}/`);
+    rsvpUrl.searchParams.set('name', rsvpName);
+    if (guest.phone) {
+      const sanitizedPhone = guest.phone.replace(/\D/g, '');
+      if (sanitizedPhone) {
+        rsvpUrl.searchParams.set('phone', sanitizedPhone);
+      }
+    }
+    rsvpUrl.hash = 'rsvp';
+
+    return `${message}\n\nPlease RSVP here: ${rsvpUrl.toString()}`;
   };
 
   const handleSendWhatsApp = (guest: Guest) => {
@@ -256,7 +307,7 @@ export default function GuestManagementPage() {
   };
 
   const handleShareMessage = () => {
-    const message = generateWhatsAppMessage({ title: '{title}', name: '{name}' } as Guest);
+    const message = generateWhatsAppMessage({ title: '{title}', name: '{name}' } as Guest, false);
     if (navigator.share) {
       navigator.share({
         title: 'Birthday Party Invitation',
@@ -269,6 +320,47 @@ export default function GuestManagementPage() {
         setTimeout(() => setModalMessage(null), 3000);
       });
     }
+  };
+
+  const handleQuizQuestionChange = (questionIndex: number, updatedQuestion: Partial<QuizQuestion>) => {
+    setQuizQuestions((prev) =>
+      prev.map((q, idx) => {
+        if (idx !== questionIndex) return q;
+        return { ...q, ...updatedQuestion };
+      })
+    );
+  };
+
+  const handleSaveQuiz = () => {
+    if (quizQuestions.length !== 5) {
+      setModalMessage({ text: 'Please have exactly 5 quiz questions.', type: 'error' });
+      setTimeout(() => setModalMessage(null), 3000);
+      return;
+    }
+
+    for (const question of quizQuestions) {
+      if (!question.question.trim() || question.options.length !== 4 || question.options.some((opt) => !opt.trim())) {
+        setModalMessage({ text: 'All questions must have text and exactly 4 options filled.', type: 'error' });
+        setTimeout(() => setModalMessage(null), 3000);
+        return;
+      }
+      if (question.correctIndex < 0 || question.correctIndex >= 4) {
+        setModalMessage({ text: 'Each question needs one correct option selected.', type: 'error' });
+        setTimeout(() => setModalMessage(null), 3000);
+        return;
+      }
+    }
+
+    localStorage.setItem('birthdayQuizQuestions', JSON.stringify(quizQuestions));
+    setModalMessage({ text: 'Quiz settings saved successfully.', type: 'success' });
+    setTimeout(() => setModalMessage(null), 3000);
+  };
+
+  const handleResetQuiz = () => {
+    setQuizQuestions(defaultQuiz);
+    localStorage.removeItem('birthdayQuizQuestions');
+    setModalMessage({ text: 'Quiz reset to default questions.', type: 'success' });
+    setTimeout(() => setModalMessage(null), 3000);
   };
 
   if (loading) {
@@ -325,6 +417,12 @@ export default function GuestManagementPage() {
           onClick={() => setActiveTab('upload')}
         >
           📊 Upload Excel
+        </button>
+        <button
+          className={`${styles.tabBtn} ${activeTab === 'quiz' ? styles.active : ''}`}
+          onClick={() => setActiveTab('quiz')}
+        >
+          🧠 Quiz Management
         </button>
       </div>
 
@@ -419,6 +517,63 @@ export default function GuestManagementPage() {
                 ))}
               </div>
             )}
+          </div>
+        )}
+
+        {activeTab === 'quiz' && (
+          <div className={styles.quizAdminSection}>
+            <h3>🧠 Quiz Management</h3>
+            <p>Admin can maintain exactly 5 questions for the homepage quiz.</p>
+
+            {quizQuestions.map((question, qIndex) => (
+              <fieldset key={question.id} className={styles.quizQuestionBlock}>
+                <legend>Question {qIndex + 1}</legend>
+
+                <label>
+                  Question
+                  <input
+                    type="text"
+                    value={question.question}
+                    onChange={(e) => handleQuizQuestionChange(qIndex, { question: e.target.value })}
+                  />
+                </label>
+
+                {question.options.map((option, optionIndex) => (
+                  <label key={optionIndex}>
+                    Option {optionIndex + 1}
+                    <input
+                      type="text"
+                      value={option}
+                      onChange={(e) => {
+                        const updatedOptions = [...question.options];
+                        updatedOptions[optionIndex] = e.target.value;
+                        handleQuizQuestionChange(qIndex, { options: updatedOptions });
+                      }}
+                    />
+                  </label>
+                ))}
+
+                <div className={styles.correctAnswerRow}>
+                  <span>Correct answer:</span>
+                  {question.options.map((_, optionIndex) => (
+                    <label key={optionIndex}>
+                      <input
+                        type="radio"
+                        name={`correct-${qIndex}`}
+                        checked={question.correctIndex === optionIndex}
+                        onChange={() => handleQuizQuestionChange(qIndex, { correctIndex: optionIndex })}
+                      />
+                      {optionIndex + 1}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+            ))}
+
+            <div className={styles.quizActions}>
+              <button className={styles.saveQuizBtn} onClick={handleSaveQuiz}>Save Quiz</button>
+              <button className={styles.resetQuizBtn} onClick={handleResetQuiz}>Reset to Default</button>
+            </div>
           </div>
         )}
 
