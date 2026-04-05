@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import config from '@/data/config.json';
 import { Navbar } from '@/components/Navbar';
 import { Hero } from '@/components/Hero';
@@ -122,12 +122,14 @@ export default function Home() {
 
       <Wave bgColor="#fffaf5" svgColor="#e8243c" />
 
-      <RSVP
-        invitedCount={config.rsvp.invitedCount}
-        comingCount={config.rsvp.comingCount}
-        features={config.rsvp.features}
-        childName={config.child.name}
-      />
+      <Suspense fallback={<div>Loading RSVP...</div>}>
+        <RSVP
+          invitedCount={config.rsvp.invitedCount}
+          comingCount={config.rsvp.comingCount}
+          features={config.rsvp.features}
+          childName={config.child.name}
+        />
+      </Suspense>
 
       <Wave bgColor="#8c001a" svgColor="#1a0008" />
 

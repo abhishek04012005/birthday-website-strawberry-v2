@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { getRSVPs, getWishes, updateWishVisibility } from '@/lib/supabase';
 import styles from '@/styles/Dashboard.module.css';
 import { FlyerCard } from '@/components/FlyerCard';
-import AdminNavbar from '@/components/AdminNavbar';
 
 interface RSVP {
   id: string;
@@ -138,10 +137,8 @@ export default function DashboardPage() {
   const totalGuests = rsvps.reduce((sum, r) => sum + r.guest_count, 0);
 
   return (
-    <>
-      <AdminNavbar />
-      <div className={styles.dashboardContainer}>
-        <div className={styles.dashboardBg}></div>
+    <div className={styles.dashboardContainer}>
+      <div className={styles.dashboardBg}></div>
 
       {/* Header */}
       <header className={styles.dashboardHeader}>
@@ -343,7 +340,6 @@ export default function DashboardPage() {
           </div>
         </div>
       )}
-      </div>
-    </>
+    </div>
   );
 }

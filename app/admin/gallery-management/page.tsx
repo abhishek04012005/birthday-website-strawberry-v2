@@ -1,12 +1,12 @@
 import { Suspense } from 'react';
-import GuestManagementClient from './page.client';
+import GalleryManagementClient from './page.client';
 
 export const dynamic = 'force-dynamic';
 
-export default function GuestManagementPage() {
+export default function GalleryManagementPage() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
-      <GuestManagementClient />
+      <GalleryManagementClient />
     </Suspense>
   );
 }

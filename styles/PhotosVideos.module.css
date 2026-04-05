@@ -1,0 +1,448 @@
+.page {
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.pageContent {
+  position: relative;
+  overflow: hidden;
+}
+
+.pageInner {
+  position: relative;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2.5rem 1rem 3.5rem;
+}
+
+.heroBackground {
+  position: absolute;
+  inset: 0 0 auto 0;
+  top: 0;
+  height: 20rem;
+  background: linear-gradient(90deg, rgba(192, 57, 238, 0.16), rgba(236, 72, 153, 0.2), rgba(67, 56, 202, 0.14));
+  pointer-events: none;
+}
+
+.heroSection {
+  margin-bottom: 2.5rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 25px 60px -30px rgba(15, 23, 42, 0.35);
+  backdrop-filter: blur(18px);
+  padding: 2.5rem;
+}
+
+.heroText {
+  text-align: center;
+  max-width: 56rem;
+  margin: 0 auto;
+}
+
+.heroEyebrow {
+  display: inline-flex;
+  margin-bottom: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  background: #fbcfe8;
+  color: #be185d;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  line-height: 1.02;
+  margin: 0 0 1rem;
+  color: #0f172a;
+}
+
+.heroCopy {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.9;
+  color: #475569;
+}
+
+.alertBox {
+  margin-bottom: 1.5rem;
+  border-radius: 2rem;
+  background: #fff1f2;
+  border: 1px solid #fecaca;
+  padding: 1.25rem;
+  box-shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+}
+
+.alertContent {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.alertText {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #831843;
+}
+
+.alertStrong {
+  font-weight: 700;
+}
+
+.alertButton {
+  border: none;
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  background: #be185d;
+  color: #ffffff;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.alertButton:hover {
+  background: #9d174d;
+  transform: translateY(-1px);
+}
+
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.filterButton {
+  border-radius: 999px;
+  padding: 0.75rem 1.25rem;
+  font-weight: 700;
+  border: 1px solid rgba(148, 163, 184, 0.35);
+  background: #ffffff;
+  color: #334155;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.filterButton:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.filterButtonActive {
+  background: #ec4899;
+  color: #ffffff;
+  box-shadow: 0 20px 50px rgba(236, 72, 153, 0.18);
+  border-color: transparent;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1280px) {
+  .grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.card {
+  overflow: hidden;
+  border-radius: 1.75rem;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 22px 45px rgba(15, 23, 42, 0.15);
+}
+
+.previewWrapper {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.95), rgba(226, 232, 240, 0.95));
+  min-height: 0;
+}
+
+.previewMedia {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+.previewOverlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(15, 23, 42, 0.82));
+  color: #f8fafc;
+}
+
+.previewChip {
+  padding: 0.25rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(248, 250, 252, 0.12);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-weight: 700;
+}
+
+.previewLabel {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 0.95rem;
+}
+
+.cardBody {
+  padding: 1.25rem;
+}
+
+.cardTitle {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #0f172a;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cardDate {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #64748b;
+}
+
+.featuredBadge {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background: #f7d070;
+  color: #1f2937;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.emptyState {
+  border-radius: 2rem;
+  border: 1px dashed #cbd5e1;
+  background: #ffffff;
+  padding: 3.5rem 2rem;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.06);
+}
+
+.emptyIcon {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 1.5rem;
+  background: #fce7f3;
+  color: #be185d;
+  font-size: 2rem;
+}
+
+.emptyTitle {
+  margin: 0 0 0.75rem;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.emptyText {
+  margin: 0 auto;
+  max-width: 32rem;
+  font-size: 1rem;
+  color: #475569;
+  line-height: 1.8;
+}
+
+.loadingPage {
+  min-height: calc(100vh - 76px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.loadingCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 24rem;
+  padding: 2rem;
+  border-radius: 1.75rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(203, 213, 225, 0.8);
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.12);
+}
+
+.loadingSpinner {
+  width: 3.5rem;
+  height: 3.5rem;
+  border: 5px solid rgba(236, 72, 153, 0.18);
+  border-top-color: #db2777;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingText {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #334155;
+  text-align: center;
+}
+
+.actionGroup {
+  margin-top: 1.25rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.actionButton,
+.downloadButton {
+  border-radius: 999px;
+  padding: 0.8rem 1.25rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.actionButton {
+  border: none;
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.actionButton:hover {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.downloadButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(37, 99, 235, 0.25);
+  background: #ffffff;
+  color: #1d4ed8;
+}
+
+.downloadButton:hover {
+  background: #eff6ff;
+  transform: translateY(-1px);
+}
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 23, 42, 0.65);
+  padding: 1.5rem;
+}
+
+.modalContent {
+  width: min(100%, 900px);
+  max-height: calc(100vh - 3rem);
+  background: #ffffff;
+  border-radius: 1.75rem;
+  box-shadow: 0 30px 90px rgba(15, 23, 42, 0.35);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.modalHeader,
+.modalFooter {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.modalTitle {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.modalClose {
+  border: none;
+  appearance: none;
+  background: transparent;
+  color: #475569;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+}
+
+.modalBody {
+  padding: 0 1.5rem 1.5rem;
+  overflow: auto;
+}
+
+.modalMedia {
+  width: 100%;
+  max-height: 72vh;
+  border-radius: 1.25rem;
+  object-fit: contain;
+  display: block;
+}
+
+.modalFooter {
+  background: #f8fafc;
+}
