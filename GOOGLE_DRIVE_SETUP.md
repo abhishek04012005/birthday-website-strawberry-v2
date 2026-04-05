@@ -53,12 +53,7 @@ This will:
 Add the following to your `.env.local` file:
 
 ```env
-# Google Drive API Configuration
-GOOGLE_CLIENT_ID=your_client_id_here
-GOOGLE_CLIENT_SECRET=your_client_secret_here
-GOOGLE_REFRESH_TOKEN=your_refresh_token_here
-GOOGLE_DRIVE_FOLDER_ID=your_folder_id_here
-GOOGLE_DRIVE_REDIRECT_URI=http://localhost:3000/api/auth/google/callback
+
 ```
 
 ## Step 6: Set Up Database
