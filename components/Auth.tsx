@@ -39,7 +39,9 @@ const Auth: React.FC = () => {
         localStorage.setItem('adminSession', JSON.stringify({
           id: data.user.id,
           email: data.user.email,
+          user: data.user,
           timestamp: new Date().toISOString(),
+          expiresAt: Date.now() + 1000 * 60 * 60 * 24, // 24 hours
         }));
         setTimeout(() => router.push('/dashboard'), 1800);
       } else {

@@ -27,27 +27,37 @@ export const Parents: React.FC<ParentsProps> = ({ title, subtitle, list }) => {
           <p className={styles.parentsSubtitle}>{subtitle}</p>
         </div>
 
-        <div className={styles.parentsList}>
-          {list.map((parent, index) => (
-            <div key={index} className={styles.parentCard}>
-              <div className={styles.parentImageWrapper}>
-                <img 
-                  src={parent.image} 
-                  alt={parent.name} 
-                  className={styles.parentImage}
-                />
-                <div className={styles.parentEmoji}>{parent.emoji}</div>
+        <div className={styles.familyTree}>
+          <div className={styles.treeLevel}>
+            {list.map((parent, index) => (
+              <div key={index} className={styles.treeNode}>
+                <div className={styles.parentImageWrapper}>
+                  <img
+                    src={parent.image}
+                    alt={parent.name}
+                    className={styles.parentImage}
+                  />
+                  <div className={styles.parentEmoji}>{parent.emoji}</div>
+                </div>
+                <div className={styles.parentContent}>
+                  <h3 className={styles.parentName}>{parent.name}</h3>
+                  <p className={styles.parentRelationship}>{parent.relationship}</p>
+                  <p className={styles.parentDescription}>{parent.description}</p>
+                  <p className={styles.parentHobbies}>
+                    <strong>Hobbies:</strong> {parent.hobbies}
+                  </p>
+                </div>
               </div>
-              <div className={styles.parentContent}>
-                <h3 className={styles.parentName}>{parent.name}</h3>
-                <p className={styles.parentRelationship}>{parent.relationship}</p>
-                <p className={styles.parentDescription}>{parent.description}</p>
-                <p className={styles.parentHobbies}>
-                  <strong>Hobbies:</strong> {parent.hobbies}
-                </p>
-              </div>
+            ))}
+          </div>
+
+          <div className={styles.connectorRow}>
+            <span className={styles.connectorLine} />
+            <div className={styles.familyHub}>
+              <span className={styles.hubLabel}>Family Network</span>
             </div>
-          ))}
+            <span className={styles.connectorLine} />
+          </div>
         </div>
 
         <div className={styles.familyNote}>

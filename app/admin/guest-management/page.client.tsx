@@ -1,9 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { getGuests, saveGuest, updateGuest, deleteGuest, bulkSaveGuests, GuestData } from '@/lib/supabase';
-import config from '@/data/config.json';
 import * as XLSX from 'xlsx';
 import styles from '@/styles/GuestManagement.module.css';
 
@@ -17,24 +16,13 @@ interface Guest {
   updated_at: string;
 }
 
-interface QuizQuestion {
-  id: number;
-  question: string;
-  options: string[];
-  correctIndex: number;
-}
-
 export default function GuestManagementClient() {
   const router = useRouter();
   const [user, setUser] = useState<any>(null);
   const [guests, setGuests] = useState<Guest[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'list' | 'add' | 'upload' | 'quiz'>('list');
+  const [activeTab, setActiveTab] = useState<'list' | 'add' | 'upload'>('list');
   const [modalMessage, setModalMessage] = useState<{text: string, type: 'success' | 'error'} | null>(null);
-
-  const searchParams = useSearchParams();
-  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
-  const defaultQuiz = config.quiz as QuizQuestion[] || [];
 
   // Form states
   const [formData, setFormData] = useState({
@@ -50,15 +38,7 @@ export default function GuestManagementClient() {
   const [customMessage, setCustomMessage] = useState('Hi {title} {name}, you\'re invited to Emma\'s birthday party! 🎉');
 
   useEffect(() => {
-    // Check URL params for initial tab
-    const urlParams = new URLSearchParams(window.location.search);
-    const tabParam = urlParams.get('tab');
-    if (tabParam === 'quiz') {
-      setActiveTab('quiz');
-    }
-
     const checkAuth = async () => {
-      // Check localStorage for admin session
       const sessionStr = localStorage.getItem('adminSession');
       if (!sessionStr) {
         router.push('/auth');
@@ -79,7 +59,6 @@ export default function GuestManagementClient() {
         return;
       }
 
-      // Fetch guests
       try {
         const guestResult = await getGuests('Emma');
         setGuests(guestResult?.data || []);
@@ -93,19 +72,8 @@ export default function GuestManagementClient() {
     checkAuth();
   }, [router]);
 
-  useEffect(() => {
-    if (activeTab === 'quiz') {
-      setQuizQuestions(defaultQuiz);
-    }
-  }, [activeTab, defaultQuiz]);
-
-  const handleTabChange = (tab: 'list' | 'add' | 'upload' | 'quiz') => {
+  const handleTabChange = (tab: 'list' | 'add' | 'upload') => {
     setActiveTab(tab);
-    if (tab === 'quiz') {
-      router.push('/admin/guest-management?tab=quiz');
-    } else {
-      router.push('/admin/guest-management');
-    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -254,25 +222,6 @@ export default function GuestManagementClient() {
     XLSX.writeFile(workbook, 'guests.xlsx');
   };
 
-  const handleQuizUpdate = (index: number, field: keyof QuizQuestion, value: any) => {
-    const updatedQuestions = [...quizQuestions];
-    updatedQuestions[index] = { ...updatedQuestions[index], [field]: value };
-    setQuizQuestions(updatedQuestions);
-  };
-
-  const addQuizQuestion = () => {
-    setQuizQuestions([...quizQuestions, {
-      id: Date.now(),
-      question: '',
-      options: ['', '', '', ''],
-      correctIndex: 0,
-    }]);
-  };
-
-  const removeQuizQuestion = (index: number) => {
-    setQuizQuestions(quizQuestions.filter((_, i) => i !== index));
-  };
-
   if (loading) {
     return (
       <div className={styles.container}>
@@ -301,28 +250,25 @@ export default function GuestManagementClient() {
 
       <div className={styles.tabs}>
         <button
+          type="button"
           className={`${styles.tab} ${activeTab === 'list' ? styles.active : ''}`}
           onClick={() => handleTabChange('list')}
         >
           Guest List ({guests.length})
         </button>
         <button
+          type="button"
           className={`${styles.tab} ${activeTab === 'add' ? styles.active : ''}`}
           onClick={() => handleTabChange('add')}
         >
           {editingGuest ? 'Edit Guest' : 'Add Guest'}
         </button>
         <button
+          type="button"
           className={`${styles.tab} ${activeTab === 'upload' ? styles.active : ''}`}
           onClick={() => handleTabChange('upload')}
         >
           Bulk Import
-        </button>
-        <button
-          className={`${styles.tab} ${activeTab === 'quiz' ? styles.active : ''}`}
-          onClick={() => handleTabChange('quiz')}
-        >
-          Quiz Settings
         </button>
       </div>
 
@@ -502,74 +448,6 @@ export default function GuestManagementClient() {
                   Download Template
                 </button>
               </div>
-            </div>
-          </div>
-        )}
-
-        {activeTab === 'quiz' && (
-          <div className={styles.quizSettings}>
-            <h2>Quiz Settings</h2>
-            <div className={styles.quizForm}>
-              <div className={styles.quizHeader}>
-                <h3>Birthday Quiz Questions</h3>
-                <button onClick={addQuizQuestion} className={styles.addQuestionBtn}>
-                  Add Question
-                </button>
-              </div>
-
-              {quizQuestions.map((question, index) => (
-                <div key={question.id} className={styles.questionCard}>
-                  <div className={styles.questionHeader}>
-                    <h4>Question {index + 1}</h4>
-                    <button
-                      onClick={() => removeQuizQuestion(index)}
-                      className={styles.removeQuestionBtn}
-                    >
-                      Remove
-                    </button>
-                  </div>
-
-                  <div className={styles.questionField}>
-                    <label>Question:</label>
-                    <input
-                      type="text"
-                      value={question.question}
-                      onChange={(e) => handleQuizUpdate(index, 'question', e.target.value)}
-                      placeholder="Enter your question"
-                    />
-                  </div>
-
-                  <div className={styles.optionsField}>
-                    <label>Options:</label>
-                    {question.options.map((option, optionIndex) => (
-                      <div key={optionIndex} className={styles.optionRow}>
-                        <input
-                          type="radio"
-                          name={`correct-${question.id}`}
-                          checked={question.correctIndex === optionIndex}
-                          onChange={() => handleQuizUpdate(index, 'correctIndex', optionIndex)}
-                        />
-                        <input
-                          type="text"
-                          value={option}
-                          onChange={(e) => {
-                            const newOptions = [...question.options];
-                            newOptions[optionIndex] = e.target.value;
-                            handleQuizUpdate(index, 'options', newOptions);
-                          }}
-                          placeholder={`Option ${optionIndex + 1}`}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-
-              {quizQuestions.length === 0 && (
-                <div className={styles.emptyQuiz}>
-                  <p>No quiz questions yet. Add your first question!</p>
-                </div>
-              )}
             </div>
           </div>
         )}
