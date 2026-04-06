@@ -1,17 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { google } from 'googleapis';
 
-const oauth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  process.env.GOOGLE_DRIVE_REDIRECT_URI
-);
+const requiredEnv = [
+  'GOOGLE_CLIENT_ID',
+  'GOOGLE_CLIENT_SECRET',
+  'GOOGLE_REFRESH_TOKEN',
+  'GOOGLE_DRIVE_REDIRECT_URI',
+];
 
-oauth2Client.setCredentials({
-  refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-});
+function getDriveClient() {
+  const missing = requiredEnv.filter((key) => !process.env[key]);
+  if (missing.length > 0) {
+    throw new Error(`Missing required Google Drive environment variables: ${missing.join(', ')}`);
+  }
 
-const drive = google.drive({ version: 'v3', auth: oauth2Client });
+  const oauth2Client = new google.auth.OAuth2(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    process.env.GOOGLE_DRIVE_REDIRECT_URI
+  );
+
+  oauth2Client.setCredentials({
+    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+  });
+
+  return google.drive({ version: 'v3', auth: oauth2Client });
+}
 
 export async function GET(
   request: NextRequest,
@@ -24,6 +38,8 @@ export async function GET(
     if (!range) {
       return NextResponse.json({ error: 'Range header required' }, { status: 400 });
     }
+
+    const drive = getDriveClient();
 
     // Get file metadata from Drive
     const file = await drive.files.get({

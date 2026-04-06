@@ -1,21 +1,38 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { Readable } from 'stream';
 import { google } from 'googleapis';
 import { supabase } from '@/lib/supabase';
 
-const oauth2Client = new google.auth.OAuth2(
-  process.env.GOOGLE_CLIENT_ID,
-  process.env.GOOGLE_CLIENT_SECRET,
-  process.env.GOOGLE_DRIVE_REDIRECT_URI
-);
+const requiredEnv = [
+  'GOOGLE_CLIENT_ID',
+  'GOOGLE_CLIENT_SECRET',
+  'GOOGLE_REFRESH_TOKEN',
+  'GOOGLE_DRIVE_REDIRECT_URI',
+  'GOOGLE_DRIVE_FOLDER_ID',
+];
 
-oauth2Client.setCredentials({
-  refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
-});
+function getDriveClient() {
+  const missing = requiredEnv.filter((key) => !process.env[key]);
+  if (missing.length > 0) {
+    throw new Error(`Missing required Google Drive environment variables: ${missing.join(', ')}`);
+  }
 
-const drive = google.drive({ version: 'v3', auth: oauth2Client });
+  const oauth2Client = new google.auth.OAuth2(
+    process.env.GOOGLE_CLIENT_ID,
+    process.env.GOOGLE_CLIENT_SECRET,
+    process.env.GOOGLE_DRIVE_REDIRECT_URI
+  );
+
+  oauth2Client.setCredentials({
+    refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+  });
+
+  return google.drive({ version: 'v3', auth: oauth2Client });
+}
 
 export async function GET(request: NextRequest) {
   try {
+    const drive = getDriveClient();
     const about = await drive.about.get({
       fields: 'storageQuota(limit,usage,usageInDrive,usageInDriveTrash)',
     });
@@ -48,7 +65,13 @@ export async function POST(request: NextRequest) {
     }
 
     const uploadedFiles = [];
-    const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID;
+    const folderId = process.env.GOOGLE_DRIVE_FOLDER_ID!;
+
+    if (!folderId) {
+      return NextResponse.json({ error: 'Google Drive folder ID is not configured' }, { status: 500 });
+    }
+
+    const drive = getDriveClient();
 
     for (const file of files) {
       try {
@@ -58,9 +81,10 @@ export async function POST(request: NextRequest) {
           parents: [folderId],
         };
 
+        const fileBuffer = Buffer.from(await file.arrayBuffer());
         const media = {
           mimeType: file.type,
-          body: Buffer.from(await file.arrayBuffer()),
+          body: Readable.from(fileBuffer),
         };
 
         const driveResponse = await drive.files.create({
