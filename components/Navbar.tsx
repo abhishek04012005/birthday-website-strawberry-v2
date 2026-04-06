@@ -24,12 +24,13 @@ export const Navbar: React.FC<NavbarProps> = ({ childName }) => {
       </div>
       
       <div className={styles.navLinks}>
-        <a href="#hero">Home</a>
-        <a href="#about">About</a>
-        <a href="#gallery">Gallery</a>
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/gallery">Gallery</a>
         <a href="/photos-videos">Photos & Videos</a>
-        <a href="#rsvp">RSVP</a>
-        <a href="#wishes">❤️ Wishes</a>
+        <a href="/rsvp">RSVP</a>
+        <a href="/quiz">Quiz</a>
+        <a href="/wishes">❤️ Wishes</a>
         <a href="/auth" className={styles.navAdminBtn}>🔐 Admin</a>
       </div>
 
@@ -44,12 +45,13 @@ export const Navbar: React.FC<NavbarProps> = ({ childName }) => {
       </button>
 
       <div className={`${styles.mobileMenu} ${isMobileMenuOpen ? styles.mobileMenuOpen : ''}`}>
-        <a href="#hero" onClick={closeMobileMenu}>Home</a>
-        <a href="#about" onClick={closeMobileMenu}>About</a>
-        <a href="#gallery" onClick={closeMobileMenu}>Gallery</a>
+        <a href="/" onClick={closeMobileMenu}>Home</a>
+        <a href="/about" onClick={closeMobileMenu}>About</a>
+        <a href="/gallery" onClick={closeMobileMenu}>Gallery</a>
         <a href="/photos-videos" onClick={closeMobileMenu}>Photos & Videos</a>
-        <a href="#rsvp" onClick={closeMobileMenu}>RSVP</a>
-        <a href="#wishes" onClick={closeMobileMenu}>❤️ Wishes</a>
+        <a href="/rsvp" onClick={closeMobileMenu}>RSVP</a>
+        <a href="/quiz" onClick={closeMobileMenu}>Quiz</a>
+        <a href="/wishes" onClick={closeMobileMenu}>Wishes</a>
         <a href="/auth" className={styles.mobileAdminBtn} onClick={closeMobileMenu}>🔐 Admin</a>
       </div>
     </nav>

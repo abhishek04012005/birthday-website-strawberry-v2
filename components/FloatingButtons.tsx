@@ -4,12 +4,13 @@ import React from 'react';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber';
 import styles from '@/styles/FloatingButtons.module.css';
+import config from '@/data/config.json';
 
 export const FloatingButtons: React.FC = () => {
   return (
     <div className={styles.floatingContainer}>
       <a
-        href="https://wa.me/919285248504?text=Hi%20Emma%2C%20I%20just%20RSVP%20for%20your%20birthday!"
+        href={`https://wa.me/919285248504?text=${encodeURIComponent(`Hi ${config.child.name}, I just RSVP'd for your birthday!`)}`}
         target="_blank"
         rel="noreferrer"
         className={`${styles.floatingBtn} ${styles.whatsappBtn}`}

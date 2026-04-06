@@ -11,16 +11,17 @@ interface Treat {
 
 interface TreatsProps {
   treats: Treat[];
+  childName: string;
 }
 
-export const Treats: React.FC<TreatsProps> = ({ treats }) => {
+export const Treats: React.FC<TreatsProps> = ({ treats, childName }) => {
   return (
     <section className={styles.treatsBg} id="treats">
       <div className={styles.secHead}>
         <div className={styles.secPill}>🍰 Sweet Treats</div>
         <h2 className={styles.secTitle}>Party Menu 🍓</h2>
         <p className={styles.secSub}>
-          A delicious spread of Emma's absolute favourite treats — because every birthday needs the sweetest food!
+          A delicious spread of {childName}'s absolute favourite treats — because every birthday needs the sweetest food!
         </p>
       </div>
 

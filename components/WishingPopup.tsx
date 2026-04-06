@@ -107,7 +107,7 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
               disabled={loading}
             />
             <textarea
-              placeholder="Write your birthday wish for Emma..."
+              placeholder={`Write your birthday wish for ${childName}...`}
               value={wish}
               onChange={(e) => setWish(e.target.value)}
               className={styles.textarea}

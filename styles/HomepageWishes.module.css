@@ -70,6 +70,96 @@
   line-height: 1.75;
 }
 
+.wishFormSection {
+  max-width: 860px;
+  margin: 0 auto 40px;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(232, 36, 60, 0.14);
+  border-radius: 28px;
+  box-shadow: 0 18px 40px rgba(232, 36, 60, 0.12);
+}
+
+.wishForm {
+  display: grid;
+  gap: 16px;
+}
+
+.wishFormRow {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.wishInput,
+.wishTextarea {
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 18px;
+  border: 1.5px solid rgba(232, 36, 60, 0.18);
+  background: #fff;
+  font-size: 1rem;
+  color: #4a4a4a;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.wishInput:focus,
+.wishTextarea:focus {
+  outline: none;
+  border-color: #e8243c;
+  box-shadow: 0 0 0 4px rgba(232, 36, 60, 0.08);
+}
+
+.wishTextarea {
+  min-height: 116px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.wishSubmitBtn {
+  align-self: flex-start;
+  background: linear-gradient(135deg, #e8243c 0%, #ff6b8a 100%);
+  border: none;
+  color: white;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 8px 24px rgba(232, 36, 60, 0.25);
+}
+
+.wishSubmitBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.wishSubmitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.formHint {
+  font-size: 0.95rem;
+  color: #7a3040;
+  margin: 0;
+}
+
+.successMessage,
+.errorMessage {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.successMessage {
+  color: #18794e;
+}
+
+.errorMessage {
+  color: #b91c1c;
+}
+
 .wishesGrid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -100,7 +190,7 @@
 
 .carousel {
   width: 100%;
-  max-width: 1300px;
+  max-width: 100%;
   overflow: hidden;
   border-radius: 24px;
   flex: 1;
@@ -112,10 +202,11 @@
   gap: 24px;
   padding: 30px 20px;
   will-change: transform;
+  min-width: fit-content;
 }
 
 .carouselSlide {
-  flex: 0 0 calc(33.333% - 8px);
+  flex: 0 0 300px;
   display: flex;
   justify-content: center;
   align-items: stretch;
@@ -178,6 +269,7 @@
   transition: all 0.3s ease;
   overflow: hidden;
   min-height: 340px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -385,7 +477,7 @@
   }
 
   .carouselSlide {
-    min-width: calc(33.333% - 16px);
+    flex: 0 0 280px;
   }
 
   .carouselTrack {
@@ -432,7 +524,7 @@
   }
 
   .carouselSlide {
-    min-width: calc(50% - 12px);
+    flex: 0 0 240px;
   }
 
   .carouselTrack {
@@ -499,7 +591,7 @@
   }
 
   .carouselSlide {
-    min-width: 100%;
+    flex: 0 0 calc(100vw - 100px);
   }
 
   .carouselTrack {

@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
+import config from '@/data/config.json';
 
 export const metadata: Metadata = {
-  title: "Emma's Strawberry Birthday Party",
-  description: 'Join us for the most magical strawberry-filled celebration!',
+  title: `${config.child.name}'s Strawberry Birthday Party`,
+  description: `Join us for the most magical ${config.child.name} celebration!`,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

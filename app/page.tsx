@@ -76,9 +76,9 @@ export default function Home() {
       <Confetti />
       <HeartsAnimation />
       <RainLayer />
-      
+
       <Navbar childName={config.child.name} />
-      
+
       <Hero
         childName={config.child.name}
         childFullName={config.child.fullName}
@@ -101,17 +101,25 @@ export default function Home() {
 
       <Wave bgColor="#fff8f2" svgColor="#fff0f4" />
 
-      <Gallery gallery={config.gallery} />
-
-      <Wave bgColor="#fff0f4" svgColor="#fffaf5" />
-
       <Parents
-        title={config.parents.title}
-        subtitle={config.parents.subtitle}
-        list={config.parents.list}
+        parents={config.parents}
+        childName={config.child.name}
       />
 
+
       <Wave bgColor="#fff0f4" svgColor="#fffaf5" />
+
+      <Gallery gallery={config.gallery} />
+
+
+      <Wave bgColor="#fff0f4" svgColor="#fffaf5" />
+
+      <HomepageWishes childName={config.child.name} />
+
+
+
+      <Wave bgColor="#fffaf5" svgColor="#e8243c" />
+
 
       <Details
         venueName={config.party.venue}
@@ -120,7 +128,9 @@ export default function Home() {
         detailCards={detailCards}
       />
 
-      <Wave bgColor="#fffaf5" svgColor="#e8243c" />
+
+      <Wave bgColor="#8c001a" svgColor="#1a0008" />
+
 
       <Suspense fallback={<div>Loading RSVP...</div>}>
         <RSVP
@@ -131,19 +141,14 @@ export default function Home() {
         />
       </Suspense>
 
+
+
       <Wave bgColor="#8c001a" svgColor="#1a0008" />
 
       <Quiz questions={quizQuestions} />
 
-      <Wave bgColor="#8c001a" svgColor="#1a0008" />
-
-      <Treats treats={config.treats} />
-
       <Wave bgColor="#fffaf5" svgColor="#fff0f4" />
 
-      <HomepageWishes childName={config.child.name} />
-
-      <Wave bgColor="#fff0f4" svgColor="#fffaf5" />
 
       <Footer
         childName={config.child.name}
@@ -151,7 +156,7 @@ export default function Home() {
         venue={config.party.venue}
       />
 
-      <WishingPopup 
+      <WishingPopup
         childName={config.child.name}
         isOpen={wishingPopupOpen}
         onClose={() => setWishingPopupOpen(false)}

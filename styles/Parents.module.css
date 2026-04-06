@@ -6,13 +6,13 @@
 }
 
 .parentsContainer {
-  max-width: 1200px;
+  max-width: 1000px;
   margin: 0 auto;
 }
 
 .parentsHeader {
   text-align: center;
-  margin-bottom: 60px;
+  margin-bottom: 70px;
 }
 
 .parentsTitle {
@@ -31,186 +31,190 @@
   font-weight: 600;
 }
 
-.familyTree {
-  margin-bottom: 48px;
-  display: grid;
-  gap: 2.5rem;
-}
-
-.treeLevel {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.treeNode {
-  flex: 1 1 min(320px, 40%);
-  max-width: 360px;
-  background: white;
-  border-radius: 24px;
-  padding: 32px 28px 22px;
-  box-shadow: 0 8px 32px rgba(232, 36, 60, 0.12),
-              0 0 0 1px rgba(232, 36, 60, 0.05);
-  border: 2px solid var(--light-pink);
+/* Timeline Structure */
+.timeline {
   position: relative;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
 }
 
-.treeNode::after {
+.timelineCenter {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, 
+    rgba(232, 36, 60, 0.3) 0%, 
+    rgba(232, 36, 60, 0.5) 50%, 
+    rgba(232, 36, 60, 0.3) 100%);
+  transform: translateX(-50%);
+  border-radius: 999px;
+}
+
+.timelineItem {
+  position: relative;
+  display: flex;
+  gap: 40px;
+  align-items: stretch;
+}
+
+.timelineItem.left {
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.timelineItem.right {
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+
+.timelineMarker {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  position: relative;
+  width: 80px;
+}
+
+.timelineCircle {
+  width: 70px;
+  height: 70px;
+  background: white;
+  border: 4px solid var(--red);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 6px 20px rgba(232, 36, 60, 0.25),
+              0 0 0 6px rgba(255, 255, 255, 0.8);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.markerEmoji {
+  font-size: 2rem;
+  display: block;
+}
+
+.timelineConnector {
+  flex: 1;
+  width: 2px;
+  background: linear-gradient(180deg, 
+    rgba(232, 36, 60, 0.4) 0%, 
+    rgba(232, 36, 60, 0.2) 100%);
+  margin-top: 10px;
+}
+
+.timelineContent {
+  flex: 1;
+  max-width: 420px;
+  padding-top: 8px;
+}
+
+.timelineCard {
+  background: white;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 40px rgba(232, 36, 60, 0.15),
+              0 0 0 1px rgba(232, 36, 60, 0.08);
+  border: 2px solid var(--light-pink);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+}
+
+.timelineCard::before {
   content: '';
   position: absolute;
-  bottom: -24px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 2px;
-  height: 24px;
-  background: rgba(232, 36, 60, 0.18);
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(255, 107, 138, 0.05) 0%, 
+    rgba(232, 36, 60, 0.02) 100%);
+  pointer-events: none;
 }
 
-.treeNode:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 18px 52px rgba(232, 36, 60, 0.18),
-              0 0 0 1px rgba(232, 36, 60, 0.1);
+.timelineItem:hover .timelineCard {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(232, 36, 60, 0.22),
+              0 0 0 1px rgba(232, 36, 60, 0.12);
+  border-color: rgba(232, 36, 60, 0.3);
 }
 
-.parentImageWrapper {
+.cardImageWrapper {
   position: relative;
-  margin-bottom: 24px;
-  width: 100%;
-  height: 260px;
-  border-radius: 16px;
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
   overflow: hidden;
   background: linear-gradient(135deg, var(--light-pink) 0%, #ffe5b0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.parentImage {
+.cardImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.4s ease;
 }
 
-.treeNode:hover .parentImage {
-  transform: scale(1.05);
+.timelineCard:hover .cardImage {
+  transform: scale(1.08);
 }
 
-.parentEmoji {
-  position: absolute;
-  bottom: -8px;
-  right: -8px;
-  font-size: 3.5rem;
-  background: white;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  display: flex;
+.cardLabel {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 16px rgba(232, 36, 60, 0.3);
-  border: 3px solid var(--light-pink);
-}
-
-.connectorRow {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  position: relative;
-}
-
-.connectorLine {
-  flex: 1;
-  display: block;
-  height: 2px;
-  background: rgba(232, 36, 60, 0.18);
-}
-
-.familyHub {
-  padding: 0.9rem 1.5rem;
+  margin: 0 auto 18px;
+  background: rgba(232, 36, 60, 0.95);
+  color: white;
+  padding: 8px 16px;
   border-radius: 999px;
-  background: #ffffff;
-  border: 1px solid rgba(232, 36, 60, 0.18);
-  box-shadow: 0 10px 30px rgba(232, 36, 60, 0.08);
-}
-
-.hubLabel {
+  font-size: 0.85rem;
   font-weight: 700;
-  color: #922029;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
+  box-shadow: 0 4px 12px rgba(232, 36, 60, 0.3);
 }
 
-.parentImageWrapper {
+.cardBody {
+  padding: 24px;
   position: relative;
-  margin-bottom: 24px;
-  width: 100%;
-  height: 280px;
-  border-radius: 16px;
-  overflow: hidden;
-  background: linear-gradient(135deg, var(--light-pink) 0%, #ffe5b0 100%);
+  z-index: 1;
 }
 
-.parentImage {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.4s ease;
-}
-
-.treeNode:hover .parentImage {
-  transform: scale(1.1);
-}
-
-.parentEmoji {
-  position: absolute;
-  bottom: -8px;
-  right: -8px;
-  font-size: 3.5rem;
-  background: white;
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 16px rgba(232, 36, 60, 0.3);
-  border: 3px solid var(--light-pink);
-}
-
-.parentContent {
-  width: 100%;
-}
-
-.parentName {
+.cardName {
   font-family: 'Fredoka One', cursive;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
   color: var(--dark-red);
   margin: 0 0 8px 0;
 }
 
-.parentRelationship {
-  font-size: 1.1rem;
-  color: var(--red);
-  margin: 0 0 16px 0;
-  font-weight: 700;
-  letter-spacing: 0.05em;
-}
-
-.parentDescription {
-  font-size: 1rem;
+.cardDescription {
+  font-size: 0.95rem;
   color: #5a5a5a;
-  margin: 16px 0;
+  margin: 12px 0;
   line-height: 1.6;
 }
 
-.parentHobbies {
-  font-size: 0.95rem;
+.cardHobbies {
+  font-size: 0.9rem;
   color: #7a3040;
   margin: 16px 0 0 0;
-  line-height: 1.5;
-  font-style: italic;
+  line-height: 1.7;
+}
+
+.cardHobbies strong {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
 }
 
 .familyNote {
@@ -220,6 +224,7 @@
   padding: 32px 24px;
   text-align: center;
   box-shadow: 0 4px 16px rgba(232, 36, 60, 0.1);
+  margin-top: 60px;
 }
 
 .familyNote p {
@@ -241,6 +246,17 @@
   }
 }
 
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 6px 20px rgba(232, 36, 60, 0.25),
+                0 0 0 6px rgba(255, 255, 255, 0.8);
+  }
+  50% {
+    box-shadow: 0 6px 20px rgba(232, 36, 60, 0.35),
+                0 0 0 12px rgba(255, 255, 255, 0.5);
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .parentsSection {
@@ -248,7 +264,7 @@
   }
 
   .parentsHeader {
-    margin-bottom: 40px;
+    margin-bottom: 50px;
   }
 
   .parentsTitle {
@@ -259,117 +275,143 @@
     font-size: 1rem;
   }
 
-  .treeLevel {
-    gap: 24px;
+  .timeline {
+    padding: 20px 0;
   }
 
-  .treeNode {
-    padding: 32px 24px;
-    border-radius: 20px;
+  .timelineCenter {
+    left: 25px;
+    width: 2px;
   }
 
-  .parentImageWrapper {
-    height: 240px;
-    margin-bottom: 20px;
+  .timelineItem {
+    flex-direction: row !important;
+    gap: 20px;
+    justify-content: flex-start;
   }
 
-  .parentEmoji {
-    width: 70px;
-    height: 70px;
-    font-size: 3rem;
+  .timelineItem.right {
+    flex-direction: row !important;
   }
 
-  .parentName {
-    font-size: 1.4rem;
+  .timelineMarker {
+    width: 60px;
+    flex-shrink: 0;
   }
 
-  .parentRelationship {
-    font-size: 1rem;
-    margin-bottom: 12px;
+  .timelineCircle {
+    width: 60px;
+    height: 60px;
+    border-width: 3px;
   }
 
-  .parentDescription {
-    font-size: 0.95rem;
-    margin: 12px 0;
+  .markerEmoji {
+    font-size: 1.5rem;
+  }
+
+  .timelineContent {
+    max-width: 100%;
+    padding-top: 0;
+  }
+
+  .cardImageWrapper {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 16px;
+  }
+
+  .cardBody {
+    padding: 18px;
+  }
+
+  .cardName {
+    font-size: 1.2rem;
+  }
+
+  .cardDescription {
+    font-size: 0.85rem;
+    margin: 8px 0;
+  }
+
+  .cardHobbies {
+    font-size: 0.8rem;
   }
 
   .familyNote {
-    padding: 24px 16px;
+    margin-top: 40px;
+    padding: 24px 18px;
   }
 
   .familyNote p {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 }
 
 @media (max-width: 480px) {
   .parentsSection {
-    padding: 40px 12px;
-  }
-
-  .parentsHeader {
-    margin-bottom: 32px;
+    padding: 50px 12px;
   }
 
   .parentsTitle {
     font-size: 1.8rem;
-    margin-bottom: 12px;
   }
 
   .parentsSubtitle {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
-  .treeLevel {
-    flex-direction: column;
-    gap: 16px;
+  .timeline {
+    gap: 2rem;
   }
 
-  .treeNode {
-    padding: 24px 16px;
-    border-radius: 16px;
+  .timelineCenter {
+    left: 20px;
   }
 
-  .treeNode:hover {
-    transform: translateY(-8px);
+  .timelineMarker {
+    width: 50px;
   }
 
-  .parentImageWrapper {
-    height: 200px;
-    margin-bottom: 16px;
-    border-radius: 14px;
+  .timelineCircle {
+    width: 50px;
+    height: 50px;
+    border-width: 3px;
   }
 
-  .parentEmoji {
-    width: 60px;
-    height: 60px;
-    font-size: 2.5rem;
-  }
-
-  .parentName {
+  .markerEmoji {
     font-size: 1.2rem;
   }
 
-  .parentRelationship {
-    font-size: 0.95rem;
-    margin-bottom: 10px;
+  .timelineItem {
+    gap: 15px;
   }
 
-  .parentDescription {
-    font-size: 0.9rem;
-    margin: 10px 0;
+  .timelineContent {
+    max-width: 100%;
   }
 
-  .parentHobbies {
-    font-size: 0.85rem;
+  .cardImageWrapper {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 14px;
   }
 
-  .familyNote {
-    padding: 20px 12px;
-    border-radius: 16px;
+  .cardBody {
+    padding: 14px;
   }
 
-  .familyNote p {
-    font-size: 0.95rem;
+  .cardLabel {
+    font-size: 0.75rem;
+    padding: 4px 10px;
+  }
+
+  .cardName {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .cardDescription,
+  .cardHobbies {
+    font-size: 0.75rem;
   }
 }

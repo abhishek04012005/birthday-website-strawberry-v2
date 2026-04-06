@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { getVisibleWishes } from '@/lib/supabase';
+import { getVisibleWishes, saveWish, WishData } from '@/lib/supabase';
 import styles from '@/styles/HomepageWishes.module.css';
 
 interface Wish {
@@ -20,6 +20,29 @@ export const HomepageWishes: React.FC<HomepageWishesProps> = ({ childName }) => 
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [slideWidth, setSlideWidth] = useState(324); // default: 300px slide + 24px gap
+  const [guestName, setGuestName] = useState('');
+  const [guestPhone, setGuestPhone] = useState('');
+  const [wishText, setWishText] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+
+  const calculateSlideWidth = () => {
+    if (typeof window === 'undefined') return 324;
+    const width = window.innerWidth;
+    if (width <= 480) return width - 88; // calc(100vw - 100px) + 12px gap ≈ vw - 88
+    if (width <= 768) return 256; // 240px + 16px gap
+    if (width <= 960) return 300; // 280px + 20px gap
+    return 324; // 300px + 24px gap
+  };
+
+  useEffect(() => {
+    setSlideWidth(calculateSlideWidth());
+    const handleResize = () => setSlideWidth(calculateSlideWidth());
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     const fetchWishes = async () => {
@@ -30,13 +53,61 @@ export const HomepageWishes: React.FC<HomepageWishesProps> = ({ childName }) => 
     fetchWishes();
   }, [childName]);
 
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitSuccess(false);
+    setSubmitError('');
+
+    if (!guestName.trim() || !guestPhone.trim() || !wishText.trim()) {
+      setSubmitError('Please fill in all fields before sending your wish.');
+      return;
+    }
+
+    setSubmitting(true);
+
+    const payload: WishData = {
+      guestName,
+      guestPhone,
+      wishText,
+      childName,
+      createdAt: new Date().toISOString(),
+    };
+
+    const result = await saveWish(payload);
+    setSubmitting(false);
+
+    if (result.success) {
+      setSubmitSuccess(true);
+      setGuestName('');
+      setGuestPhone('');
+      setWishText('');
+      setTimeout(() => setSubmitSuccess(false), 4000);
+    } else {
+      setSubmitError(result.error || 'Failed to submit your wish.');
+    }
+  };
+
+  const [isTransitioning, setIsTransitioning] = useState(true);
+
   // Auto-scroll carousel with infinite loop
   useEffect(() => {
     if (wishes.length === 0) return;
 
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % wishes.length);
-    }, 6000); // Change slide every 6 seconds
+      setCurrentSlide((prev) => {
+        const next = prev + 1;
+        if (next >= wishes.length) {
+          // Disable transition and reset position
+          setIsTransitioning(false);
+          setTimeout(() => {
+            setCurrentSlide(0);
+            setTimeout(() => setIsTransitioning(true), 50);
+          }, 0);
+          return prev;
+        }
+        return next;
+      });
+    }, 6000);
 
     return () => clearInterval(interval);
   }, [wishes.length]);
@@ -45,11 +116,33 @@ export const HomepageWishes: React.FC<HomepageWishesProps> = ({ childName }) => 
   const displayWishes = wishes.length > 0 ? [...wishes, ...wishes] : [];
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % wishes.length);
+    setCurrentSlide((prev) => {
+      const next = prev + 1;
+      if (next >= wishes.length) {
+        setIsTransitioning(false);
+        setTimeout(() => {
+          setCurrentSlide(0);
+          setTimeout(() => setIsTransitioning(true), 50);
+        }, 0);
+        return prev;
+      }
+      return next;
+    });
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + wishes.length) % wishes.length);
+    setCurrentSlide((prev) => {
+      const next = prev - 1;
+      if (next < 0) {
+        setIsTransitioning(false);
+        setTimeout(() => {
+          setCurrentSlide(wishes.length - 1);
+          setTimeout(() => setIsTransitioning(true), 50);
+        }, 0);
+        return prev;
+      }
+      return next;
+    });
   };
 
   const goToSlide = (index: number) => {
@@ -81,9 +174,10 @@ export const HomepageWishes: React.FC<HomepageWishesProps> = ({ childName }) => 
             Love Messages
           </h2>
           <p className={styles.wishesSubtitle}>
-            Heartfelt messages from everyone who celebrates with Emma 🎉💕
+            Heartfelt messages from everyone who celebrates with {childName} 🎉💕
           </p>
         </div>
+
 
         {wishes.length === 0 ? (
           <div className={styles.emptyWishes}>
@@ -104,8 +198,8 @@ export const HomepageWishes: React.FC<HomepageWishesProps> = ({ childName }) => 
               <div 
                 className={styles.carouselTrack} 
                 style={{ 
-                  transform: `translateX(calc(-${currentSlide} * (calc(100% / 3) + 24px)))`,
-                  transition: 'transform 0.8s linear'
+                  transform: `translateX(calc(-${currentSlide * slideWidth}px))`,
+                  transition: isTransitioning ? 'transform 0.8s linear' : 'none'
                 }}
               >
                 {displayWishes.map((wish, index) => (
@@ -140,6 +234,45 @@ export const HomepageWishes: React.FC<HomepageWishesProps> = ({ childName }) => 
             </div>
           </div>
         )}
+
+        <div className={styles.wishFormSection}>
+          <form className={styles.wishForm} onSubmit={handleSubmit}>
+            <div className={styles.wishFormRow}>
+              <input
+                type="text"
+                placeholder="Your name"
+                value={guestName}
+                onChange={(e) => setGuestName(e.target.value)}
+                className={styles.wishInput}
+                disabled={submitting}
+              />
+              <input
+                type="tel"
+                placeholder="Your phone number"
+                value={guestPhone}
+                onChange={(e) => setGuestPhone(e.target.value)}
+                className={styles.wishInput}
+                disabled={submitting}
+              />
+            </div>
+            <textarea
+              placeholder={`Write your birthday wish for ${childName}...`}
+              value={wishText}
+              onChange={(e) => setWishText(e.target.value)}
+              className={styles.wishTextarea}
+              rows={4}
+              disabled={submitting}
+            />
+            <button type="submit" className={styles.wishSubmitBtn} disabled={submitting}>
+              {submitting ? 'Sending...' : 'Send Your Wish'}
+            </button>
+            <p className={styles.formHint}>
+              Your wish will be saved to the same birthday wish board and shown on the homepage after approval.
+            </p>
+            {submitSuccess && <p className={styles.successMessage}>🎉 Wish submitted successfully!</p>}
+            {submitError && <p className={styles.errorMessage}>{submitError}</p>}
+          </form>
+        </div>
       </div>
     </section>
   );

@@ -1,0 +1,72 @@
+.pageWrapper {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #fff8f2 0%, #fff3f7 100%);
+}
+
+.pageHero {
+  padding: 100px 24px 60px;
+  background: linear-gradient(180deg, rgba(232, 36, 60, 0.06) 0%, transparent 100%);
+  display: flex;
+  justify-content: center;
+}
+
+.pageHeroBody {
+  max-width: 840px;
+  text-align: center;
+  padding: 0 12px;
+}
+
+.pageEyebrow {
+  display: inline-block;
+  margin-bottom: 18px;
+  color: #8c001a;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+}
+
+.pageTitle {
+  font-size: clamp(2.3rem, 4vw, 3.8rem);
+  line-height: 1.05;
+  color: #8c001a;
+  margin: 0 0 18px;
+}
+
+.pageCopy {
+  max-width: 680px;
+  margin: 0 auto;
+  color: #5a414f;
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.pageSection {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+@media (max-width: 768px) {
+  .pageHero {
+    padding: 72px 16px 40px;
+  }
+
+  .pageTitle {
+    font-size: 2.4rem;
+  }
+
+  .pageCopy {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .pageHero {
+    padding: 56px 14px 32px;
+  }
+
+  .pageTitle {
+    font-size: 2rem;
+  }
+}

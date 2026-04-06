@@ -12,7 +12,7 @@ export const Footer: React.FC<FooterProps> = ({ childName, date, venue }) => {
     <footer className={styles.footerWrapper}>
       <div className={styles.footLeft}>
         Made with love for <strong>{childName}'s Birthday</strong> 🍓<br />
-        {date} · {venue}
+        2026 · {venue}
       </div>
       <div className={styles.footEmoji}>
         <span>🍓</span>

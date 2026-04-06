@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getGuests, saveGuest, updateGuest, deleteGuest, bulkSaveGuests, GuestData } from '@/lib/supabase';
 import * as XLSX from 'xlsx';
+import config from '@/data/config.json';
 import styles from '@/styles/GuestManagement.module.css';
 
 interface Guest {
@@ -35,7 +36,7 @@ export default function GuestManagementClient() {
   const [editingGuest, setEditingGuest] = useState<Guest | null>(null);
 
   // WhatsApp message state
-  const [customMessage, setCustomMessage] = useState('Hi {title} {name}, you\'re invited to Emma\'s birthday party! 🎉');
+  const [customMessage, setCustomMessage] = useState(`Hi {title} {name}, you're invited to ${config.child.name}'s birthday party! 🎉`);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -60,7 +61,7 @@ export default function GuestManagementClient() {
       }
 
       try {
-        const guestResult = await getGuests('Emma');
+        const guestResult = await getGuests(config.child.name);
         setGuests(guestResult?.data || []);
       } catch (error) {
         console.error('Error fetching guests:', error);
@@ -97,7 +98,7 @@ export default function GuestManagementClient() {
           title: formData.title,
           name: formData.name,
           phone: formData.phone || null,
-          childName: 'Emma',
+          childName: config.child.name,
         });
         setModalMessage({ text: 'Guest added successfully!', type: 'success' });
       }
@@ -107,7 +108,7 @@ export default function GuestManagementClient() {
       setEditingGuest(null);
 
       // Refresh guests list
-      const guestResult = await getGuests('Emma');
+      const guestResult = await getGuests(config.child.name);
       setGuests(guestResult?.data || []);
 
     } catch (error) {
@@ -134,7 +135,7 @@ export default function GuestManagementClient() {
       setModalMessage({ text: 'Guest deleted successfully!', type: 'success' });
 
       // Refresh guests list
-      const guestResult = await getGuests('Emma');
+      const guestResult = await getGuests(config.child.name);
       setGuests(guestResult?.data || []);
 
     } catch (error) {
@@ -157,14 +158,14 @@ export default function GuestManagementClient() {
         title: row.title || row.Title || '',
         name: row.name || row.Name || '',
         phone: row.phone || row.Phone || null,
-        childName: 'Emma',
+        childName: config.child.name,
       }));
 
       await bulkSaveGuests(guestsToSave);
       setModalMessage({ text: `${guestsToSave.length} guests imported successfully!`, type: 'success' });
 
       // Refresh guests list
-      const guestResult = await getGuests('Emma');
+      const guestResult = await getGuests(config.child.name);
       setGuests(guestResult?.data || []);
 
     } catch (error) {

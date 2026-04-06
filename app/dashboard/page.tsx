@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { getRSVPs, getWishes, updateWishVisibility } from '@/lib/supabase';
+import config from '@/data/config.json';
 import styles from '@/styles/Dashboard.module.css';
 import { FlyerCard } from '@/components/FlyerCard';
 
@@ -57,12 +58,12 @@ export default function DashboardPage() {
         setUser({
           id: session.id,
           email: session.email,
-          childName: 'Emma', // Default or fetch from config
+          childName: config.child.name,
         });
 
-        // Fetch RSVPs and Wishes with default child name
-        const rsvpResult = await getRSVPs('Emma');
-        const wishResult = await getWishes('Emma');
+        // Fetch RSVPs and Wishes for configured child
+        const rsvpResult = await getRSVPs(config.child.name);
+        const wishResult = await getWishes(config.child.name);
 
         setRsvps(rsvpResult?.data || []);
         const wishesData = wishResult?.data || [];
@@ -240,7 +241,7 @@ export default function DashboardPage() {
                     </div>
                     <div className={styles.actionButtons}>
                       <a
-                        href={`https://wa.me/${rsvp.phone.replace(/\D/g, '')}?text=Hi%20${rsvp.guest_name.replace(/\s/g, '%20')}%2C%20thanks%20for%20RSVPing%20for%20Emma's%20birthday!`}
+                        href={`https://wa.me/${rsvp.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${rsvp.guest_name}, thanks for RSVPing for ${config.child.name}'s birthday!`)}`}
                         target="_blank"
                         rel="noreferrer"
                         className={styles.actionBtn}

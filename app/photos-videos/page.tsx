@@ -105,7 +105,7 @@ export default function PhotosVideosPage() {
         <div className={styles.pageInner}>
           <section className={styles.heroSection}>
             <div className={styles.heroText}>
-              <p className={styles.heroEyebrow}>Emma's Moments</p>
+              <p className={styles.heroEyebrow}>{config.child.name}'s Moments</p>
               <h1 className={styles.heroTitle}>
                 Photos & Videos from the celebration
               </h1>

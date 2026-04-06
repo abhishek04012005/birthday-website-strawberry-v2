@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
+import config from '@/data/config.json';
 import styles from '@/styles/AdminPhotosVideos.module.css';
 
 interface MediaItem {
@@ -250,7 +251,7 @@ export default function PhotosVideosClient() {
         <div className={styles.card}>
           <div className={styles.hero}>
             <h1 className={styles.heroTitle}>Upload Photos & Videos</h1>
-            <p className={styles.heroSubtitle}>Share memories from Emma&apos;s birthday party</p>
+            <p className={styles.heroSubtitle}>Share memories from {config.child.name}&apos;s birthday party</p>
           </div>
 
           <div className={styles.cardBody}>

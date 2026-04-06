@@ -31,7 +31,7 @@ export const Gallery: React.FC<GalleryProps> = ({ gallery }) => {
     <section className={styles.galleryBg} id="gallery">
       <div className={styles.secHead}>
         <div className={styles.secPill}>📸 Sweet Memories</div>
-        <h2 className={styles.secTitle}>🍓 Photo Gallery 🍓</h2>
+        <h2 className={styles.secTitle}>🍓 Memories 🍓</h2>
         <p className={styles.secSub}>Click any photo to zoom in — sneak peeks of our sweetest moments!</p>
       </div>
 

@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import styles from '@/styles/Auth.module.css';
+import config from '@/data/config.json';
 
 const Auth: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -63,7 +64,7 @@ const Auth: React.FC = () => {
         {/* Left Section - Branding */}
         <div className={styles.authBrand}>
           <div className={styles.brandEmoji}>🍓</div>
-          <h1 className={styles.brandTitle}>Emma's</h1>
+          <h1 className={styles.brandTitle}>{config.child.name}'s</h1>
           <h2 className={styles.brandSubtitle}>Birthday Party</h2>
           <p className={styles.brandTagline}>Admin Access Portal</p>
           

@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { saveRSVP } from '@/lib/supabase';
+import config from '@/data/config.json';
 import styles from '@/styles/RSVP.module.css';
 
 interface RSVPProps {
@@ -249,7 +250,7 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
 
       <div className={styles.bottomActionBarRight}>
         <a
-          href="https://wa.me/YOURNUMBER?text=Hi%20Emma%2C%20I%20just%20submitted%20an%20RSVP!"
+          href={`https://wa.me/YOURNUMBER?text=${encodeURIComponent(`Hi ${config.child.name}, I just submitted an RSVP!`)}`}
           target="_blank"
           rel="noreferrer"
           className={styles.floatingCircleBtn}
