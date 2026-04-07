@@ -303,24 +303,7 @@ export default function DashboardPage() {
                         })}
                       </p>
                     </div>
-                    <div className={styles.actionButtons}>
-                      {/* <a
-                        href={`https://wa.me/${rsvp.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${rsvp.guest_name}, thanks for RSVPing for ${config.child.name}'s birthday!`)}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className={styles.actionBtn}
-                        title="WhatsApp Message"
-                      >
-                        💬 WhatsApp
-                      </a>
-                      <a
-                        href={`tel:${rsvp.phone}`}
-                        className={styles.actionBtn}
-                        title="Call"
-                      >
-                        📞 Call
-                      </a> */}
-                    </div>
+             
                   </div>
                 ))}
               </div>
