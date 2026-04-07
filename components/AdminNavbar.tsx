@@ -2,14 +2,17 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useState } from 'react';
 import styles from '../styles/AdminNavbar.module.css';
 
 const AdminNavbar = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const navItems = [
     { href: '/dashboard', label: 'Dashboard' },
+    { href: '/admin/wishes', label: 'Wishes' },
     { href: '/admin/guest-management', label: 'Guest Management' },
     { href: '/admin/quiz-settings', label: 'Quiz Settings' },
     { href: '/admin/photos-videos', label: 'Photos & Videos' },
@@ -35,12 +38,23 @@ const AdminNavbar = () => {
           <span>Admin Panel</span>
         </Link>
 
-        <nav className={styles.navLinks} aria-label="Admin navigation">
+        <button
+          type="button"
+          className={styles.mobileToggle}
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? '✕' : '☰'}
+        </button>
+
+        <nav className={`${styles.navLinks} ${menuOpen ? styles.open : ''}`} aria-label="Admin navigation">
           {navItems.map((item) => (
             <Link
               key={item.href}
               href={item.href}
               className={`${styles.navLink} ${isActive(item.href) ? styles.active : ''}`}
+              onClick={() => setMenuOpen(false)}
             >
               {item.label}
             </Link>

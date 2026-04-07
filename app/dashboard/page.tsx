@@ -6,6 +6,8 @@ import { getRSVPs, getWishes, updateWishVisibility } from '@/lib/supabase';
 import config from '@/data/config.json';
 import styles from '@/styles/Dashboard.module.css';
 import { FlyerCard } from '@/components/FlyerCard';
+import html2canvas from 'html2canvas';
+import { jsPDF } from 'jspdf';
 
 interface RSVP {
   id: string;
@@ -118,6 +120,68 @@ export default function DashboardPage() {
     setModalMessage({ text: 'Homepage wishes updated successfully!', type: 'success' });
     setTimeout(() => setModalMessage(null), 3000);
   };
+
+  const handleDownloadWishes = async () => {
+    const wrapper = document.getElementById('wish-print-pages');
+    if (!wrapper) {
+      setModalMessage({ text: 'Download failed: no printable content found.', type: 'error' });
+      setTimeout(() => setModalMessage(null), 3000);
+      return;
+    }
+
+    const originalWidth = wrapper.style.width;
+    const originalMinHeight = wrapper.style.minHeight;
+    wrapper.style.width = '210mm';
+    wrapper.style.minHeight = '297mm';
+
+    try {
+      const canvas = await html2canvas(wrapper, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: true,
+        logging: false,
+        backgroundColor: '#ffffff',
+      });
+
+      const imgData = canvas.toDataURL('image/png');
+      const pdf = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+      const pdfWidth = 210;
+      const pdfHeight = 297;
+      const pageHeight = (canvas.height * pdfWidth) / canvas.width;
+      let heightLeft = pageHeight;
+      let position = 0;
+
+      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pageHeight);
+      heightLeft -= pdfHeight;
+
+      while (heightLeft > 0) {
+        position -= pdfHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, pageHeight);
+        heightLeft -= pdfHeight;
+      }
+
+      pdf.save(`${config.child.name.replace(/\s+/g, '_')}_birthday_wishes.pdf`);
+    } catch (error) {
+      console.error('Download failed:', error);
+      setModalMessage({ text: 'Download failed. Please try again.', type: 'error' });
+      setTimeout(() => setModalMessage(null), 3000);
+    } finally {
+      wrapper.style.width = originalWidth;
+      wrapper.style.minHeight = originalMinHeight;
+    }
+  };
+
+  const printableWishes = selectedWishes.length > 0
+    ? wishes.filter(w => selectedWishes.includes(w.id))
+    : wishes;
+  const wishPages = Array.from(
+    { length: Math.max(1, Math.ceil(printableWishes.length / 4)) },
+    (_, pageIndex) => {
+      const pageItems = printableWishes.slice(pageIndex * 4, pageIndex * 4 + 4);
+      return [...pageItems, ...Array(4 - pageItems.length).fill(null)];
+    }
+  );
 
   if (loading) {
     return (
@@ -271,51 +335,103 @@ export default function DashboardPage() {
               <p className={styles.wishesDescription}>
                 Choose which birthday wishes should appear on the homepage. Selected wishes will be visible to all visitors.
               </p>
+              <div className={styles.wishesActionRow}>
               <button
+                type="button"
                 className={styles.updateBtn}
                 onClick={handleBulkVisibilityUpdate}
                 disabled={selectedWishes.length === 0 && wishes.filter(w => w.is_visible).length === 0}
               >
                 ✨ Update Homepage Wishes ({selectedWishes.length} selected)
               </button>
+              <button
+                type="button"
+                className={styles.downloadSheetBtn}
+                onClick={handleDownloadWishes}
+              >
+                📄 Download A4 Wishes PDF
+              </button>
             </div>
+          </div>
 
-            {wishes.length === 0 ? (
+          {wishes.length === 0 ? (
               <div className={styles.emptyState}>
                 <p className={styles.emptyIcon}>🎁</p>
                 <p className={styles.emptyText}>No wishes yet!</p>
               </div>
             ) : (
-              <div className={styles.wishesList}>
-                {wishes.map((wish) => (
-                  <div key={wish.id} className={`${styles.wishCard} ${selectedWishes.includes(wish.id) ? styles.wishSelected : ''}`}>
-                    <div className={styles.wishSelect}>
-                      <input
-                        type="checkbox"
-                        id={`wish-${wish.id}`}
-                        checked={selectedWishes.includes(wish.id)}
-                        onChange={(e) => {
-                          if (e.target.checked) {
-                            setSelectedWishes([...selectedWishes, wish.id]);
-                          } else {
-                            setSelectedWishes(selectedWishes.filter(id => id !== wish.id));
-                          }
-                        }}
-                      />
-                      <label htmlFor={`wish-${wish.id}`} className={styles.wishCheckbox}>
-                        {selectedWishes.includes(wish.id) ? '✅ Selected' : '⬜ Select'}
-                      </label>
+              <>
+                <div className={styles.wishesList}>
+                  {wishes.map((wish) => (
+                    <div key={wish.id} className={`${styles.wishCard} ${selectedWishes.includes(wish.id) ? styles.wishSelected : ''}`}>
+                      <div className={styles.wishSelect}>
+                        <input
+                          type="checkbox"
+                          id={`wish-${wish.id}`}
+                          checked={selectedWishes.includes(wish.id)}
+                          onChange={(e) => {
+                            if (e.target.checked) {
+                              setSelectedWishes([...selectedWishes, wish.id]);
+                            } else {
+                              setSelectedWishes(selectedWishes.filter(id => id !== wish.id));
+                            }
+                          }}
+                        />
+                        <label htmlFor={`wish-${wish.id}`} className={styles.wishCheckbox}>
+                          {selectedWishes.includes(wish.id) ? '✅ Selected' : '⬜ Select'}
+                        </label>
+                      </div>
+                      <div className={styles.wishHeader}>
+                        <h4>{wish.guest_name}</h4>
+                        <span className={styles.wishDate}>
+                          {new Date(wish.submitted_at).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <p className={styles.wishText}>{wish.wish_text}</p>
                     </div>
-                    <div className={styles.wishHeader}>
-                      <h4>{wish.guest_name}</h4>
-                      <span className={styles.wishDate}>
-                        {new Date(wish.submitted_at).toLocaleDateString()}
-                      </span>
+                  ))}
+                </div>
+
+                <div id="wish-print-pages" className={styles.printPages}>
+                  {wishPages.map((page, pageIndex) => (
+                    <div key={`page-${pageIndex}`} className={styles.printSheet}>
+                      <div className={styles.printHeader}>
+                        <div className={styles.printTitles}>
+                          <span className={styles.printTag}>A4 Wishes Sheet</span>
+                          <h1>{config.child.name}'s Birthday Wishes</h1>
+                        </div>
+                        <p className={styles.printSubtitle}>
+                          {config.party.title} • {config.party.date} • {config.party.time}
+                        </p>
+                      </div>
+                      <div className={styles.printGrid}>
+                        {page.map((wish, index) => (
+                          <div key={index} className={styles.printCard}>
+                            <div className={styles.printCardNumber}>Wish {pageIndex * 6 + index + 1}</div>
+                            <div className={styles.printWishText}>
+                              {wish ? wish.wish_text : 'Write your birthday message here...'}
+                            </div>
+                            <div className={styles.printMeta}>
+                              <span>{wish ? new Date(wish.submitted_at).toLocaleDateString([], { dateStyle: 'medium' }) : 'Date: _________'}</span>
+                              <span>{wish ? new Date(wish.submitted_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Time: _________'}</span>
+                            </div>
+                            <div className={styles.printFrom}>
+                              <span>From:</span> {wish ? wish.guest_name : '__________________'}
+                            </div>
+                            <div className={styles.printSignature}>
+                              <span>Signature:</span>
+                              <div className={styles.signatureLine} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                      <div className={styles.printFooter}>
+                        <p>Page {pageIndex + 1} of {wishPages.length}</p>
+                      </div>
                     </div>
-                    <p className={styles.wishText}>{wish.wish_text}</p>
-                  </div>
-                ))}
-              </div>
+                  ))}
+                </div>
+              </>
             )}
           </div>
         )}

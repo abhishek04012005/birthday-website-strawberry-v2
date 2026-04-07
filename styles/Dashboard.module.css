@@ -379,7 +379,16 @@
   line-height: 1.5;
 }
 
-.updateBtn {
+.wishesActionRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.updateBtn,
+.downloadSheetBtn {
   background: linear-gradient(135deg, var(--red) 0%, var(--crimson) 100%);
   color: white;
   border: none;
@@ -390,6 +399,218 @@
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 4px 12px rgba(232, 36, 60, 0.3);
+}
+
+.downloadSheetBtn:hover:not(:disabled),
+.updateBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(232, 36, 60, 0.4);
+}
+
+.downloadSheetBtn:disabled,
+.updateBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.updateBtn {
+  min-width: 240px;
+}
+
+.downloadSheetBtn {
+  min-width: 240px;
+}
+
+.printHeader {
+  text-align: center;
+  margin-bottom: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.printTitles {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: center;
+}
+
+.printTag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(232, 36, 60, 0.1);
+  color: var(--dark-red);
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 8px 16px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+}
+
+.printHeader h1 {
+  margin: 0;
+  font-size: 2.4rem;
+  line-height: 1.1;
+  color: var(--dark-red);
+}
+
+.printSubtitle {
+  margin: 12px auto 0;
+  max-width: 680px;
+  color: #7e3a50;
+  line-height: 1.6;
+  font-size: 0.98rem;
+}
+
+.printGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  grid-auto-rows: minmax(180px, auto);
+}
+
+.printPages {
+  display: grid;
+  gap: 24px;
+}
+
+.printSheet {
+  margin-top: 32px;
+  width: min(210mm, 100%);
+  min-height: 297mm;
+  padding: 20mm 18mm;
+  background: linear-gradient(180deg, #fff8fb 0%, #ffe9f2 100%);
+  border: 1mm solid rgba(232, 36, 60, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+  page-break-after: always;
+}
+
+.printSheet::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  height: 12px;
+  background: radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.9) 0%, transparent 45%),
+              radial-gradient(circle at 70% 40%, rgba(255, 255, 255, 0.85) 0%, transparent 40%);
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+.printCard {
+  background: #fff7f9;
+  border: 1px dashed #ffc1cf;
+  border-radius: 18px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 220px;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+.printCardNumber {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--red);
+  margin-bottom: 10px;
+}
+
+.printWishText {
+  font-size: 0.95rem;
+  color: #4b4b4b;
+  line-height: 1.7;
+  min-height: 96px;
+  padding: 14px;
+  border-radius: 14px;
+  border: 1px solid #ffe3ea;
+  background: #fff;
+  margin-bottom: 14px;
+}
+
+.printFrom,
+.printSignature {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #5e333f;
+  font-size: 0.9rem;
+}
+
+.printMeta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: #7a4d60;
+  margin-top: 8px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid #ffe3ea;
+}
+
+.printFrom span,
+.printSignature span {
+  font-weight: 700;
+}
+
+.signatureLine {
+  height: 1px;
+  background: #b28591;
+  margin-top: 6px;
+  width: 100%;
+}
+
+.printFooter {
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid #ffd6e0;
+  color: #7d4b58;
+  text-align: center;
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 14mm;
+  }
+
+  body * {
+    visibility: hidden;
+  }
+
+  #wish-print-pages,
+  #wish-print-pages * {
+    visibility: visible;
+  }
+
+  #wish-print-pages {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-shadow: none;
+  }
+
+  .printSheet {
+    border: none;
+    box-shadow: none;
+    background: white;
+    width: 100%;
+    padding: 0;
+    page-break-after: always;
+  }
 }
 
 .updateBtn:hover:not(:disabled) {

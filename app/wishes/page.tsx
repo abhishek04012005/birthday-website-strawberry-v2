@@ -54,6 +54,15 @@ export default function WishesPage() {
     setLoading(false);
   };
 
+  const handlePrintWishes = () => {
+    if (typeof window !== 'undefined') {
+      window.print();
+    }
+  };
+
+  const printableWishes = (user ? allWishes : visibleWishes).slice(0, 8);
+  const printSlots = Array.from({ length: 8 }, (_, index) => printableWishes[index] || null);
+
   const submitWish = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -145,7 +154,18 @@ export default function WishesPage() {
 
           {user && (
             <div className={styles.adminSection}>
-              <h2>Admin Controls: Manage Wish Visibility</h2>
+              <div className={styles.adminSectionHeader}>
+                <div>
+                  <h2>Admin Controls: Manage Wish Visibility</h2>
+                  <p className={styles.adminSectionNote}>
+                    Download a printable A4 sheet with up to 8 birthday wishes and signature lines.
+                  </p>
+                </div>
+                <button className={styles.downloadSheetBtn} onClick={handlePrintWishes}>
+                  Download A4 Wishes Sheet
+                </button>
+              </div>
+
               {allWishes.length === 0 ? (
                 <p>No wishes submitted yet.</p>
               ) : (
@@ -170,6 +190,33 @@ export default function WishesPage() {
             </div>
           )}
 
+        </div>
+
+        <div id="wish-print-sheet" className={styles.printSheet}>
+          <div className={styles.printHeader}>
+            <h1>{config.child.name}'s Birthday Wishes</h1>
+            <p>Happy birthday {config.child.name}! Here are the wishes to sign and celebrate.</p>
+          </div>
+          <div className={styles.printGrid}>
+            {printSlots.map((wish, index) => (
+              <div key={index} className={styles.printCard}>
+                <div className={styles.printCardNumber}>Wish {index + 1}</div>
+                <div className={styles.printWishText}>
+                  {wish ? wish.wish_text : 'Write your birthday message here...'}
+                </div>
+                <div className={styles.printFrom}>
+                  <span>From:</span> {wish ? wish.guest_name : '__________________'}
+                </div>
+                <div className={styles.printSignature}>
+                  <span>Signature:</span>
+                  <div className={styles.signatureLine} />
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className={styles.printFooter}>
+            <p>Download this sheet and print on A4 paper. Each card includes a wish and signature line.</p>
+          </div>
         </div>
 
         <Wave bgColor="#fff0f4" svgColor="#fffaf5" />
