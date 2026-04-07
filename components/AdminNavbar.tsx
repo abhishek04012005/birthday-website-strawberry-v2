@@ -14,7 +14,8 @@ const AdminNavbar = () => {
     { href: '/dashboard', label: 'Dashboard' },
     { href: '/admin/wishes', label: 'Wishes' },
     { href: '/admin/guest-management', label: 'Guest Management' },
-    { href: '/admin/quiz-settings', label: 'Quiz Settings' },
+    // { href: '/admin/quiz-settings', label: 'Quiz Settings' },
+    { href: '/admin/quiz-dashboard', label: 'Quiz Dashboard' },
     { href: '/admin/photos-videos', label: 'Photos & Videos' },
   ];
 

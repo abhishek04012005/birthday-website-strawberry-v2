@@ -10,6 +10,15 @@ export interface QuizQuestion {
   correctIndex: number;
 }
 
+export interface QuizResult {
+  id: string;
+  name: string;
+  phone: string;
+  score: number;
+  total: number;
+  completedAt: string;
+}
+
 interface QuizProps {
   questions: QuizQuestion[];
 }
@@ -38,6 +47,17 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
   const total = questions.length;
   const correctAnswerCount = useMemo(() => score, [score]);
 
+  const saveQuizResult = (result: QuizResult) => {
+    try {
+      const existing = localStorage.getItem('birthdayQuizResults');
+      const parsed: QuizResult[] = existing ? JSON.parse(existing) : [];
+      parsed.unshift(result);
+      localStorage.setItem('birthdayQuizResults', JSON.stringify(parsed));
+    } catch {
+      // Ignore localStorage failures.
+    }
+  };
+
   const handleSelect = (qIndex: number, optionIndex: number) => {
     if (submitted) return;
     setAnswers((prev) => {
@@ -63,6 +83,15 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
     setScore(newScore);
     setSubmitted(true);
     setShowValidationMessage(false);
+
+    saveQuizResult({
+      id: `${guestName.trim().replace(/\s+/g, '_')}_${Date.now()}`,
+      name: guestName.trim(),
+      phone: phone.trim(),
+      score: newScore,
+      total,
+      completedAt: new Date().toISOString(),
+    });
   };
 
   const handleReset = () => {
