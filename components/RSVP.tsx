@@ -248,17 +248,7 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
         </div>
       </div>
 
-      <div className={styles.bottomActionBarRight}>
-        <a
-          href={`https://wa.me/YOURNUMBER?text=${encodeURIComponent(`Hi ${config.child.name}, I just submitted an RSVP!`)}`}
-          target="_blank"
-          rel="noreferrer"
-          className={styles.floatingCircleBtn}
-          title="WhatsApp"
-        >
-          📱
-        </a>
-      </div>
+    
     </section>
   );
 };

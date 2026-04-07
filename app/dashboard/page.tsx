@@ -304,7 +304,7 @@ export default function DashboardPage() {
                       </p>
                     </div>
                     <div className={styles.actionButtons}>
-                      <a
+                      {/* <a
                         href={`https://wa.me/${rsvp.phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hi ${rsvp.guest_name}, thanks for RSVPing for ${config.child.name}'s birthday!`)}`}
                         target="_blank"
                         rel="noreferrer"
@@ -319,7 +319,7 @@ export default function DashboardPage() {
                         title="Call"
                       >
                         📞 Call
-                      </a>
+                      </a> */}
                     </div>
                   </div>
                 ))}
