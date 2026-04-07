@@ -114,3 +114,278 @@
   background: #f1fff4;
   color: #29593d;
 }
+
+/* Start Quiz Button */
+.startQuizContainer {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+.startQuizBtn {
+  background: linear-gradient(135deg, #8c001a 0%, #c0003a 100%);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(140, 0, 26, 0.3);
+}
+
+.startQuizBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(140, 0, 26, 0.4);
+}
+
+/* Popup Styles */
+.popupOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.popup {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.popupClose {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #666;
+}
+
+.popupContent {
+  text-align: center;
+}
+
+.popupIcon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.popupContent h3 {
+  color: #8c001a;
+  margin-bottom: 0.5rem;
+}
+
+.popupContent p {
+  color: #666;
+  margin-bottom: 1.5rem;
+}
+
+/* Form Styles */
+.formGroup {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+.formGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #4f151f;
+}
+
+.formGroup input {
+  width: 100%;
+  padding: 0.75rem;
+  border: 2px solid #e8aab2;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.formGroup input:focus {
+  outline: none;
+  border-color: #8c001a;
+}
+
+/* Popup Actions */
+.popupActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  justify-content: center;
+}
+
+.cancelBtn,
+.startBtn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.cancelBtn {
+  background: #f5aab5;
+  color: #5f1a23;
+}
+
+.startBtn {
+  background: #8c001a;
+  color: white;
+}
+
+.cancelBtn:hover,
+.startBtn:hover {
+  transform: translateY(-1px);
+}
+
+/* Save Actions */
+.saveActions {
+  margin-top: 1rem;
+}
+
+.saveBtn {
+  background: linear-gradient(135deg, #2fa254 0%, #4ade80 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(47, 162, 84, 0.3);
+}
+
+.saveBtn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(47, 162, 84, 0.4);
+}
+
+.saveBtn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Message Styles */
+.message {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.message.success {
+  background: #f1fff4;
+  color: #29593d;
+  border: 1px solid #9ad3a9;
+}
+
+.message.error {
+  background: #fff1f1;
+  color: #c72f3f;
+  border: 1px solid #f5aab5;
+}
+
+/* Quiz Popup Styles */
+.quizPopup {
+  background: white;
+  border-radius: 16px;
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.quizPopupContent {
+  text-align: center;
+}
+
+.quizQuestions {
+  text-align: left;
+  margin: 1.5rem 0;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.quizProgress {
+  font-weight: 700;
+  color: #8c001a;
+  margin-top: 1rem;
+}
+
+.quizActions,
+.popupActions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.prevBtn,
+.nextBtn,
+.downloadBtn,
+.submitBtn,
+.resetBtn,
+.saveBtn {
+  border: 0;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+.prevBtn,
+.nextBtn {
+  background: #f5aab5;
+  color: #5f1a23;
+}
+
+.nextBtn {
+  background: linear-gradient(135deg, #8c001a 0%, #c0003a 100%);
+  color: white;
+}
+
+.prevBtn:disabled,
+.nextBtn:disabled,
+.submitBtn:disabled,
+.saveBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.downloadBtn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+}
+
+.prevBtn:hover:not(:disabled),
+.nextBtn:hover:not(:disabled),
+.downloadBtn:hover:not(:disabled),
+.saveBtn:hover:not(:disabled),
+.submitBtn:hover:not(:disabled) {
+  transform: translateY(-1px);
+}

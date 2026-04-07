@@ -1,0 +1,373 @@
+'use client';
+
+import React, { useEffect, useMemo, useState } from 'react';
+import { saveWish } from '@/lib/supabase';
+import config from '@/data/config.json';
+import styles from '@/styles/Quiz.module.css';
+
+export interface QuizQuestion {
+  id: number;
+  question: string;
+  options: string[];
+  correctIndex: number;
+}
+
+interface QuizProps {
+  questions: QuizQuestion[];
+}
+
+export const Quiz: React.FC<QuizProps> = ({ questions }) => {
+  const [answers, setAnswers] = useState<number[]>([]);
+  const [submitted, setSubmitted] = useState(false);
+  const [score, setScore] = useState<number>(0);
+  const [showValidationMessage, setShowValidationMessage] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
+  const [guestName, setGuestName] = useState('');
+  const [guestPhone, setGuestPhone] = useState('');
+  const [quizStarted, setQuizStarted] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState<{text: string, type: 'success' | 'error'} | null>(null);
+
+  useEffect(() => {
+    setAnswers(questions.map(() => -1));
+    setSubmitted(false);
+    setScore(0);
+    setShowValidationMessage(false);
+  }, [questions]);
+
+  const total = questions.length;
+  const correctAnswerCount = useMemo(() => score, [score]);
+
+  const handleSelect = (qIndex: number, optionIndex: number) => {
+    if (submitted) return;
+    setAnswers((prev) => {
+      const next = [...prev];
+      next[qIndex] = optionIndex;
+      return next;
+    });
+  };
+
+  const handleSubmit = () => {
+    if (answers.some((value) => value === -1)) {
+      setShowValidationMessage(true);
+      return;
+    }
+
+    const newScore = answers.reduce((acc, value, index) => {
+      if (value === questions[index].correctIndex) {
+        return acc + 1;
+      }
+      return acc;
+    }, 0);
+
+    setScore(newScore);
+    setSubmitted(true);
+    setShowValidationMessage(false);
+  };
+
+  const handleStartQuiz = () => {
+    if (!guestName.trim() || !guestPhone.trim()) {
+      setSaveMessage({ text: 'Please enter both name and phone number.', type: 'error' });
+      setTimeout(() => setSaveMessage(null), 3000);
+      return;
+    }
+
+    setQuizStarted(true);
+    setShowPopup(false);
+    setSaveMessage(null);
+  };
+
+  const handleSaveResults = async () => {
+    if (!guestName.trim() || !guestPhone.trim()) {
+      setSaveMessage({ text: 'Missing participant information.', type: 'error' });
+      setTimeout(() => setSaveMessage(null), 3000);
+      return;
+    }
+
+    setSaving(true);
+    const quizResult = `Quiz completed! Score: ${score}/${total}. ${score === total ? 'Perfect score! 🎉' : 'Great effort! 🎈'}`;
+    
+    const result = await saveWish({
+      guestName,
+      guestPhone,
+      wishText: quizResult,
+      childName: config.child.name,
+    });
+
+    setSaving(false);
+    
+    if (result.success) {
+      setSaveMessage({ text: 'Quiz results saved successfully! Thank you for playing! 🎉', type: 'success' });
+    } else {
+      setSaveMessage({ text: 'Failed to save results. Please try again.', type: 'error' });
+    }
+    
+    setTimeout(() => setSaveMessage(null), 5000);
+  };
+
+  const handleResetQuiz = () => {
+    setAnswers(questions.map(() => -1));
+    setSubmitted(false);
+    setScore(0);
+    setShowValidationMessage(false);
+    setQuizStarted(false);
+    setShowPopup(false);
+    setGuestName('');
+    setGuestPhone('');
+    setSaveMessage(null);
+  };
+
+  if (questions.length === 0) {
+    return (
+      <section className={styles.quizSection}>
+        <h2>🎮 Quiz</h2>
+        <p>No quiz available right now. Please ask admin to add questions.</p>
+      </section>
+    );
+  }
+
+  if (!quizStarted) {
+    return (
+      <section className={styles.quizSection} id="quiz">
+        <h2>🎮 Birthday Quiz</h2>
+        <p>Test your party knowledge! There are {total} questions.</p>
+        
+        <div className={styles.startQuizContainer}>
+          <button 
+            className={styles.startQuizBtn}
+            onClick={() => setShowPopup(true)}
+          >
+            🎯 Take a Quiz
+          </button>
+        </div>
+
+        {/* Quiz Info Popup */}
+        {showPopup && (
+          <div className={styles.popupOverlay} onClick={() => setShowPopup(false)}>
+            <div className={styles.popup} onClick={(e) => e.stopPropagation()}>
+              <button className={styles.popupClose} onClick={() => setShowPopup(false)}>✕</button>
+              <div className={styles.popupContent}>
+                <div className={styles.popupIcon}>🎮</div>
+                <h3>Ready to Play?</h3>
+                <p>Please enter your details to start the quiz:</p>
+                
+                <form onSubmit={(e) => { e.preventDefault(); handleStartQuiz(); }}>
+                  <div className={styles.formGroup}>
+                    <label htmlFor="guestName">Your Name *</label>
+                    <input
+                      type="text"
+                      id="guestName"
+                      value={guestName}
+                      onChange={(e) => setGuestName(e.target.value)}
+                      placeholder="Enter your name"
+                      required
+                    />
+                  </div>
+                  
+                  <div className={styles.formGroup}>
+                    <label htmlFor="guestPhone">Phone Number *</label>
+                    <input
+                      type="tel"
+                      id="guestPhone"
+                      value={guestPhone}
+                      onChange={(e) => setGuestPhone(e.target.value)}
+                      placeholder="Enter your phone number"
+                      required
+                    />
+                  </div>
+                  
+                  <div className={styles.popupActions}>
+                    <button type="button" className={styles.cancelBtn} onClick={() => setShowPopup(false)}>
+                      Cancel
+                    </button>
+                    <button type="submit" className={styles.startBtn}>
+                      Start Quiz
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {saveMessage && (
+          <div className={`${styles.message} ${styles[saveMessage.type]}`}>
+            {saveMessage.text}
+          </div>
+        )}
+      </section>
+    );
+  }
+
+  return (
+    <>
+      <section className={styles.quizSection} id="quiz">
+        <h2>🎮 Birthday Quiz</h2>
+        <p>Test your party knowledge! There are {total} questions.</p>
+        
+        <div className={styles.startQuizContainer}>
+          <button 
+            className={styles.startQuizBtn}
+            onClick={() => setShowPopup(true)}
+          >
+            🎯 Take a Quiz
+          </button>
+        </div>
+      </section>
+
+      {/* Quiz Popup */}
+      {quizStarted && (
+        <div className={styles.popupOverlay} onClick={() => setShowPopup(false)}>
+          <div className={styles.quizPopup} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.popupClose} onClick={() => setShowPopup(false)}>✕</button>
+            <div className={styles.quizPopupContent}>
+              <div className={styles.popupIcon}>🎮</div>
+              <h3>Welcome {guestName}!</h3>
+              <p>Test your party knowledge! There are {total} questions.</p>
+
+              <div className={styles.quizQuestions}>
+                {questions.map((question, qIndex) => (
+                  <div key={question.id} className={styles.quizCard}>
+                    <div className={styles.questionText}>
+                      {qIndex + 1}. {question.question}
+                    </div>
+
+                    <div className={styles.optionList}>
+                      {question.options.map((option, optionIndex) => {
+                        const selected = answers[qIndex] === optionIndex;
+                        const correct = submitted && question.correctIndex === optionIndex;
+                        const wrong = submitted && selected && question.correctIndex !== optionIndex;
+
+                        return (
+                          <button
+                            key={optionIndex}
+                            className={`${styles.optionBtn} ${selected ? styles.selectedOption : ''} ${correct ? styles.correctOption : ''} ${wrong ? styles.wrongOption : ''}`}
+                            aria-pressed={selected}
+                            disabled={submitted}
+                            onClick={() => handleSelect(qIndex, optionIndex)}
+                          >
+                            {option}
+                          </button>
+                        );
+                      })}
+                    </div>
+
+                    {submitted && (
+                      <p className={styles.explanationText}>
+                        Correct answer: {question.options[question.correctIndex]}
+                      </p>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {showValidationMessage && <p className={styles.validationText}>Please answer all questions before submitting.</p>}
+
+              <div className={styles.quizActions}>
+                <button className={styles.submitBtn} onClick={handleSubmit} disabled={submitted}>
+                  {submitted ? 'Submitted' : 'Submit Quiz'}
+                </button>
+                <button className={styles.resetBtn} onClick={handleResetQuiz}>
+                  Start New Quiz
+                </button>
+              </div>
+
+              {submitted && (
+                <div className={styles.scoreBox}>
+                  <strong>Score: {correctAnswerCount} / {total}</strong>
+                  <p>Great job, {guestName}! Keep the party spirit alive 🎉</p>
+                  
+                  <div className={styles.saveActions}>
+                    <button 
+                      className={styles.saveBtn} 
+                      onClick={handleSaveResults}
+                      disabled={saving}
+                    >
+                      {saving ? 'Saving...' : '💾 Save My Results'}
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {saveMessage && (
+                <div className={`${styles.message} ${styles[saveMessage.type]}`}>
+                  {saveMessage.text}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
+    </>
+  );
+
+      {questions.map((question, qIndex) => (
+        <div key={question.id} className={styles.quizCard}>
+          <div className={styles.questionText}>
+            {qIndex + 1}. {question.question}
+          </div>
+
+          <div className={styles.optionList}>
+            {question.options.map((option, optionIndex) => {
+              const selected = answers[qIndex] === optionIndex;
+              const correct = submitted && question.correctIndex === optionIndex;
+              const wrong = submitted && selected && question.correctIndex !== optionIndex;
+
+              return (
+                <button
+                  key={optionIndex}
+                  className={`${styles.optionBtn} ${selected ? styles.selectedOption : ''} ${correct ? styles.correctOption : ''} ${wrong ? styles.wrongOption : ''}`}
+                  aria-pressed={selected}
+                  disabled={submitted}
+                  onClick={() => handleSelect(qIndex, optionIndex)}
+                >
+                  {option}
+                </button>
+              );
+            })}
+          </div>
+
+          {submitted && (
+            <p className={styles.explanationText}>
+              Correct answer: {question.options[question.correctIndex]}
+            </p>
+          )}
+        </div>
+      ))}
+
+      {showValidationMessage && <p className={styles.validationText}>Please answer all questions before submitting.</p>}
+
+      <div className={styles.quizActions}>
+        <button className={styles.submitBtn} onClick={handleSubmit} disabled={submitted}>
+          {submitted ? 'Submitted' : 'Submit Quiz'}
+        </button>
+        <button className={styles.resetBtn} onClick={handleResetQuiz}>
+          Start New Quiz
+        </button>
+      </div>
+
+      {submitted && (
+        <div className={styles.scoreBox}>
+          <strong>Score: {correctAnswerCount} / {total}</strong>
+          <p>Great job, {guestName}! Keep the party spirit alive 🎉</p>
+          
+          <div className={styles.saveActions}>
+            <button 
+              className={styles.saveBtn} 
+              onClick={handleSaveResults}
+              disabled={saving}
+            >
+              {saving ? 'Saving...' : '💾 Save My Results'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {saveMessage && (
+        <div className={`${styles.message} ${styles[saveMessage.type]}`}>
+          {saveMessage.text}
+        </div>
+      )}
+    </>
+  );
+};
