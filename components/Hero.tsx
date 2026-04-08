@@ -16,7 +16,6 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({
-  childName,
   childFullName,
   age,
   heroData,
@@ -31,7 +30,12 @@ export const Hero: React.FC<HeroProps> = ({
 
   useEffect(() => {
     const tick = () => {
-      const party = new Date(partyDate + 'T15:00:00').getTime();
+      // Calculate 7 days from today at 3 PM
+      const today = new Date();
+      const partyDateObj = new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000);
+      partyDateObj.setHours(15, 0, 0, 0);
+
+      const party = partyDateObj.getTime();
       const now = new Date().getTime();
       const diff = party - now;
 
