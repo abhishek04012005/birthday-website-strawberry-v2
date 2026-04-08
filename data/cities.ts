@@ -3001,4 +3001,53 @@ export function generatePatnaBirthdayServiceUrls(): Array<{ service: string; tit
         url: `/birthday-services/patna/${serviceKey}`
     }));
 }
+
+export function getStaticRoutes(): string[] {
+    return [
+        '/',
+        '/about',
+        '/birthday-services/patna',
+        '/dashboard',
+        '/gallery',
+        '/photos-videos',
+        '/quiz',
+        '/rsvp',
+        '/wishes',
+    ];
+}
+
+export function getAllSitemapRoutes(): string[] {
+    const staticRoutes = getStaticRoutes();
+
+    const serviceRoutes = Object.keys(digitalServices).flatMap((service) =>
+        getCitiesWithSlugs().map((city) => `/service/${service}/${city.slug}`),
+    );
+
+    const patnaRoutes = generatePatnaBirthdayServiceUrls().map((item) => item.url);
+
+    return [...staticRoutes, ...serviceRoutes, ...patnaRoutes];
+}
+
+export function chunkRoutes(routes: string[], chunkSize = 50000): string[][] {
+    const chunks: string[][] = [];
+
+    for (let i = 0; i < routes.length; i += chunkSize) {
+        chunks.push(routes.slice(i, i + chunkSize));
+    }
+
+    return chunks;
+}
+
+export function getSitemapPriority(url: string): number {
+    if (url === '/') {
+        return 1.0;
+    }
+
+    if (url.startsWith('/service/')) {
+        return 0.8;
+    }
+
+    return 0.6;
+}
+
 export const patnaBirthdayServiceUrls = generatePatnaBirthdayServiceUrls();
