@@ -379,7 +379,7 @@ export default function DashboardClient() {
                     <div key={`page-${pageIndex}`} className={styles.printSheet}>
                       <div className={styles.printHeader}>
                         <div className={styles.printTitles}>
-                          <span className={styles.printTag}>A4 Wishes Sheet</span>
+                          {/* <span className={styles.printTag}>A4 Wishes Sheet</span> */}
                           <h1>{config.child.name}'s Birthday Wishes</h1>
                         </div>
                         <p className={styles.printSubtitle}>
@@ -389,7 +389,7 @@ export default function DashboardClient() {
                       <div className={styles.printGrid}>
                         {page.map((wish, index) => (
                           <div key={index} className={styles.printCard}>
-                            <div className={styles.printCardNumber}>Wish {pageIndex * 6 + index + 1}</div>
+                            {/* <div className={styles.printCardNumber}>Wish {pageIndex * 6 + index + 1}</div> */}
                             <div className={styles.printWishText}>
                               {wish ? wish.wish_text : 'Write your birthday message here...'}
                             </div>
@@ -407,9 +407,7 @@ export default function DashboardClient() {
                           </div>
                         ))}
                       </div>
-                      <div className={styles.printFooter}>
-                        <p>Page {pageIndex + 1} of {wishPages.length}</p>
-                      </div>
+
                     </div>
                   ))}
                 </div>

@@ -12,7 +12,7 @@ const AdminNavbar = () => {
 
   const navItems = [
     { href: '/dashboard', label: 'Dashboard' },
-    { href: '/admin/wishes', label: 'Wishes' },
+    // { href: '/admin/wishes', label: 'Wishes' },
     { href: '/admin/guest-management', label: 'Guest Management' },
     // { href: '/admin/quiz-settings', label: 'Quiz Settings' },
     { href: '/admin/quiz-dashboard', label: 'Quiz Dashboard' },
