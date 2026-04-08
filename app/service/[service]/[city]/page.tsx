@@ -99,6 +99,7 @@ export default async function ServiceCityPage({ params }: ServiceCityPageProps) 
   }
 
   const serviceName = formatServiceName(service);
+  const hideBottomButtons = city === 'california';
 
   return (
     <>
@@ -133,14 +134,16 @@ export default async function ServiceCityPage({ params }: ServiceCityPageProps) 
               <div className={styles.contactSection}>
                 <h3>Get Started Today</h3>
                 <p>Contact us to book your {serviceName.toLowerCase()} service in {cityData.name}.</p>
-                <div className={styles.contactButtons}>
-                  <a href="tel:+919285248504" className={styles.primaryButton}>
-                    📞 Call Now: +91-9285248504
-                  </a>
-                  <a href="https://wa.me/919285248504" className={styles.secondaryButton}>
-                    💬 WhatsApp Us
-                  </a>
-                </div>
+                {!hideBottomButtons && (
+                  <div className={styles.contactButtons}>
+                    <a href="tel:+919285248504" className={styles.primaryButton}>
+                      📞 Call Now: +91-9285248504
+                    </a>
+                    <a href="https://wa.me/919285248504" className={styles.secondaryButton}>
+                      💬 WhatsApp Us
+                    </a>
+                  </div>
+                )}
                 <p className={styles.contactLink}>
                   🌐 Website: <a href="https://birthday.ditvi.org" target="_blank" rel="noopener noreferrer">www.birthday.ditvi.org</a>
                 </p>
@@ -172,7 +175,6 @@ export default async function ServiceCityPage({ params }: ServiceCityPageProps) 
           </div>
         </div>
       </section>
-      <FloatingButtons />
     </main>
     </>
   );
