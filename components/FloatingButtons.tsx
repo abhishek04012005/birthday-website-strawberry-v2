@@ -17,6 +17,8 @@ export const FloatingButtons: React.FC = () => {
       const globalAudio = (window as any).__birthdayMusicAudio as HTMLAudioElement | undefined;
       if (globalAudio) {
         setAudioReady(true);
+        // Show as playing since audio is always running
+        setIsPlaying(!globalAudio.muted);
       }
     };
 
@@ -29,13 +31,18 @@ export const FloatingButtons: React.FC = () => {
     const globalAudio = (window as any).__birthdayMusicAudio as HTMLAudioElement | undefined;
     if (!globalAudio) return;
 
-    if (isPlaying) {
+    if (isPlaying || !globalAudio.muted) {
+      // Pause: mute the audio
+      globalAudio.muted = true;
       globalAudio.pause();
       setIsPlaying(false);
     } else {
+      // Play: unmute the audio
       try {
+        globalAudio.muted = false;
         await globalAudio.play();
         setIsPlaying(true);
+        (window as any).__birthdayMusicMuted = false;
       } catch {
         setIsPlaying(false);
       }
@@ -48,7 +55,7 @@ export const FloatingButtons: React.FC = () => {
         type="button"
         className={`${styles.floatingBtn} ${styles.audioBtn}`}
         onClick={toggleAudio}
-        title={isPlaying ? 'Pause background music' : 'Play background music'}
+        title={isPlaying ? 'Mute background music' : 'Unmute background music'}
         disabled={!audioReady}
       >
         {isPlaying ? <PauseIcon sx={{ fontSize: '1.5rem' }} /> : <PlayArrowIcon sx={{ fontSize: '1.5rem' }} />}
