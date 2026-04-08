@@ -175,13 +175,12 @@ export default function DashboardClient() {
   const printableWishes = selectedWishes.length > 0
     ? wishes.filter(w => selectedWishes.includes(w.id))
     : wishes;
-  const wishPages = Array.from(
-    { length: Math.max(1, Math.ceil(printableWishes.length / 4)) },
+  const wishPages = printableWishes.length > 0 ? Array.from(
+    { length: Math.ceil(printableWishes.length / 4) },
     (_, pageIndex) => {
-      const pageItems = printableWishes.slice(pageIndex * 4, pageIndex * 4 + 4);
-      return [...pageItems, ...Array(4 - pageItems.length).fill(null)];
+      return printableWishes.slice(pageIndex * 4, pageIndex * 4 + 4);
     }
-  );
+  ) : [];
 
   if (loading) {
     return (
@@ -391,18 +390,18 @@ export default function DashboardClient() {
                           <div key={index} className={styles.printCard}>
                             {/* <div className={styles.printCardNumber}>Wish {pageIndex * 6 + index + 1}</div> */}
                             <div className={styles.printWishText}>
-                              {wish ? wish.wish_text : 'Write your birthday message here...'}
+                              {wish.wish_text}
                             </div>
                             <div className={styles.printMeta}>
-                              <span>{wish ? new Date(wish.submitted_at).toLocaleDateString([], { dateStyle: 'medium' }) : 'Date: _________'}</span>
-                              <span>{wish ? new Date(wish.submitted_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Time: _________'}</span>
+                              <span>{new Date(wish.submitted_at).toLocaleDateString([], { dateStyle: 'medium' })}</span>
+                              <span>{new Date(wish.submitted_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
                             </div>
                             <div className={styles.printFrom}>
-                              <span>From:</span> {wish ? wish.guest_name : '__________________'}
+                              <span>From:</span> {wish.guest_name}
                             </div>
                             <div className={styles.printSignature}>
                               <span>Signature:</span>
-                              <div className={styles.signatureLine} />
+                              {/* <div className={styles.signatureLine} /> */}
                             </div>
                           </div>
                         ))}

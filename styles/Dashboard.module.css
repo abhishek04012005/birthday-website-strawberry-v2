@@ -538,7 +538,7 @@
 .printFrom,
 .printSignature {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 8px;
   color: #5e333f;
   font-size: 0.9rem;
