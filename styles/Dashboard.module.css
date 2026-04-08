@@ -424,7 +424,7 @@
 
 .printHeader {
   text-align: center;
-  /* margin-bottom: 28px; */
+  margin-bottom: 12px;
   position: relative;
   z-index: 1;
 }
@@ -473,15 +473,15 @@
 
 .printPages {
   display: grid;
-  gap: 24px;
+  gap: 0;
   padding: 0;
 }
 
 .printSheet {
-  margin-top: 32px;
+  margin-top: 0;
   width: min(210mm, 100%);
   min-height: 297mm;
-  padding: 20mm 18mm;
+  padding: 3mm 18mm;
   background: linear-gradient(180deg, #fff8fb 0%, #ffe9f2 100%);
   border: 1mm solid rgba(232, 36, 60, 0.2);
   border-radius: 16px;
