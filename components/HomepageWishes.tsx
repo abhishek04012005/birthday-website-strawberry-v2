@@ -258,11 +258,15 @@ export const HomepageWishes: React.FC<HomepageWishesProps> = ({ childName }) => 
             <textarea
               placeholder={`Write your birthday wish for ${childName}...`}
               value={wishText}
-              onChange={(e) => setWishText(e.target.value)}
+              onChange={(e) => setWishText(e.target.value.slice(0, 150))}
               className={styles.wishTextarea}
               rows={4}
               disabled={submitting}
+              maxLength={150}
             />
+            <div className={styles.characterCount}>
+              {wishText.length}/150
+            </div>
             <button type="submit" className={styles.wishSubmitBtn} disabled={submitting}>
               {submitting ? 'Sending...' : 'Send Your Wish'}
             </button>

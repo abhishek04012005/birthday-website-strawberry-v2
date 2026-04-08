@@ -126,6 +126,14 @@
   font-family: 'Nunito', sans-serif;
 }
 
+.characterCount {
+  font-size: 0.85rem;
+  color: var(--pink);
+  text-align: right;
+  margin-top: 4px;
+  font-weight: 600;
+}
+
 .submitBtn {
   background: linear-gradient(135deg, var(--red) 0%, var(--pink) 100%);
   color: white;

@@ -109,11 +109,15 @@ export const WishingPopup: React.FC<WishingPopupProps> = ({ childName, onClose, 
             <textarea
               placeholder={`Write your birthday wish for ${childName}...`}
               value={wish}
-              onChange={(e) => setWish(e.target.value)}
+              onChange={(e) => setWish(e.target.value.slice(0, 150))}
               className={styles.textarea}
               disabled={loading}
               rows={4}
+              maxLength={150}
             />
+            <div className={styles.characterCount}>
+              {wish.length}/150
+            </div>
             <button 
               type="submit" 
               className={styles.submitBtn}

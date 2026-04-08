@@ -116,6 +116,14 @@
   font-family: inherit;
 }
 
+.characterCount {
+  font-size: 0.85rem;
+  color: rgba(232, 36, 60, 0.6);
+  text-align: right;
+  margin-top: 6px;
+  font-weight: 600;
+}
+
 .wishSubmitBtn {
   align-self: flex-start;
   background: linear-gradient(135deg, #e8243c 0%, #ff6b8a 100%);
