@@ -424,7 +424,7 @@
 
 .printHeader {
   text-align: center;
-  margin-bottom: 28px;
+  /* margin-bottom: 28px; */
   position: relative;
   z-index: 1;
 }
@@ -474,6 +474,7 @@
 .printPages {
   display: grid;
   gap: 24px;
+  padding: 0;
 }
 
 .printSheet {
@@ -493,7 +494,7 @@
 .printSheet::before {
   content: '';
   position: absolute;
-  top: 12px;
+  /* top: 12px; */
   left: 12px;
   right: 12px;
   height: 12px;

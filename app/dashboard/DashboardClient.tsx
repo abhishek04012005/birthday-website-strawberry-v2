@@ -172,13 +172,11 @@ export default function DashboardClient() {
     }
   };
 
-  const printableWishes = selectedWishes.length > 0
-    ? wishes.filter(w => selectedWishes.includes(w.id))
-    : wishes;
+  const printableWishes = wishes;
   const wishPages = printableWishes.length > 0 ? Array.from(
-    { length: Math.ceil(printableWishes.length / 4) },
+    { length: Math.ceil(printableWishes.length / 6) },
     (_, pageIndex) => {
-      return printableWishes.slice(pageIndex * 4, pageIndex * 4 + 4);
+      return printableWishes.slice(pageIndex * 6, pageIndex * 6 + 6);
     }
   ) : [];
 
