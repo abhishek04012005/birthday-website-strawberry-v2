@@ -81,7 +81,14 @@ export const Hero: React.FC<HeroProps> = ({
             <a href="#rsvp" className={styles.btnRed}>{heroData.cta1}</a>
             <button className={styles.btnGhost} onClick={() => {
               const canvas = document.getElementById('confettiCanvas') as HTMLCanvasElement;
-              if (canvas) launchConfetti(canvas);
+              if (canvas) {
+                // Stop any existing animation
+                if ((canvas as any).__confettiCleanup) {
+                  (canvas as any).__confettiCleanup();
+                }
+                // Start new infinite confetti
+                (canvas as any).__confettiCleanup = launchConfetti(canvas);
+              }
             }}>
               {heroData.cta2}
             </button>
@@ -149,32 +156,87 @@ function launchConfetti(canvas: HTMLCanvasElement) {
   const CC = ['#e8243c', '#ffb3c1', '#ffe566', '#3da84c', '#fff', '#ff6b8a', '#8c001a', '#c77dff', '#00b4d8'];
   const CS = ['circle', 'rect', 'tri'];
   let particles: any[] = [];
+  let animationId: number;
+  let lastTime = 0;
 
-  for (let i = 0; i < 240; i++) {
+  // Create initial particles
+  for (let i = 0; i < 150; i++) {
     particles.push({
       x: Math.random() * canvas.width,
-      y: -22,
-      r: 5 + Math.random() * 10,
+      y: Math.random() * canvas.height,
+      r: 3 + Math.random() * 8,
       c: CC[Math.floor(Math.random() * CC.length)],
       s: CS[Math.floor(Math.random() * CS.length)],
-      vx: (Math.random() - 0.5) * 8,
-      vy: 2 + Math.random() * 6,
+      vx: (Math.random() - 0.5) * 2,
+      vy: 1 + Math.random() * 3,
       rot: Math.random() * 360,
-      rv: (Math.random() - 0.5) * 10,
-      a: 1,
+      rv: (Math.random() - 0.5) * 2,
+      a: 0.8 + Math.random() * 0.2,
+      life: 0,
+      maxLife: 300 + Math.random() * 200,
     });
   }
 
-  function draw() {
-    cx.clearRect(0, 0, canvas.width, canvas.height);
-    particles = particles.filter((p) => p.a > 0.01);
+  function addNewParticles() {
+    // Add 2-5 new particles at random positions at the top
+    const numNew = 2 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < numNew; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * 50,
+        r: 3 + Math.random() * 8,
+        c: CC[Math.floor(Math.random() * CC.length)],
+        s: CS[Math.floor(Math.random() * CS.length)],
+        vx: (Math.random() - 0.5) * 2,
+        vy: 1 + Math.random() * 3,
+        rot: Math.random() * 360,
+        rv: (Math.random() - 0.5) * 2,
+        a: 0.8 + Math.random() * 0.2,
+        life: 0,
+        maxLife: 300 + Math.random() * 200,
+      });
+    }
+  }
 
-    for (const p of particles) {
+  function draw(currentTime: number) {
+    const deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
+
+    cx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Add new particles periodically
+    if (Math.random() < 0.3) {
+      addNewParticles();
+    }
+
+    // Update and draw particles
+    particles = particles.filter((p) => {
+      // Update particle properties with smooth linear motion
       p.x += p.vx;
       p.y += p.vy;
-      p.vy += 0.14;
       p.rot += p.rv;
-      if (p.y > canvas.height - 50) p.a -= 0.024;
+      p.life += deltaTime;
+
+      // Fade out particles near the bottom or when life expires
+      if (p.y > canvas.height - 100 || p.life > p.maxLife) {
+        p.a = Math.max(0, p.a - 0.005);
+      }
+
+      // Remove particles that are completely faded
+      if (p.a <= 0.01) {
+        return false;
+      }
+
+      // Wrap particles around screen edges for infinite effect
+      if (p.x < -p.r) p.x = canvas.width + p.r;
+      if (p.x > canvas.width + p.r) p.x = -p.r;
+      if (p.y > canvas.height + p.r) {
+        // Reset particle to top when it goes off bottom
+        p.y = -p.r;
+        p.x = Math.random() * canvas.width;
+        p.life = 0;
+        p.a = 0.8 + Math.random() * 0.2;
+      }
 
       cx.save();
       cx.globalAlpha = p.a;
@@ -197,11 +259,21 @@ function launchConfetti(canvas: HTMLCanvasElement) {
         cx.fill();
       }
       cx.restore();
-    }
 
-    if (particles.length > 0) requestAnimationFrame(draw);
-    else cx.clearRect(0, 0, canvas.width, canvas.height);
+      return true;
+    });
+
+    // Keep the animation running infinitely
+    animationId = requestAnimationFrame(draw);
   }
 
-  draw();
+  // Start the animation
+  animationId = requestAnimationFrame(draw);
+
+  // Return cleanup function
+  return () => {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+    }
+  };
 }

@@ -1,29 +1,20 @@
-'use client';
-
-import React, { Suspense } from 'react';
+import type { Metadata } from 'next';
 import config from '@/data/config.json';
-import { Navbar } from '@/components/Navbar';
-import { RSVP } from '@/components/RSVP';
-import { Footer } from '@/components/Footer';
-import { Wave } from '@/components/Utils';
-import styles from '@/styles/SectionPage.module.css';
+import RSVPClient from './page.client';
+
+export const metadata: Metadata = {
+  title: `RSVP - Confirm Your Attendance for ${config.child.name}'s Party`,
+  description: `Let us know if you're coming to ${config.child.name}'s strawberry-themed birthday party. RSVP now to reserve your seat and party surprises.`,
+  keywords: [
+    'RSVP',
+    'birthday RSVP',
+    'party attendance',
+    `${config.child.name} party`,
+    'kids party RSVP',
+    'confirm attendance'
+  ],
+};
 
 export default function RSVPPage() {
-  return (
-    <main className={styles.pageWrapper}>
-      <Navbar childName={config.child.name} />
-
-      <Suspense fallback={<div className={styles.loading}>Loading RSVP...</div>}>
-        <RSVP
-          invitedCount={config.rsvp.invitedCount}
-          comingCount={config.rsvp.comingCount}
-          features={config.rsvp.features}
-          childName={config.child.name}
-        />
-      </Suspense>
-
-      <Wave bgColor="#fff8f2" svgColor="#fff0f4" />
-      <Footer childName={config.child.name} date={config.party.date} venue={config.party.venue} />
-    </main>
-  );
+  return <RSVPClient />;
 }

@@ -140,8 +140,160 @@ export const About: React.FC<AboutProps> = ({
               ))}
             </div>
           </div>
+
+          <div className={styles.confettiButton}>
+            <button
+              className={styles.btnConfetti}
+              onClick={() => {
+                const canvas = document.getElementById('confettiCanvas') as HTMLCanvasElement;
+                if (canvas) {
+                  // Stop any existing animation
+                  if ((canvas as any).__confettiCleanup) {
+                    (canvas as any).__confettiCleanup();
+                  }
+                  // Start new infinite confetti
+                  (canvas as any).__confettiCleanup = launchConfetti(canvas);
+                }
+              }}
+            >
+              🎉 Celebrate with Confetti! 🎉
+            </button>
+          </div>
         </div>
       </div>
     </section>
   );
 };
+
+// Confetti animation function
+function launchConfetti(canvas: HTMLCanvasElement) {
+  const cx = canvas.getContext('2d');
+  if (!cx) return;
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  const CC = ['#e8243c', '#ffb3c1', '#ffe566', '#3da84c', '#fff', '#ff6b8a', '#8c001a', '#c77dff', '#00b4d8'];
+  const CS = ['circle', 'rect', 'tri'];
+  let particles: any[] = [];
+  let animationId: number;
+  let lastTime = 0;
+
+  // Create initial particles
+  for (let i = 0; i < 150; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: 3 + Math.random() * 8,
+      c: CC[Math.floor(Math.random() * CC.length)],
+      s: CS[Math.floor(Math.random() * CS.length)],
+      vx: (Math.random() - 0.5) * 2,
+      vy: 1 + Math.random() * 3,
+      rot: Math.random() * 360,
+      rv: (Math.random() - 0.5) * 2,
+      a: 0.8 + Math.random() * 0.2,
+      life: 0,
+      maxLife: 300 + Math.random() * 200,
+    });
+  }
+
+  function addNewParticles() {
+    // Add 2-5 new particles at random positions at the top
+    const numNew = 2 + Math.floor(Math.random() * 4);
+    for (let i = 0; i < numNew; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: -20 - Math.random() * 50,
+        r: 3 + Math.random() * 8,
+        c: CC[Math.floor(Math.random() * CC.length)],
+        s: CS[Math.floor(Math.random() * CS.length)],
+        vx: (Math.random() - 0.5) * 2,
+        vy: 1 + Math.random() * 3,
+        rot: Math.random() * 360,
+        rv: (Math.random() - 0.5) * 2,
+        a: 0.8 + Math.random() * 0.2,
+        life: 0,
+        maxLife: 300 + Math.random() * 200,
+      });
+    }
+  }
+
+  function draw(currentTime: number) {
+    const deltaTime = currentTime - lastTime;
+    lastTime = currentTime;
+
+    cx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Add new particles periodically
+    if (Math.random() < 0.3) {
+      addNewParticles();
+    }
+
+    // Update and draw particles
+    particles = particles.filter((p) => {
+      // Update particle properties with smooth linear motion
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.rv;
+      p.life += deltaTime;
+
+      // Fade out particles near the bottom or when life expires
+      if (p.y > canvas.height - 100 || p.life > p.maxLife) {
+        p.a = Math.max(0, p.a - 0.005);
+      }
+
+      // Remove particles that are completely faded
+      if (p.a <= 0.01) {
+        return false;
+      }
+
+      // Wrap particles around screen edges for infinite effect
+      if (p.x < -p.r) p.x = canvas.width + p.r;
+      if (p.x > canvas.width + p.r) p.x = -p.r;
+      if (p.y > canvas.height + p.r) {
+        // Reset particle to top when it goes off bottom
+        p.y = -p.r;
+        p.x = Math.random() * canvas.width;
+        p.life = 0;
+        p.a = 0.8 + Math.random() * 0.2;
+      }
+
+      cx.save();
+      cx.globalAlpha = p.a;
+      cx.translate(p.x, p.y);
+      cx.rotate((p.rot * Math.PI) / 180);
+      cx.fillStyle = p.c;
+
+      if (p.s === 'circle') {
+        cx.beginPath();
+        cx.arc(0, 0, p.r, 0, Math.PI * 2);
+        cx.fill();
+      } else if (p.s === 'rect') {
+        cx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r);
+      } else {
+        cx.beginPath();
+        cx.moveTo(0, -p.r);
+        cx.lineTo(p.r, p.r);
+        cx.lineTo(-p.r, p.r);
+        cx.closePath();
+        cx.fill();
+      }
+      cx.restore();
+
+      return true;
+    });
+
+    // Keep the animation running infinitely
+    animationId = requestAnimationFrame(draw);
+  }
+
+  // Start the animation
+  animationId = requestAnimationFrame(draw);
+
+  // Return cleanup function
+  return () => {
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+    }
+  };
+}

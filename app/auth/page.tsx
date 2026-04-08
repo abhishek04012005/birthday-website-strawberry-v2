@@ -1,15 +1,16 @@
-'use client';
+import type { Metadata } from 'next';
+import AuthClient from './AuthClient';
 
-import Auth from '@/components/Auth';
-import styles from '@/styles/Auth.module.css';
+export const metadata: Metadata = {
+  title: 'Admin Login - Birthday Party Management',
+  description: 'Secure admin login for birthday party management system.',
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  },
+};
 
 export default function AuthPage() {
-  return (
-    <div className={styles.authContainer}>
-      <div className={styles.authBg}></div>
-      <div className={styles.authCard}>
-        <Auth />
-      </div>
-    </div>
-  );
+  return <AuthClient />;
 }

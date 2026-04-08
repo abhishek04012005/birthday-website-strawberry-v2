@@ -1,23 +1,40 @@
-'use client';
-
-import React from 'react';
+import type { Metadata } from 'next';
 import config from '@/data/config.json';
-import { Navbar } from '@/components/Navbar';
-import { Gallery } from '@/components/Gallery';
-import { Footer } from '@/components/Footer';
-import { Wave } from '@/components/Utils';
-import styles from '@/styles/SectionPage.module.css';
+import GalleryClient from './GalleryClient';
+
+export const metadata: Metadata = {
+  title: `${config.child.name}'s Birthday Gallery - Photo Memories`,
+  description: `Browse beautiful photos and memories from ${config.child.name}'s birthday celebration! ${config.child.age} years of magical moments captured in stunning images.`,
+  keywords: [
+    `${config.child.name} birthday photos`,
+    'birthday gallery',
+    'party photos',
+    'birthday memories',
+    'celebration pictures',
+    'kids birthday images'
+  ],
+  openGraph: {
+    title: `${config.child.name}'s Birthday Gallery - Photo Memories`,
+    description: `Browse beautiful photos and memories from ${config.child.name}'s birthday celebration!`,
+    url: '/gallery',
+    images: [
+      {
+        url: config.hero.photoUrl,
+        width: 1200,
+        height: 630,
+        alt: `${config.child.name}'s Birthday Gallery`,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${config.child.name}'s Birthday Gallery - Photo Memories`,
+    description: `Browse beautiful photos and memories from ${config.child.name}'s birthday celebration!`,
+    images: [config.hero.photoUrl],
+  },
+};
 
 export default function GalleryPage() {
-  return (
-    <main className={styles.pageWrapper}>
-      <Navbar childName={config.child.name} />
-
-
-      <Gallery gallery={config.gallery} />
-
-      <Wave bgColor="#fff8f2" svgColor="#fff0f4" />
-      <Footer childName={config.child.name} date={config.party.date} venue={config.party.venue} />
-    </main>
-  );
+  return <GalleryClient />;
 }

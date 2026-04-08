@@ -70,3 +70,385 @@
     font-size: 2rem;
   }
 }
+
+/* Birthday Services Styles */
+.pageContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px 80px;
+}
+
+.contentContainer {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+  margin-bottom: 60px;
+}
+
+.serviceCard {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 24px;
+  box-shadow: 0 4px 20px rgba(232, 36, 60, 0.08);
+  border: 1px solid rgba(232, 36, 60, 0.1);
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.serviceCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(232, 36, 60, 0.15);
+}
+
+.serviceIcon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.serviceTitle {
+  font-size: 1.4rem;
+  color: #8c001a;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.serviceTitle a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.serviceTitle a:hover {
+  color: #e8243c;
+}
+
+.serviceDescription {
+  color: #5a414f;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.serviceLink {
+  display: inline-block;
+  color: #e8243c;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.serviceLink:hover {
+  color: #8c001a;
+}
+
+.ctaSection {
+  background: linear-gradient(135deg, #e8243c 0%, #ff6b6b 100%);
+  border-radius: 20px;
+  padding: 60px 40px;
+  text-align: center;
+  margin-bottom: 60px;
+  color: white;
+}
+
+.ctaContent h2 {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.ctaContent p {
+  font-size: 1.1rem;
+  margin-bottom: 30px;
+  opacity: 0.9;
+}
+
+.ctaButtons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.primaryButton {
+  background: white;
+  color: #e8243c;
+  padding: 16px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.primaryButton:hover {
+  background: #f8f9fa;
+  transform: translateY(-2px);
+}
+
+.secondaryButton {
+  background: rgba(232, 36, 60, 0.1);
+  color: #e8243c;
+  padding: 16px 32px;
+  border-radius: 50px;
+  text-decoration: none;
+  font-weight: 600;
+  border: 2px solid #e8243c;
+  transition: all 0.3s ease;
+  display: inline-block;
+}
+
+.secondaryButton:hover {
+  background: #e8243c;
+  color: white;
+}
+
+.whyChooseUs {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.whyChooseUs h2 {
+  font-size: 2.2rem;
+  color: #8c001a;
+  margin-bottom: 40px;
+}
+
+.benefitsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.benefit {
+  background: white;
+  padding: 32px 24px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.benefit:hover {
+  transform: translateY(-4px);
+}
+
+.benefitIcon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.benefit h4 {
+  font-size: 1.2rem;
+  color: #8c001a;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.benefit p {
+  color: #5a414f;
+  line-height: 1.6;
+}
+
+/* Individual Service Page Styles */
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+.contentMain {
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  box-shadow: 0 4px 20px rgba(232, 36, 60, 0.08);
+}
+
+.contentMain h2 {
+  font-size: 1.8rem;
+  color: #8c001a;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.overviewText {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #5a414f;
+  margin-bottom: 40px;
+}
+
+.serviceFeatures {
+  margin-bottom: 40px;
+}
+
+.serviceFeatures h3 {
+  font-size: 1.4rem;
+  color: #8c001a;
+  margin-bottom: 20px;
+  font-weight: 700;
+}
+
+.featuresList {
+  list-style: none;
+  padding: 0;
+}
+
+.featuresList li {
+  padding: 12px 0;
+  border-bottom: 1px solid #f0f0f0;
+  color: #5a414f;
+  font-size: 1rem;
+}
+
+.contactSection {
+  background: #fff8f2;
+  padding: 32px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.contactSection h3 {
+  font-size: 1.4rem;
+  color: #8c001a;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.contactSection p {
+  color: #5a414f;
+  margin-bottom: 24px;
+}
+
+.contactLink {
+  color: #5a414f;
+  font-size: 0.95rem;
+  margin-top: 16px;
+}
+
+.contactLink a {
+  color: #e8243c;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.contactLink a:hover {
+  color: #8c001a;
+}
+
+.websiteLink {
+  color: white;
+  font-size: 0.95rem;
+  margin-top: 16px;
+  text-align: center;
+}
+
+.websiteLink a {
+  color: white;
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.websiteLink a:hover {
+  color: #f8f9fa;
+}
+
+.contactButtons {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.contentSidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.serviceCard, .popularServices {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.serviceCard h4, .popularServices h4 {
+  font-size: 1.2rem;
+  color: #8c001a;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.serviceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.serviceInfo p {
+  margin: 0;
+  color: #5a414f;
+  font-size: 0.95rem;
+}
+
+.servicesList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.servicesList li {
+  margin-bottom: 8px;
+}
+
+.servicesList a {
+  color: #e8243c;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.servicesList a:hover {
+  color: #8c001a;
+}
+
+@media (max-width: 768px) {
+  .servicesGrid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .benefitsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .ctaButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contactButtons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contentMain {
+    padding: 24px;
+  }
+
+  .ctaSection {
+    padding: 40px 24px;
+  }
+
+  .ctaContent h2 {
+    font-size: 1.8rem;
+  }
+}

@@ -1,236 +1,43 @@
-'use client';
-
-import React, { useEffect, useState, Suspense } from 'react';
+import type { Metadata } from 'next';
 import config from '@/data/config.json';
-import { Navbar } from '@/components/Navbar';
-import { Hero } from '@/components/Hero';
-import { Quiz, QuizQuestion } from '@/components/Quiz';
-import { About } from '@/components/About';
-import { Gallery } from '@/components/Gallery';
-import { Parents } from '@/components/Parents';
-import { Details } from '@/components/Details';
-import { RSVP } from '@/components/RSVP';
-import { HomepageWishes } from '@/components/HomepageWishes';
-import { Treats } from '@/components/Treats';
-import { Footer } from '@/components/Footer';
-import { WishingPopup } from '@/components/WishingPopup';
-import { FloatingButtons } from '@/components/FloatingButtons';
-import { Wave, Confetti, HeartsAnimation, RainLayer } from '@/components/Utils';
+import HomeClient from './HomeClient';
+
+export const metadata: Metadata = {
+  title: `${config.child.name}'s Strawberry Birthday Party - Join the Magical Celebration!`,
+  description: `🎉 Join us for ${config.child.name}'s ${config.child.age}th birthday party! ${config.child.age} years of pure magic, mischief & mountains of chocolate. ${config.party.date} at ${config.party.venue}. RSVP now!`,
+  keywords: [
+    `${config.child.name} birthday party`,
+    'children birthday celebration',
+    'strawberry theme party',
+    'kids birthday invitation',
+    'birthday RSVP',
+    'birthday games',
+    'birthday cake',
+    'family celebration',
+    'birthday party activities'
+  ],
+  openGraph: {
+    title: `${config.child.name}'s Strawberry Birthday Party`,
+    description: `Join us for the most magical ${config.child.name} celebration! ${config.child.age} years of pure magic, mischief & mountains of chocolate.`,
+    url: '/',
+    images: [
+      {
+        url: config.hero.photoUrl,
+        width: 1200,
+        height: 630,
+        alt: `${config.child.name}'s Birthday Party Invitation`,
+      },
+    ],
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${config.child.name}'s Strawberry Birthday Party`,
+    description: `Join us for the most magical ${config.child.name} celebration! ${config.child.age} years of pure magic, mischief & mountains of chocolate.`,
+    images: [config.hero.photoUrl],
+  },
+};
 
 export default function Home() {
-  const [wishingPopupOpen, setWishingPopupOpen] = useState(true);
-  const [quizQuestions, setQuizQuestions] = useState<QuizQuestion[]>([]);
-
-  useEffect(() => {
-    // Setup quiz data from admin saved values / default config
-    const savedQuiz = localStorage.getItem('birthdayQuizQuestions');
-    if (savedQuiz) {
-      try {
-        const parsed = JSON.parse(savedQuiz) as QuizQuestion[];
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          setQuizQuestions(parsed);
-        } else {
-          setQuizQuestions(config.quiz as QuizQuestion[]);
-        }
-      } catch {
-        setQuizQuestions(config.quiz as QuizQuestion[]);
-      }
-    } else {
-      setQuizQuestions(config.quiz as QuizQuestion[]);
-    }
-
-    // Launch confetti on load
-    const canvas = document.getElementById('confettiCanvas') as HTMLCanvasElement;
-    if (canvas) {
-      setTimeout(() => {
-        launchConfetti(canvas);
-      }, 700);
-    }
-  }, []);
-
-  const detailCards = [
-    {
-      icon: '📅',
-      title: 'Date & Time',
-      content: `Saturday, <strong>${config.party.date}</strong><br>3:00 PM – 6:00 PM<br>Don't be late — cake waits for no one! 🎂`,
-    },
-    {
-      icon: '📍',
-      title: 'Venue',
-      content: `<strong>${config.party.venue}</strong><br>${config.party.address} 🌸`,
-    },
-    {
-      icon: '🎁',
-      title: 'Dress Code',
-      content: `Wear your pinkest outfit! <strong>Strawberry theme</strong> encouraged 🍓<br>Red, pink & white are perfect!`,
-    },
-    {
-      icon: '🎪',
-      title: 'Activities',
-      content: `${config.party.activities.join(', ')}`,
-    },
-  ];
-
-  return (
-    <main>
-      <Confetti />
-      <HeartsAnimation />
-      <RainLayer />
-
-      <Navbar childName={config.child.name} />
-
-      <Hero
-        childName={config.child.name}
-        childFullName={config.child.fullName}
-        age={config.child.age}
-        heroData={config.hero}
-        partyDate={config.party.date}
-      />
-
-      <Wave bgColor="#fff0f4" svgColor="#fff0f4" />
-
-      <About
-        childName={config.child.name}
-        childFullName={config.child.fullName}
-        birthDate={config.child.birthDate}
-        age={config.child.age}
-        photoUrl={config.hero.photoUrl}
-        facts={config.facts}
-        personalityTags={config.personalityTags}
-      />
-
-      <Wave bgColor="#fff8f2" svgColor="#fff0f4" />
-
-      <Parents
-        parents={config.parents}
-        childName={config.child.name}
-      />
-
-
-      <Wave bgColor="#fff0f4" svgColor="#fffaf5" />
-
-      <Gallery gallery={config.gallery} />
-
-
-      <Wave bgColor="#fff0f4" svgColor="#fffaf5" />
-
-      <HomepageWishes childName={config.child.name} />
-
-
-
-      <Wave bgColor="#fffaf5" svgColor="#e8243c" />
-
-
-      <Details
-        venueName={config.party.venue}
-        address={config.party.address}
-        mapUrl={config.party.mapUrl}
-        detailCards={detailCards}
-      />
-
-
-      <Wave bgColor="#8c001a" svgColor="#1a0008" />
-
-
-      <Suspense fallback={<div>Loading RSVP...</div>}>
-        <RSVP
-          invitedCount={config.rsvp.invitedCount}
-          comingCount={config.rsvp.comingCount}
-          features={config.rsvp.features}
-          childName={config.child.name}
-        />
-      </Suspense>
-
-
-
-      <Wave bgColor="#8c001a" svgColor="#1a0008" />
-
-      <Quiz questions={quizQuestions} />
-
-      <Wave bgColor="#fffaf5" svgColor="#fff0f4" />
-
-
-      <Footer
-        childName={config.child.name}
-        date={config.party.date}
-        venue={config.party.venue}
-      />
-
-      <WishingPopup
-        childName={config.child.name}
-        isOpen={wishingPopupOpen}
-        onClose={() => setWishingPopupOpen(false)}
-      />
-
-      <FloatingButtons />
-    </main>
-  );
-}
-
-// Confetti animation function
-function launchConfetti(canvas: HTMLCanvasElement) {
-  const cx = canvas.getContext('2d');
-  if (!cx) return;
-
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  const CC = ['#e8243c', '#ffb3c1', '#ffe566', '#3da84c', '#fff', '#ff6b8a', '#8c001a', '#c77dff', '#00b4d8'];
-  const CS = ['circle', 'rect', 'tri'];
-  let particles: any[] = [];
-
-  for (let i = 0; i < 240; i++) {
-    particles.push({
-      x: Math.random() * canvas.width,
-      y: -22,
-      r: 5 + Math.random() * 10,
-      c: CC[Math.floor(Math.random() * CC.length)],
-      s: CS[Math.floor(Math.random() * CS.length)],
-      vx: (Math.random() - 0.5) * 8,
-      vy: 2 + Math.random() * 6,
-      rot: Math.random() * 360,
-      rv: (Math.random() - 0.5) * 10,
-      a: 1,
-    });
-  }
-
-  function draw() {
-    cx.clearRect(0, 0, canvas.width, canvas.height);
-    particles = particles.filter((p) => p.a > 0.01);
-
-    for (const p of particles) {
-      p.x += p.vx;
-      p.y += p.vy;
-      p.vy += 0.14;
-      p.rot += p.rv;
-      if (p.y > canvas.height - 50) p.a -= 0.024;
-
-      cx.save();
-      cx.globalAlpha = p.a;
-      cx.translate(p.x, p.y);
-      cx.rotate((p.rot * Math.PI) / 180);
-      cx.fillStyle = p.c;
-
-      if (p.s === 'circle') {
-        cx.beginPath();
-        cx.arc(0, 0, p.r, 0, Math.PI * 2);
-        cx.fill();
-      } else if (p.s === 'rect') {
-        cx.fillRect(-p.r, -p.r / 2, p.r * 2, p.r);
-      } else {
-        cx.beginPath();
-        cx.moveTo(0, -p.r);
-        cx.lineTo(p.r, p.r);
-        cx.lineTo(-p.r, p.r);
-        cx.closePath();
-        cx.fill();
-      }
-      cx.restore();
-    }
-
-    if (particles.length > 0) requestAnimationFrame(draw);
-    else cx.clearRect(0, 0, canvas.width, canvas.height);
-  }
-
-  draw();
+  return <HomeClient />;
 }
