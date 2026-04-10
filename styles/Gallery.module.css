@@ -287,3 +287,25 @@
 .lbImgWrap {
   position: relative;
 }
+
+@media (max-width: 768px) {
+  .lbNav {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 5;
+  }
+  
+  .lbPrev {
+    left: 10px;
+  }
+  
+  .lbNext {
+    right: 10px;
+  }
+  
+  .lbNav:hover {
+    background: rgba(255, 255, 255, 0.9);
+  }
+}
