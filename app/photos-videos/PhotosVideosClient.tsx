@@ -69,10 +69,30 @@ export default function PhotosVideosClient() {
     return item.type === 'image' ? 'celebration-image.jpg' : 'celebration-video.mp4';
   };
 
-  const openPreview = (item: MediaItem) => setPreviewItem(item);
-  const closePreview = () => setPreviewItem(null);
+  const openPreview = (item: MediaItem) => {
+    const index = filteredItems.findIndex(i => i.id === item.id);
+    setPreviewIndex(index);
+  };
+  const closePreview = () => setPreviewIndex(null);
 
-  const [previewItem, setPreviewItem] = useState<MediaItem | null>(null);
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
+
+  const navigatePreview = (direction: number) => {
+    if (previewIndex === null) return;
+    const newIndex = (previewIndex + direction + filteredItems.length) % filteredItems.length;
+    setPreviewIndex(newIndex);
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (previewIndex === null) return;
+      if (e.key === 'ArrowLeft') navigatePreview(-1);
+      if (e.key === 'ArrowRight') navigatePreview(1);
+      if (e.key === 'Escape') closePreview();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [previewIndex]);
   const mediaFilters = ['all', 'images', 'videos'] as const;
 
   const filteredItems = mediaItems.filter(item => {
@@ -226,36 +246,48 @@ export default function PhotosVideosClient() {
             </div>
           )}
 
-          {previewItem && (
+          {previewIndex !== null && (
             <div className={styles.modalOverlay} role="dialog" aria-modal="true">
               <div className={styles.modalContent}>
                 <div className={styles.modalHeader}>
-                  <h2 className={styles.modalTitle}>{previewItem.filename || previewItem.alt || 'Preview'}</h2>
+                  <h2 className={styles.modalTitle}>
+                    {filteredItems[previewIndex]?.filename || filteredItems[previewIndex]?.alt || 'Preview'} ({previewIndex + 1} of {filteredItems.length})
+                  </h2>
                   <button type="button" className={styles.modalClose} onClick={closePreview} aria-label="Close preview">
                     ×
                   </button>
                 </div>
                 <div className={styles.modalBody}>
-                  {previewItem.type === 'image' ? (
+                  {filteredItems[previewIndex]?.type === 'image' ? (
                     <img
-                      src={getMediaUrl(previewItem)}
-                      alt={previewItem.filename || previewItem.alt || 'Preview image'}
+                      src={getMediaUrl(filteredItems[previewIndex])}
+                      alt={filteredItems[previewIndex]?.filename || filteredItems[previewIndex]?.alt || 'Preview image'}
                       className={styles.modalMedia}
                     />
                   ) : (
                     <video
-                      src={getMediaUrl(previewItem)}
+                      src={getMediaUrl(filteredItems[previewIndex])}
                       className={styles.modalMedia}
                       controls
                       autoPlay
                     />
                   )}
+                  {filteredItems.length > 1 && (
+                    <>
+                      <button className={styles.navButton} onClick={() => navigatePreview(-1)} style={{ left: '10px' }}>
+                        ←
+                      </button>
+                      <button className={styles.navButton} onClick={() => navigatePreview(1)} style={{ right: '10px' }}>
+                        →
+                      </button>
+                    </>
+                  )}
                 </div>
                 <div className={styles.modalFooter}>
                   <a
                     className={styles.downloadButton}
-                    href={getMediaUrl(previewItem)}
-                    download={getDownloadName(previewItem)}
+                    href={getMediaUrl(filteredItems[previewIndex])}
+                    download={getDownloadName(filteredItems[previewIndex])}
                     target="_blank"
                     rel="noreferrer"
                   >

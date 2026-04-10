@@ -393,8 +393,10 @@
 }
 
 .modalContent {
-  width: min(100%, 900px);
-  max-height: calc(100vh - 3rem);
+  width: 800px;
+  height: 800px;
+  max-width: 95vw;
+  max-height: 95vh;
   background: #ffffff;
   border-radius: 1.75rem;
   box-shadow: 0 30px 90px rgba(15, 23, 42, 0.35);
@@ -433,14 +435,43 @@
 .modalBody {
   padding: 0 1.5rem 1.5rem;
   overflow: auto;
+  position: relative;
 }
 
 .modalMedia {
   width: 100%;
-  max-height: 72vh;
+  height: 100%;
+  max-height: calc(100% - 120px); /* Account for header and footer */
   border-radius: 1.25rem;
   object-fit: contain;
   display: block;
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.7);
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.navButton:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: translateY(-50%) scale(1.1);
 }
 
 .modalFooter {
