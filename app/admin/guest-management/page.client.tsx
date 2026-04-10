@@ -292,6 +292,7 @@ export default function GuestManagementClient() {
                 <table className={styles.guestTable}>
                   <thead>
                     <tr>
+                      <th>S.No</th>
                       <th>Title</th>
                       <th>Name</th>
                       <th>Phone</th>
@@ -300,8 +301,9 @@ export default function GuestManagementClient() {
                     </tr>
                   </thead>
                   <tbody>
-                    {guests.map((guest) => (
+                    {guests.map((guest, index) => (
                       <tr key={guest.id}>
+                        <td>{index + 1}</td>
                         <td>{guest.title}</td>
                         <td>{guest.name}</td>
                         <td>{guest.phone || '-'}</td>
