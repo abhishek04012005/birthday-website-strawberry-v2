@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styles from '@/styles/Gallery.module.css';
 
 interface GalleryProps {
@@ -14,6 +14,17 @@ export const Gallery: React.FC<GalleryProps> = ({ gallery }) => {
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxIndex, setLightboxIndex] = useState(0);
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+      if (e.key === 'ArrowLeft') navLightbox(-1);
+      if (e.key === 'ArrowRight') navLightbox(1);
+      if (e.key === 'Escape') closeLightbox();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxOpen]);
+
   const openLightbox = (index: number) => {
     setLightboxIndex(index);
     setLightboxOpen(true);
@@ -26,6 +37,17 @@ export const Gallery: React.FC<GalleryProps> = ({ gallery }) => {
   const navLightbox = (dir: number) => {
     setLightboxIndex((prev) => (prev + dir + gallery.length) % gallery.length);
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (!lightboxOpen) return;
+      if (e.key === 'ArrowLeft') navLightbox(-1);
+      if (e.key === 'ArrowRight') navLightbox(1);
+      if (e.key === 'Escape') closeLightbox();
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxOpen]);
 
   return (
     <section className={styles.galleryBg} id="gallery">
@@ -56,18 +78,13 @@ export const Gallery: React.FC<GalleryProps> = ({ gallery }) => {
       </div>
 
       {lightboxOpen && (
-        <div className={styles.lightbox} onClick={closeLightbox}>
-          <button className={styles.lbClose} onClick={closeLightbox}>✕</button>
-          <div onClick={(e) => e.stopPropagation()}>
+        <div className={`${styles.lightbox} ${styles.open}`} onClick={closeLightbox}>
+          <div className={styles.lbImgWrap} onClick={(e) => e.stopPropagation()}>
+            <button className={styles.lbClose} onClick={closeLightbox}>✕</button>
             <button className={`${styles.lbNav} ${styles.lbPrev}`} onClick={() => navLightbox(-1)}>‹</button>
             <img
               src={gallery[lightboxIndex]?.url}
               alt=""
-              style={{
-                maxWidth: '88vw',
-                maxHeight: '82vh',
-                borderRadius: '20px',
-              }}
             />
             <button className={`${styles.lbNav} ${styles.lbNext}`} onClick={() => navLightbox(1)}>›</button>
           </div>
