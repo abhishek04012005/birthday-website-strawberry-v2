@@ -6,6 +6,9 @@ import { getGuests, saveGuest, updateGuest, deleteGuest, bulkSaveGuests, GuestDa
 import * as XLSX from 'xlsx';
 import config from '@/data/config.json';
 import styles from '@/styles/GuestManagement.module.css';
+import EditIcon from '@mui/icons-material/Edit';
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface Guest {
   id: number;
@@ -313,21 +316,24 @@ export default function GuestManagementClient() {
                             <button
                               onClick={() => handleEdit(guest)}
                               className={styles.editBtn}
+                              title="Edit"
                             >
-                              Edit
+                              <EditIcon />
                             </button>
                             <button
                               onClick={() => sendWhatsAppMessage(guest)}
                               className={styles.whatsappBtn}
                               disabled={!guest.phone}
+                              title="Send WhatsApp"
                             >
-                              WhatsApp
+                              <WhatsAppIcon />
                             </button>
                             <button
                               onClick={() => handleDelete(guest.id)}
                               className={styles.deleteBtn}
+                              title="Delete"
                             >
-                              Delete
+                              <DeleteIcon />
                             </button>
                           </div>
                         </td>

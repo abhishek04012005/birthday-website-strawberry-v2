@@ -235,10 +235,15 @@
 .cancelBtn {
   border: none;
   border-radius: 999px;
-  padding: 10px 16px;
+  padding: 8px;
   font-weight: 700;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
 }
 
 .editBtn {
