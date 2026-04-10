@@ -148,6 +148,7 @@ export interface RSVPData {
   attending: 'yes' | 'no';
   childName: string;
   submittedAt: string;
+  confirmationNumber?: string;
 }
 
 export interface WishData {
@@ -170,6 +171,7 @@ export const saveRSVP = async (data: RSVPData) => {
       attending: data.attending,
       child_name: data.childName,
       submitted_at: data.submittedAt,
+      confirmation_number: data.confirmationNumber,
     };
 
     const { data: result, error } = await supabase
