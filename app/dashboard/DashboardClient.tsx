@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import { getRSVPs, getWishes, updateWishVisibility } from '@/lib/supabase';
 import config from '@/data/config.json';
 import styles from '@/styles/Dashboard.module.css';
-import { FlyerCard } from '@/components/FlyerCard';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
 
@@ -36,14 +35,14 @@ export default function DashboardClient() {
   const [wishes, setWishes] = useState<Wish[]>([]);
   const [selectedWishes, setSelectedWishes] = useState<number[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'rsvps' | 'wishes' | 'flyer'>('rsvps');
+  const [activeTab, setActiveTab] = useState<'rsvps' | 'wishes'>('rsvps');
   const [modalMessage, setModalMessage] = useState<{text: string, type: 'success' | 'error'} | null>(null);
 
   useEffect(() => {
     // Check URL params for initial tab
     const urlParams = new URLSearchParams(window.location.search);
     const tabParam = urlParams.get('tab');
-    if (tabParam === 'rsvps' || tabParam === 'wishes' || tabParam === 'flyer') {
+    if (tabParam === 'rsvps' || tabParam === 'wishes') {
       setActiveTab(tabParam);
     }
 
@@ -82,7 +81,7 @@ export default function DashboardClient() {
     checkAuth();
   }, [router]);
 
-  const handleTabChange = (tab: 'rsvps' | 'wishes' | 'flyer') => {
+  const handleTabChange = (tab: 'rsvps' | 'wishes') => {
     setActiveTab(tab);
     // Update URL without causing a page reload
     const url = new URL(window.location.href);
@@ -248,12 +247,6 @@ export default function DashboardClient() {
         >
           🎈 Wishes ({wishes.length})
         </button>
-        <button
-          className={`${styles.tabBtn} ${activeTab === 'flyer' ? styles.active : ''}`}
-          onClick={() => handleTabChange('flyer')}
-        >
-          🎟 Flyer
-        </button>
       </div>
 
       {/* Content */}
@@ -410,14 +403,6 @@ export default function DashboardClient() {
                 </div>
               </>
             )}
-          </div>
-        )}
-
-        {activeTab === 'flyer' && (
-          <div className={styles.flyerSection}>
-            <div className={styles.flyerPreview}>
-              <FlyerCard />
-            </div>
           </div>
         )}
       </main>
