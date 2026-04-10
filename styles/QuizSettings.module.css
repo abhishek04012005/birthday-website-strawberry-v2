@@ -102,6 +102,104 @@
   border: 1px solid #fecdd3;
 }
 
+.tabs {
+  max-width: 1180px;
+  margin: 0 auto 22px;
+  display: flex;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.tabBtn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 12px 12px 0 0;
+  background: var(--pink);
+  color: var(--red);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tabBtn:hover {
+  background: #fce4ec;
+}
+
+.tabBtn.active {
+  background: var(--red);
+  color: white;
+}
+
+.questionList {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.sectionHeader {
+  margin-bottom: 1.5rem;
+}
+
+.sectionHeader h2 {
+  margin: 0 0 0.5rem;
+  color: var(--text);
+}
+
+.sectionHeader p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.questionContent {
+  margin-top: 1rem;
+}
+
+.questionText {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.optionsList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.optionItem {
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  background: #f8f9fa;
+  color: var(--muted);
+  position: relative;
+  border: 1px solid #e9ecef;
+}
+
+.correctOption {
+  background: #ecfdf5;
+  color: #166534;
+  border-color: #a7f3d0;
+}
+
+.correctBadge {
+  position: absolute;
+  right: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #16a34a;
+  font-weight: bold;
+}
+
+.emptyState {
+  padding: 2rem;
+  text-align: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  color: var(--muted);
+}
+
 .loading {
   min-height: calc(100vh - 120px);
   display: grid;
