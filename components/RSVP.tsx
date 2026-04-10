@@ -67,9 +67,9 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
     };
 
     const result = await saveRSVP(rsvpData);
-    
+
     setLoading(false);
-    
+
     if (result.success) {
       setSubmitted(true);
       setShowConfetti(true);
@@ -158,7 +158,6 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
           {!submitted ? (
             <form onSubmit={handleSubmit}>
               <div className={styles.rsvpCardTitle}>🍓 Will You Come? 🍓</div>
-
               <div className={styles.attendOpts}>
                 <div
                   className={`${styles.attendOpt} ${choice === 'yes' ? styles.active : ''}`}
@@ -198,7 +197,7 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
               </div>
 
               <div className={styles.frow}>
-                <div className={styles.fgroup}>
+                {/* <div className={styles.fgroup}>
                   <label>Email Address</label>
                   <input
                     type="email"
@@ -206,29 +205,32 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   />
-                </div>
-                <div className={styles.fgroup}>
+                </div> */}
+                <div className={styles.fgroup} style={{ width: '100%', gridColumn: '1 / -1' }}>
                   <label>Number of Guests</label>
-                  <select
-                    value={formData.guests}
-                    onChange={(e) => setFormData({ ...formData, guests: e.target.value })}
-                  >
-                    <option>Just me 👤</option>
-                    <option>2 people 👥</option>
-                    <option>3 people 👨‍👩‍👦</option>
-                    <option>4+ people 🎉</option>
-                  </select>
+                  <div className={styles.guestButtonGroup}>
+                    {['Just me 👤', '2 people 👥', '3 people 👨‍👩‍👦', '4+ people 🎉'].map((option) => (
+                      <button
+                        key={option}
+                        type="button"
+                        className={`${styles.guestButton} ${formData.guests === option ? styles.guestButtonActive : ''}`}
+                        onClick={() => setFormData({ ...formData, guests: option })}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
-              <div className={styles.fgroup}>
+              {/* <div className={styles.fgroup}>
                 <label>Sweet Birthday Wish 🍓</label>
                 <textarea
                   placeholder="Share a sweet message for our birthday girl..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                 ></textarea>
-              </div>
+              </div> */}
 
               <button type="submit" className={styles.rsvpSubmit} disabled={loading}>
                 {loading ? '⏳ Sending...' : '🍓 Send My RSVP! 🎉'}
@@ -247,8 +249,6 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
           )}
         </div>
       </div>
-
-    
     </section>
   );
 };

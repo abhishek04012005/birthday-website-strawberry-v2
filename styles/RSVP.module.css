@@ -182,6 +182,10 @@
   margin-bottom: 18px;
 }
 
+.fgroupFull {
+  grid-column: 1 / -1;
+}
+
 .fgroup label {
   display: block;
   font-weight: 800;
@@ -204,6 +208,39 @@
   outline: none;
   transition: all 0.22s;
   background: #fff;
+}
+
+.guestButtonGroup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.guestButton {
+  flex: 1 1 150px;
+  min-width: 120px;
+  border: 2.5px solid #ffd6e0;
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.92rem;
+  color: #8c001a;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.22s ease;
+}
+
+.guestButton:hover {
+  border-color: #ff94aa;
+  background: #fff0f4;
+}
+
+.guestButtonActive {
+  border-color: #e8243c;
+  background: #fff0f4;
+  color: #8c001a;
+  box-shadow: 0 10px 24px rgba(232, 36, 60, 0.12);
 }
 
 .fgroup input:focus,
