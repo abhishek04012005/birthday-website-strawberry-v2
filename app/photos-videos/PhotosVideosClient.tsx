@@ -69,16 +69,34 @@ export default function PhotosVideosClient() {
     return item.type === 'image' ? 'celebration-image.jpg' : 'celebration-video.mp4';
   };
 
+  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
+  const [previewItem, setPreviewItem] = useState<MediaItem | null>(null);
+  const mediaFilters = ['all', 'images', 'videos'] as const;
+
+  const filteredItems = mediaItems.filter(item => {
+    if (filter === 'all') return true;
+    if (filter === 'images') return item.type === 'image';
+    if (filter === 'videos') return item.type === 'video';
+    return true;
+  });
+
   const openPreview = (item: MediaItem) => {
     const index = filteredItems.findIndex(i => i.id === item.id);
-    setPreviewIndex(index);
+    setPreviewItem(item);
+    setPreviewIndex(index !== -1 ? index : 0);
   };
-  const closePreview = () => setPreviewIndex(null);
 
-  const [previewIndex, setPreviewIndex] = useState<number | null>(null);
+  const closePreview = () => {
+    setPreviewIndex(null);
+    setPreviewItem(null);
+  };
+
+  const currentPreviewItem = previewIndex !== null && filteredItems[previewIndex]
+    ? filteredItems[previewIndex]
+    : previewItem;
 
   const navigatePreview = (direction: number) => {
-    if (previewIndex === null) return;
+    if (previewIndex === null || filteredItems.length === 0) return;
     const newIndex = (previewIndex + direction + filteredItems.length) % filteredItems.length;
     setPreviewIndex(newIndex);
   };
@@ -93,14 +111,6 @@ export default function PhotosVideosClient() {
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [previewIndex]);
-  const mediaFilters = ['all', 'images', 'videos'] as const;
-
-  const filteredItems = mediaItems.filter(item => {
-    if (filter === 'all') return true;
-    if (filter === 'images') return item.type === 'image';
-    if (filter === 'videos') return item.type === 'video';
-    return true;
-  });
 
   if (loading) {
     return (
@@ -186,21 +196,20 @@ export default function PhotosVideosClient() {
               {filteredItems.map((item) => (
                 <div key={item.id} className={styles.card}>
                   <div className={styles.previewWrapper}>
-                    {item.type === 'image' ? (
-                      <img
-                        src={getMediaUrl(item)}
-                        alt={item.filename || 'Uploaded image'}
-                        className={styles.previewMedia}
-                      />
-                    ) : (
-                      <video
-                        src={getMediaUrl(item)}
-                        className={styles.previewMedia}
-                        controls
-                        preload="metadata"
-                      />
-                    )}
-
+                      {item.type === 'image' ? (
+                        <img
+                          src={getMediaUrl(item)}
+                          alt={item.filename || 'Uploaded image'}
+                          className={styles.previewMedia}
+                        />
+                      ) : (
+                        <video
+                          src={getMediaUrl(item)}
+                          className={styles.previewMedia}
+                          controls
+                          preload="metadata"
+                        />
+                      )}
                     <div className={styles.previewOverlay}>
                       <span className={styles.previewChip}>{item.type === 'image' ? 'Photo' : 'Video'}</span>
                       <span className={styles.previewLabel}>{item.filename || item.alt || 'Memorable moment'}</span>
@@ -219,10 +228,10 @@ export default function PhotosVideosClient() {
                         const createdAt = item.uploaded_at || item.created_at;
                         return createdAt
                           ? new Date(createdAt).toLocaleDateString('en-US', {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                            })
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric',
+                          })
                           : '-';
                       })()}
                     </p>
@@ -246,27 +255,27 @@ export default function PhotosVideosClient() {
             </div>
           )}
 
-          {previewIndex !== null && (
+          {previewIndex !== null && currentPreviewItem && (
             <div className={styles.modalOverlay} role="dialog" aria-modal="true">
               <div className={styles.modalContent}>
                 <div className={styles.modalHeader}>
                   <h2 className={styles.modalTitle}>
-                    {filteredItems[previewIndex]?.filename || filteredItems[previewIndex]?.alt || 'Preview'} ({previewIndex + 1} of {filteredItems.length})
+                    {currentPreviewItem.filename || currentPreviewItem.alt || 'Preview'} ({(previewIndex ?? 0) + 1} of {filteredItems.length})
                   </h2>
                   <button type="button" className={styles.modalClose} onClick={closePreview} aria-label="Close preview">
                     ×
                   </button>
                 </div>
                 <div className={styles.modalBody}>
-                  {filteredItems[previewIndex]?.type === 'image' ? (
+                  {currentPreviewItem.type === 'image' ? (
                     <img
-                      src={getMediaUrl(filteredItems[previewIndex])}
-                      alt={filteredItems[previewIndex]?.filename || filteredItems[previewIndex]?.alt || 'Preview image'}
+                      src={getMediaUrl(currentPreviewItem)}
+                      alt={currentPreviewItem.filename || currentPreviewItem.alt || 'Preview image'}
                       className={styles.modalMedia}
                     />
                   ) : (
                     <video
-                      src={getMediaUrl(filteredItems[previewIndex])}
+                      src={getMediaUrl(currentPreviewItem)}
                       className={styles.modalMedia}
                       controls
                       autoPlay
@@ -286,8 +295,8 @@ export default function PhotosVideosClient() {
                 <div className={styles.modalFooter}>
                   <a
                     className={styles.downloadButton}
-                    href={getMediaUrl(filteredItems[previewIndex])}
-                    download={getDownloadName(filteredItems[previewIndex])}
+                    href={getMediaUrl(currentPreviewItem)}
+                    download={getDownloadName(currentPreviewItem)}
                     target="_blank"
                     rel="noreferrer"
                   >
