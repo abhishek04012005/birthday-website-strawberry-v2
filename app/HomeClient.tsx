@@ -133,9 +133,8 @@ export default function HomeClient() {
 
       <Wave bgColor="#fff0f4" svgColor="#fff5e8" />
 
-      <Treats treats={config.treats} childName={config.child.name} />
+      {/* <Treats treats={config.treats} childName={config.child.name} /> */}
 
-      <Footer childName={config.child.name} date={config.party.date} venue={config.party.venue} />
 
       <FloatingButtons />
 
@@ -148,6 +147,9 @@ export default function HomeClient() {
       {quizQuestions.length > 0 && (
         <Quiz questions={quizQuestions} />
       )}
+
+      <Footer childName={config.child.name} date={config.party.date} venue={config.party.venue} />
+
     </main>
   );
 }
