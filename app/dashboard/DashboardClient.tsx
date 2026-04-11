@@ -310,6 +310,22 @@ export default function DashboardClient() {
               <div className={styles.wishesActionRow}>
                 <button
                   type="button"
+                  className={styles.selectAllBtn}
+                  onClick={() => setSelectedWishes(wishes.map(w => w.id))}
+                  disabled={wishes.length === 0}
+                >
+                  Select All
+                </button>
+                <button
+                  type="button"
+                  className={styles.selectAllBtn}
+                  onClick={() => setSelectedWishes([])}
+                  disabled={selectedWishes.length === 0}
+                >
+                  Deselect All
+                </button>
+                <button
+                  type="button"
                   className={styles.updateBtn}
                   onClick={handleBulkVisibilityUpdate}
                   disabled={selectedWishes.length === 0 && wishes.filter(w => w.is_visible).length === 0}
@@ -337,21 +353,19 @@ export default function DashboardClient() {
                   {wishes.map((wish) => (
                     <div key={wish.id} className={`${styles.wishCard} ${selectedWishes.includes(wish.id) ? styles.wishSelected : ''}`}>
                       <div className={styles.wishSelect}>
-                        <input
-                          type="checkbox"
-                          id={`wish-${wish.id}`}
-                          checked={selectedWishes.includes(wish.id)}
-                          onChange={(e) => {
-                            if (e.target.checked) {
-                              setSelectedWishes([...selectedWishes, wish.id]);
-                            } else {
+                        <button
+                          type="button"
+                          className={`${styles.selectBtn} ${selectedWishes.includes(wish.id) ? styles.selected : ''}`}
+                          onClick={() => {
+                            if (selectedWishes.includes(wish.id)) {
                               setSelectedWishes(selectedWishes.filter(id => id !== wish.id));
+                            } else {
+                              setSelectedWishes([...selectedWishes, wish.id]);
                             }
                           }}
-                        />
-                        <label htmlFor={`wish-${wish.id}`} className={styles.wishCheckbox}>
+                        >
                           {selectedWishes.includes(wish.id) ? '✅ Selected' : '⬜ Select'}
-                        </label>
+                        </button>
                       </div>
                       <div className={styles.wishHeader}>
                         <h4>{wish.guest_name}</h4>
@@ -360,6 +374,15 @@ export default function DashboardClient() {
                         </span>
                       </div>
                       <p className={styles.wishText}>{wish.wish_text}</p>
+                      <div className={styles.wishFooter}>
+                        <button
+                          type="button"
+                          className={`${styles.toggleBtn} ${wish.is_visible ? styles.visible : styles.hidden}`}
+                          onClick={() => handleToggleWishVisibility(wish.id, wish.is_visible)}
+                        >
+                          {wish.is_visible ? 'Visible on homepage' : 'Hidden from homepage'}
+                        </button>
+                      </div>
                     </div>
                   ))}
                 </div>

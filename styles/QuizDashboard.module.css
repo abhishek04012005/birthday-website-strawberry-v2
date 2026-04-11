@@ -99,6 +99,11 @@
 
 .sectionHeader {
   margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .sectionHeader h2 {
@@ -364,4 +369,261 @@
   padding: 4rem 1.5rem;
   text-align: center;
   color: #8c001a;
+}
+
+.downloadSheetBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.9rem 1.4rem;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  color: #ffffff;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  white-space: nowrap;
+}
+
+.downloadSheetBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(255, 107, 157, 0.25);
+}
+
+.printSheet {
+  display: none;
+  visibility: hidden;
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  width: 0;
+  height: 0;
+}
+
+.printHeader {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.printHeader h1 {
+  margin: 0;
+  font-size: 2rem;
+  color: #8c001a;
+  orphans: 3;
+  widows: 3;
+}
+
+.printHeader p {
+  margin: 12px auto 0;
+  color: #6e3b46;
+  line-height: 1.75;
+}
+
+.printGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin: 30px 0;
+}
+
+.printCard {
+  background: linear-gradient(135deg, #fff7f9 0%, #fff1f6 100%);
+  border: 2px solid #ff6b9d;
+  border-radius: 20px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 260px;
+  box-shadow: 0 12px 32px rgba(255, 107, 157, 0.15),
+              0 0 0 1px rgba(255, 107, 157, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.printCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #ff6b9d 0%, #c44569 100%);
+}
+
+.printCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 48px rgba(255, 107, 157, 0.22),
+              0 0 0 1px rgba(255, 107, 157, 0.12);
+}
+
+.printCardNumber {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #fff;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 100%);
+  padding: 6px 14px;
+  border-radius: 999px;
+  display: inline-block;
+  width: fit-content;
+  margin-bottom: 16px;
+}
+
+.participantName {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  font-size: 1.2rem;
+  color: #8c001a;
+  font-weight: 700;
+}
+
+.participantName span {
+  font-weight: 700;
+  color: #8c001a;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.participantPhone {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  font-size: 0.95rem;
+  color: #ff6b9d;
+  font-weight: 600;
+}
+
+.participantPhone span {
+  font-weight: 700;
+  color: #8c001a;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.participantDate {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid rgba(255, 107, 157, 0.2);
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.participantDate span {
+  font-weight: 700;
+  color: #8c001a;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
+}
+
+.participantScore {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.participantScore span {
+  font-weight: 700;
+  color: #8c001a;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scoreValue {
+  font-size: 1.4rem;
+  color: #c0003a;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+.scoreBar {
+  width: 100%;
+  height: 8px;
+  background: #ffe0ed;
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.scoreBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #ff6b9d 0%, #c44569 100%);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.printTable {
+  margin: 20px 0;
+}
+
+.printTable table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.printTable th,
+.printTable td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid #f2b8c5;
+}
+
+.printTable thead {
+  background: #fff1f6;
+}
+
+.printTable thead th {
+  font-weight: 700;
+  color: #8c001a;
+  background: #fff1f6;
+}
+
+.printTable tbody tr:nth-child(odd) {
+  background: #fffbfd;
+}
+
+.printTable tbody tr:hover {
+  background: #fff7fa;
+}
+
+.scoreCell {
+  font-weight: 600;
+  color: #c0003a;
+}
+
+.printFooter {
+  margin-top: 28px;
+  padding-top: 18px;
+  border-top: 1px solid #ffd6e1;
+  color: #7d4b58;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.printFooter p {
+  margin: 8px 0;
+}
+
+/* PDF generation styling - element hidden on screen, visible for PDF generation */
+/* No print media queries needed as html2pdf handles PDF generation JavaScript-side */
+
+@media (max-width: 900px) {
+  .printGrid {
+    grid-template-columns: 1fr;
+  }
 }
