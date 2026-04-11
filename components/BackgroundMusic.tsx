@@ -5,8 +5,14 @@ const AUDIO_SRC = '/hbd_instrumental.mp3';
 
 export default function BackgroundMusic() {
   useEffect(() => {
-    // Don't play music on admin pages
-    if (window.location.pathname.startsWith('/admin')) {
+    // Don't play music on admin pages, dashboard, or any admin-related routes
+    const currentPath = window.location.pathname;
+    const isAdminPage = currentPath.startsWith('/admin') || 
+                       currentPath.startsWith('/dashboard') || 
+                       currentPath.includes('/admin/') ||
+                       currentPath === '/auth';
+    
+    if (isAdminPage) {
       return;
     }
 
