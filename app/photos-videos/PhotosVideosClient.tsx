@@ -49,6 +49,10 @@ export default function PhotosVideosClient() {
   };
 
   const getMediaUrl = (item: MediaItem) => {
+    if (item.type === 'video' && item.drive_file_id) {
+      return `/api/media/stream/${encodeURIComponent(item.drive_file_id)}`;
+    }
+
     if (item.url) {
       return item.url;
     }
@@ -57,11 +61,7 @@ export default function PhotosVideosClient() {
       return undefined;
     }
 
-    if (item.type === 'image') {
-      return `https://lh3.googleusercontent.com/d/${encodeURIComponent(item.drive_file_id)}?sz=0`;
-    }
-
-    return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(item.drive_file_id)}`;
+    return `https://lh3.googleusercontent.com/d/${encodeURIComponent(item.drive_file_id)}?sz=0`;
   };
 
   const getDownloadName = (item: MediaItem) => {

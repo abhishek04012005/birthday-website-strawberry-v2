@@ -97,13 +97,16 @@ export default function GalleryManagementClient() {
     if (item.url) {
       return item.url;
     }
+    if (item.type === 'video' && item.drive_file_id) {
+      return `/api/media/stream/${encodeURIComponent(item.drive_file_id)}`;
+    }
     if (!item.drive_file_id) {
       return undefined;
     }
     if (item.type === 'image') {
       return `https://lh3.googleusercontent.com/d/${encodeURIComponent(item.drive_file_id)}?sz=0`;
     }
-    return `https://drive.google.com/uc?export=download&id=${encodeURIComponent(item.drive_file_id)}`;
+    return `https://lh3.googleusercontent.com/d/${encodeURIComponent(item.drive_file_id)}?sz=0`;
   };
 
   if (loading) {

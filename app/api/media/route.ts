@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
         : driveId
         ? item.type === 'image'
           ? `https://lh3.googleusercontent.com/d/${encodeURIComponent(driveId)}?sz=0`
-          : `https://drive.google.com/uc?export=download&id=${encodeURIComponent(driveId)}`
+          : `/api/media/stream/${encodeURIComponent(driveId)}`
         : undefined;
       const filename = item.filename || item.alt || item.text || 'Uploaded media';
       return {

@@ -87,11 +87,17 @@ export async function POST(request: NextRequest) {
           body: Readable.from(fileBuffer),
         };
 
-        const driveResponse = await drive.files.create({
+        const uploadOptions: any = {
           requestBody: fileMetadata,
-          media: media,
+          media,
           fields: 'id',
-        });
+        };
+
+        if (fileBuffer.length > 5 * 1024 * 1024) {
+          uploadOptions.uploadType = 'resumable';
+        }
+
+        const driveResponse = await drive.files.create(uploadOptions);
 
         // Make file publicly accessible
         await drive.permissions.create({
