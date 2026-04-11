@@ -91,6 +91,18 @@
   transform-origin: center;
 }
 
+.hamburgerOpen .hamburgerLine:nth-child(1) {
+  transform: translateY(10px) rotate(45deg);
+}
+
+.hamburgerOpen .hamburgerLine:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburgerOpen .hamburgerLine:nth-child(3) {
+  transform: translateY(-10px) rotate(-45deg);
+}
+
 .mobileMenu {
   display: none;
   position: fixed;

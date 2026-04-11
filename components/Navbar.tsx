@@ -36,7 +36,7 @@ export const Navbar: React.FC<NavbarProps> = ({ childName }) => {
       </div>
 
       <button 
-        className={styles.hamburger} 
+        className={`${styles.hamburger} ${isMobileMenuOpen ? styles.hamburgerOpen : ''}`} 
         onClick={toggleMobileMenu}
         aria-label="Toggle mobile menu"
       >
