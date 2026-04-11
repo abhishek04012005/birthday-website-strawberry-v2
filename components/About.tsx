@@ -95,10 +95,6 @@ export const About: React.FC<AboutProps> = ({
               className={styles.portraitImg}
               src={photoUrl}
               alt={childName}
-              onError={(e) => {
-                e.currentTarget.src =
-                  'https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=600&q=80&fit=crop&crop=faces,top';
-              }}
             />
           </div>
 

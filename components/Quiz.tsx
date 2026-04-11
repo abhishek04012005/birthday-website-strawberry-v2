@@ -122,34 +122,118 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
   };
 
   const handleDownloadScore = () => {
-    const width = 900;
-    const height = 500;
+    const width = 1000;
+    const height = 600;
     const canvas = document.createElement('canvas');
     canvas.width = width;
     canvas.height = height;
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    ctx.fillStyle = '#fff7f9';
+    // Create gradient background
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#ff6b9d');
+    gradient.addColorStop(0.5, '#c44569');
+    gradient.addColorStop(1, '#8c001a');
+    ctx.fillStyle = gradient;
     ctx.fillRect(0, 0, width, height);
 
+    // Add decorative border
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 8;
+    ctx.strokeRect(20, 20, width - 40, height - 40);
+
+    // Inner white background
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
+    ctx.fillRect(40, 40, width - 80, height - 80);
+
+    // Header section with party theme
     ctx.fillStyle = '#8c001a';
-    ctx.fillRect(0, 0, width, 130);
+    ctx.fillRect(40, 40, width - 80, 120);
 
+    // Header text with shadow
     ctx.fillStyle = '#ffffff';
-    ctx.font = 'bold 40px Inter, system-ui, sans-serif';
-    ctx.fillText('Quiz Score', 40, 80);
+    ctx.font = 'bold 48px Inter, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🎉 QUIZ SCORE CARD 🎉', width / 2, 100);
 
+    // Subtitle
     ctx.fillStyle = '#4f151f';
     ctx.font = '24px Inter, system-ui, sans-serif';
-    ctx.fillText(`Name: ${guestName}`, 40, 180);
-    ctx.fillText(`Phone: ${phone}`, 40, 230);
-    ctx.fillText(`Score: ${score} / ${total}`, 40, 280);
-    ctx.fillText(`Completed: ${new Date().toLocaleString()}`, 40, 330);
+    ctx.fillText('Birthday Party Knowledge Test', width / 2, 130);
 
-    ctx.strokeStyle = '#8c001a';
-    ctx.lineWidth = 2;
-    ctx.strokeRect(30, 150, width - 60, 220);
+    // Score circle in center
+    const centerX = width / 2;
+    const centerY = 280;
+    const radius = 80;
+
+    // Score circle background
+    ctx.beginPath();
+    ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
+    ctx.fillStyle = score === total ? '#4CAF50' : score >= total * 0.7 ? '#FF9800' : '#f44336';
+    ctx.fill();
+
+    // Score circle border
+    ctx.strokeStyle = '#ffffff';
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    // Score text
+    ctx.fillStyle = '#ffffff';
+    ctx.font = 'bold 42px Inter, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(`${score}/${total}`, centerX, centerY + 15);
+
+    // Score label
+    ctx.font = '18px Inter, system-ui, sans-serif';
+    ctx.fillText('SCORE', centerX, centerY + 35);
+
+    // Participant details section
+    ctx.fillStyle = '#8c001a';
+    ctx.font = 'bold 28px Inter, system-ui, sans-serif';
+    ctx.textAlign = 'left';
+    ctx.fillText('PARTICIPANT DETAILS', 80, 400);
+
+    // Details background
+    ctx.fillStyle = 'rgba(140, 0, 26, 0.1)';
+    ctx.fillRect(70, 420, width - 140, 120);
+
+    // Details text
+    ctx.fillStyle = '#333333';
+    ctx.font = '22px Inter, system-ui, sans-serif';
+    ctx.fillText(`👤 Name: ${guestName}`, 100, 450);
+    ctx.fillText(`📱 Phone: ${phone}`, 100, 480);
+    ctx.fillText(`📅 Completed: ${new Date().toLocaleDateString()} ${new Date().toLocaleTimeString()}`, 100, 510);
+
+    // Performance message
+    let performanceMessage = '';
+    let performanceColor = '#333333';
+    const percentage = (score / total) * 100;
+
+    if (percentage === 100) {
+      performanceMessage = '🎯 PERFECT SCORE! You\'re a party expert!';
+      performanceColor = '#4CAF50';
+    } else if (percentage >= 80) {
+      performanceMessage = '🌟 Excellent! You know the birthday star well!';
+      performanceColor = '#FF9800';
+    } else if (percentage >= 60) {
+      performanceMessage = '👍 Good job! Keep celebrating!';
+      performanceColor = '#2196F3';
+    } else {
+      performanceMessage = '🎉 Thanks for participating! Every guest is special!';
+      performanceColor = '#9C27B0';
+    }
+
+    ctx.fillStyle = performanceColor;
+    ctx.font = 'bold 20px Inter, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText(performanceMessage, width / 2, 550);
+
+    // Footer decoration
+    ctx.fillStyle = '#8c001a';
+    ctx.font = '16px Inter, system-ui, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('🎂 Happy Birthday! 🎂', width / 2, 575);
 
     const link = document.createElement('a');
     link.href = canvas.toDataURL('image/png');

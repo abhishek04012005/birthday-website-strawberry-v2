@@ -107,10 +107,6 @@ export const Hero: React.FC<HeroProps> = ({
               <img
                 src={heroData.photoUrl}
                 alt={heroData.photoAlt}
-                onError={(e) => {
-                  e.currentTarget.src =
-                    'https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=600&q=85&fit=crop&crop=faces,top';
-                }}
               />
             </div>
           </div>

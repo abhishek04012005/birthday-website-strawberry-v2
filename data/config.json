@@ -33,7 +33,7 @@
     "subtitle": "Join us for the most magical strawberry-filled celebration ever! 🎉",
     "cta1": "🎟 RSVP Now",
     "cta2": "🎉 Celebrate!",
-    "photoUrl": "https://images.unsplash.com/photo-1519340241574-2cec6aef0c01?w=600&q=85&fit=crop&crop=faces,top",
+    "photoUrl": "/riya.png",
     "photoAlt": "Birthday child"
   },
   "personalityTags": [
@@ -318,7 +318,7 @@
         "emoji": "👩‍🦰",
         "description": "Riya's loving mother, party planner extraordinaire & professional hugger 💕",
         "hobbies": "Baking, gardening & photography",
-        "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=85&fit=crop"
+        "image": "/mom.png"
       },
       {
         "name": "Vivek Kumar",
@@ -326,15 +326,15 @@
         "emoji": "👨",
         "description": "Riya's proud papa, storyteller & master of silly jokes that make everyone laugh 😄",
         "hobbies": "Building, sports & teaching Riya new skills",
-        "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=85&fit=crop"
+        "image": "./dad.png"
       },
       {
-        "name": "Lily Rose",
+        "name": "Sneha Kumari",
         "relationship": "Older Sister",
         "emoji": "👧",
         "description": "Emma's big sis & best friend, fashion advisor & protector of all things cute 🌸",
         "hobbies": "Art, music & looking after her little sister",
-        "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&q=85&fit=crop"
+        "image": "./sister.png"
       }
     ]
   }
