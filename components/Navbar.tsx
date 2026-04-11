@@ -28,6 +28,7 @@ export const Navbar: React.FC<NavbarProps> = ({ childName }) => {
         <a href="/about">About</a>
         <a href="/gallery">Gallery</a>
         <a href="/photos-videos">Photos & Videos</a>
+        <a href="/live-stream">Live Stream</a>
         <a href="/rsvp">RSVP</a>
         <a href="/quiz">Quiz</a>
         <a href="/wishes">❤️ Wishes</a>
@@ -49,6 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({ childName }) => {
         <a href="/about" onClick={closeMobileMenu}>About</a>
         <a href="/gallery" onClick={closeMobileMenu}>Gallery</a>
         <a href="/photos-videos" onClick={closeMobileMenu}>Photos & Videos</a>
+        <a href="/live-stream" onClick={closeMobileMenu}>Live Stream</a>
         <a href="/rsvp" onClick={closeMobileMenu}>RSVP</a>
         <a href="/quiz" onClick={closeMobileMenu}>Quiz</a>
         <a href="/wishes" onClick={closeMobileMenu}>Wishes</a>

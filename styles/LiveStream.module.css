@@ -1,0 +1,386 @@
+.liveStreamSection {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #ff6b9d 0%, #c44569 50%, #f093fb 100%);
+  padding: 2rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.liveStreamSection::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="80" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="70" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="10" cy="60" r="1.5" fill="rgba(255,255,255,0.1)"/></svg>');
+  pointer-events: none;
+}
+
+.liveStreamContainer {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.liveStreamHeader {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.secPill {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.liveStreamTitle {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800;
+  color: white;
+  margin: 0 0 1rem 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  line-height: 1.2;
+}
+
+.liveStreamSubtitle {
+  font-size: 1.2rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+.liveStreamContent {
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+}
+
+.streamContainer {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.streamWrapper {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  margin-bottom: 2rem;
+}
+
+.streamIframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 15px;
+}
+
+.streamInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.streamStatus {
+  flex: 1;
+  min-width: 250px;
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.statusDot {
+  width: 12px;
+  height: 12px;
+  background: #ff4757;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.statusText {
+  font-weight: 700;
+  color: #ff4757;
+  font-size: 1.1rem;
+}
+
+.streamDetails h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #2d3436;
+  margin: 0 0 0.5rem 0;
+}
+
+.streamDetails p {
+  color: #636e72;
+  margin: 0.25rem 0;
+  font-size: 0.95rem;
+}
+
+.streamActions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.watchOnYoutubeBtn,
+.shareBtn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  font-size: 0.95rem;
+}
+
+.watchOnYoutubeBtn {
+  background: linear-gradient(135deg, #ff0000, #cc0000);
+  color: white;
+  box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+}
+
+.watchOnYoutubeBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 0, 0, 0.4);
+}
+
+.shareBtn {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+}
+
+.shareBtn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+.scheduleSection {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.scheduleTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3436;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.scheduleGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.scheduleItem {
+  display: flex;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  border-left: 4px solid #ff6b9d;
+  transition: transform 0.3s ease;
+}
+
+.scheduleItem:hover {
+  transform: translateY(-2px);
+}
+
+.scheduleTime {
+  font-weight: 700;
+  color: #ff6b9d;
+  font-size: 1.1rem;
+  min-width: 80px;
+}
+
+.scheduleContent h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #2d3436;
+  margin: 0 0 0.5rem 0;
+}
+
+.scheduleContent p {
+  color: #636e72;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.interactionSection {
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+}
+
+.interactionTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2d3436;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.interactionGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.interactionCard {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 1.5rem;
+  text-align: center;
+  transition: transform 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.interactionCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.interactionIcon {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+}
+
+.interactionCard h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #2d3436;
+  margin: 0 0 0.5rem 0;
+}
+
+.interactionCard p {
+  color: #636e72;
+  margin: 0 0 1rem 0;
+  font-size: 0.9rem;
+}
+
+.interactionLink {
+  color: #ff6b9d;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.interactionLink:hover {
+  color: #c44569;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .liveStreamContainer {
+    padding: 0 0.5rem;
+  }
+
+  .liveStreamHeader {
+    margin-bottom: 2rem;
+  }
+
+  .liveStreamTitle {
+    font-size: 2.5rem;
+  }
+
+  .liveStreamSubtitle {
+    font-size: 1rem;
+  }
+
+  .streamContainer {
+    padding: 1.5rem;
+  }
+
+  .streamWrapper {
+    margin-bottom: 1.5rem;
+  }
+
+  .streamInfo {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .streamActions {
+    justify-content: center;
+  }
+
+  .scheduleGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .scheduleItem {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .scheduleTime {
+    min-width: auto;
+  }
+
+  .interactionGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .liveStreamSection {
+    padding: 1rem 0;
+  }
+
+  .liveStreamTitle {
+    font-size: 2rem;
+  }
+
+  .streamContainer,
+  .scheduleSection,
+  .interactionSection {
+    padding: 1rem;
+  }
+
+  .scheduleTitle,
+  .interactionTitle {
+    font-size: 1.5rem;
+  }
+}
