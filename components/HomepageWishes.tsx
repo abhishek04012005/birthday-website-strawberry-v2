@@ -242,17 +242,31 @@ export const HomepageWishes: React.FC<HomepageWishesProps> = ({ childName }) => 
                 type="text"
                 placeholder="Your name"
                 value={guestName}
-                onChange={(e) => setGuestName(e.target.value)}
+                onChange={(e) => {
+                  // Only allow letters and spaces
+                  const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                  setGuestName(value);
+                }}
                 className={styles.wishInput}
                 disabled={submitting}
+                pattern="[a-zA-Z\s]+"
+                title="Please enter only letters and spaces"
+                required
               />
               <input
                 type="tel"
                 placeholder="Your phone number"
                 value={guestPhone}
-                onChange={(e) => setGuestPhone(e.target.value)}
+                onChange={(e) => {
+                  // Only allow numbers and limit to 15 digits
+                  const value = e.target.value.replace(/\D/g, '').slice(0, 15);
+                  setGuestPhone(value);
+                }}
                 className={styles.wishInput}
                 disabled={submitting}
+                pattern="[0-9]{1,15}"
+                title="Please enter only numbers (up to 15 digits)"
+                maxLength={15}
               />
             </div>
             <textarea

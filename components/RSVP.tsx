@@ -293,18 +293,32 @@ export const RSVP: React.FC<RSVPProps> = ({ invitedCount, comingCount, features,
                   <label>Your Name *</label>
                   <input
                     type="text"
-                    placeholder="Jane Smith"
+                    placeholder="Your Name"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) => {
+                      // Only allow letters and spaces
+                      const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                      setFormData({ ...formData, name: value });
+                    }}
+                    pattern="[a-zA-Z\s]+"
+                    title="Please enter only letters and spaces"
+                    required
                   />
                 </div>
                 <div className={styles.fgroup}>
                   <label>WhatsApp / Phone</label>
                   <input
                     type="tel"
-                    placeholder="+1 234 567 8900"
+                    placeholder="Your Phone Number"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={(e) => {
+                      // Only allow numbers and limit to 15 digits
+                      const value = e.target.value.replace(/\D/g, '').slice(0, 15);
+                      setFormData({ ...formData, phone: value });
+                    }}
+                    pattern="[0-9]{1,15}"
+                    title="Please enter only numbers (up to 15 digits)"
+                    maxLength={15}
                   />
                 </div>
               </div>
