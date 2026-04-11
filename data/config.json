@@ -1,7 +1,7 @@
 {
   "child": {
-    "name": "Emma",
-    "fullName": "Emma Rose",
+    "name": "Riya",
+    "fullName": "Riya Kumari",
     "age": 5,
     "birthDate": "2020-04-12",
     "zodiac": "♈ Aries",
@@ -14,7 +14,7 @@
     }
   },
   "party": {
-    "title": "Happy Birthday, Little Emma!",
+    "title": "Happy Birthday, Little Riya!",
     "date": "2025-04-12",
     "time": "3:00 PM - 6:00 PM",
     "venue": "Strawberry Garden Hall",
@@ -313,19 +313,19 @@
     "subtitle": "The amazing people behind the birthday girl",
     "list": [
       {
-        "name": "Sarah Rose",
+        "name": "Ritika Kumari",
         "relationship": "Mom",
         "emoji": "👩‍🦰",
-        "description": "Emma's loving mother, party planner extraordinaire & professional hugger 💕",
+        "description": "Riya's loving mother, party planner extraordinaire & professional hugger 💕",
         "hobbies": "Baking, gardening & photography",
         "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=85&fit=crop"
       },
       {
-        "name": "Michael Rose",
+        "name": "Vivek Kumar",
         "relationship": "Dad",
         "emoji": "👨",
-        "description": "Emma's proud papa, storyteller & master of silly jokes that make everyone laugh 😄",
-        "hobbies": "Building, sports & teaching Emma new skills",
+        "description": "Riya's proud papa, storyteller & master of silly jokes that make everyone laugh 😄",
+        "hobbies": "Building, sports & teaching Riya new skills",
         "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=85&fit=crop"
       },
       {
