@@ -284,8 +284,14 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
                   id="guestName"
                   type="text"
                   value={guestName}
-                  onChange={(e) => setGuestName(e.target.value)}
+                  onChange={(e) => {
+                    // Only allow letters and spaces
+                    const value = e.target.value.replace(/[^a-zA-Z\s]/g, '');
+                    setGuestName(value);
+                  }}
                   placeholder="Enter your name"
+                  pattern="[a-zA-Z\s]+"
+                  title="Please enter only letters and spaces"
                   required
                 />
               </div>
@@ -296,8 +302,15 @@ export const Quiz: React.FC<QuizProps> = ({ questions }) => {
                   id="phone"
                   type="tel"
                   value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
+                  onChange={(e) => {
+                    // Only allow numbers and limit to 15 digits
+                    const value = e.target.value.replace(/\D/g, '').slice(0, 15);
+                    setPhone(value);
+                  }}
                   placeholder="Enter your phone number"
+                  pattern="[0-9]{1,15}"
+                  title="Please enter only numbers (up to 15 digits)"
+                  maxLength={15}
                   required
                 />
               </div>
