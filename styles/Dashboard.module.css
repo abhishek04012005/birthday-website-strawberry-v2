@@ -527,7 +527,7 @@
 }
 
 .printPages {
-  display: grid;
+  display: none;
   gap: 0;
   padding: 0;
 }

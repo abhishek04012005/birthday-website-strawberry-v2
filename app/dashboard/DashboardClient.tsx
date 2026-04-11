@@ -130,8 +130,10 @@ export default function DashboardClient() {
 
     const originalWidth = wrapper.style.width;
     const originalMinHeight = wrapper.style.minHeight;
+    const originalDisplay = wrapper.style.display;
     wrapper.style.width = '210mm';
     wrapper.style.minHeight = '297mm';
+    wrapper.style.display = 'grid'; // Temporarily show the element for capture
 
     try {
       const canvas = await html2canvas(wrapper, {
@@ -168,6 +170,7 @@ export default function DashboardClient() {
     } finally {
       wrapper.style.width = originalWidth;
       wrapper.style.minHeight = originalMinHeight;
+      wrapper.style.display = originalDisplay; // Restore original display
     }
   };
 
